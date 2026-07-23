@@ -36,6 +36,19 @@ ez a projekt követi a [Semantic Versioning](https://semver.org/spec/v2.0.0.html
 - Telepítési pipeline
 
 ---
+## [0.8.2] - 2026-07-22
+
+### Hozzáadva
+- Interaktív térkép nézet (`/ub/map`) Leaflet-tel
+- Szakaszok útvonalai polyline-ként megjelenítve a térképen
+- Váltópont markerek popuppal (szakasz neve, távolság)
+- Dupla kattintásra a marker névre szűrve átnavigál a váltópontok listájára
+- Rajt váltópont zöld markerrel kiemelve
+- Szakaszlistából a névre kattintva átnavigálás a váltópontok listájára
+- Keresés és lapozás a váltópontok oldalon
+- Keresés és lapozás a szakaszok oldalon
+- Leaflet függőség hozzáadva
+
 ## [0.8.1] - 2026-07-21
 
 ### Hozzáadva

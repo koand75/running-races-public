@@ -24,5 +24,8 @@ export const UB_ROUTES: Routes = [
   {
     path: 'waypoints',
     loadComponent: () => import('./components/waypoints/waypoints').then(m => m.Waypoints)
+  },
+  {
+    path: 'map', loadComponent: () => import('./components/map/map').then(m => m.MapComponent)
   }
 ];

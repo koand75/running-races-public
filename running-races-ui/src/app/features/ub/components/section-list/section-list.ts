@@ -13,6 +13,7 @@ import { SectionInsertDialog } from '../section-insert-dialog/section-insert-dia
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../../services/auth';
 import { ConfirmationDialogComponent } from '../../../../components/confirmation-dialog/confirmation-dialog';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-section-list',
@@ -24,7 +25,8 @@ import { ConfirmationDialogComponent } from '../../../../components/confirmation
     FormsModule,
     MatInputModule,
     MatFormFieldModule,
-    RouterLink
+    RouterLink,
+    MatPaginatorModule
   ],
   templateUrl: './section-list.html',
   styleUrl: './section-list.css'
@@ -34,6 +36,12 @@ export class SectionListComponent implements OnInit {
   isAdmin(): boolean { return this.authService.isAdmin(); }
   private dialog = inject(MatDialog);
   private sectionService = inject(SectionService);
+
+  searchTerm = '';
+  page = 1;
+  pageSize = 20;
+  totalCount = 0;
+  pagedSections: Section[] = [];
 
   sections: Section[] = [];
   displayedColumns = ['order', 'name', 'fullDistance', 'distance', 'actions'];
@@ -48,7 +56,27 @@ export class SectionListComponent implements OnInit {
   loadSections(): void {
     this.sectionService.getAll().subscribe(sections => {
       this.sections = sections;
+      this.updatePage();
     });
+  }
+
+  filteredSections(): Section[] {
+    return this.sections.filter(s =>
+      s.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+  }
+
+  updatePage(): void {
+    const filtered = this.filteredSections();
+    this.totalCount = filtered.length;
+    const start = (this.page - 1) * this.pageSize;
+    this.pagedSections = filtered.slice(start, start + this.pageSize);
+  }
+
+  onPageChange(event: PageEvent): void {
+    this.page = event.pageIndex + 1;
+    this.pageSize = event.pageSize;
+    this.updatePage();
   }
 
   onFileSelected(event: Event): void {

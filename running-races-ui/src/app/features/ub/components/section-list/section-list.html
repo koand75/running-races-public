@@ -16,7 +16,12 @@
     </button>
   </div>
 
-  <table mat-table [dataSource]="sections">
+  <mat-form-field>
+    <mat-label>Keresés</mat-label>
+    <input matInput [(ngModel)]="searchTerm" (ngModelChange)="updatePage()">
+  </mat-form-field>
+
+  <table mat-table [dataSource]="pagedSections">
     <ng-container matColumnDef="order">
       <th mat-header-cell *matHeaderCellDef>#</th>
       <td mat-cell *matCellDef="let section">{{ section.order }}</td>
@@ -24,7 +29,8 @@
 
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>Név</th>
-      <td mat-cell *matCellDef="let section">
+      <td mat-cell *matCellDef="let section" style="cursor: pointer" [routerLink]="['/ub/waypoints']"
+        [queryParams]="{search: section.startWayPoint?.name}">
         {{ section.startWayPoint?.name ?? '?' }} - {{ section.endWayPoint?.name ?? '?' }}
       </td>
     </ng-container>
@@ -62,4 +68,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+  <mat-paginator [length]="totalCount" [pageSize]="pageSize" [pageSizeOptions]="[20, 50, 100]"
+    (page)="onPageChange($event)">
+  </mat-paginator>
 </div>

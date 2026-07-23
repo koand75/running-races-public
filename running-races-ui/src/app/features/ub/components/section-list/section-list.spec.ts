@@ -71,4 +71,22 @@ describe('SectionList', () => {
         mockAuthService.isAdmin.and.returnValue(true);
         expect(component.isAdmin()).toBeTrue();
     });
+
+    it('should page sections correctly', () => {
+        expect(component.pagedSections.length).toBe(2);
+        expect(component.totalCount).toBe(2);
+    });
+
+    it('should filter sections by search term', () => {
+        component.searchTerm = 'S1';
+        component.updatePage();
+        expect(component.pagedSections.length).toBe(1);
+        expect(component.pagedSections[0].name).toBe('S1');
+    });
+
+    it('should update page on page change', () => {
+        component.onPageChange({ pageIndex: 0, pageSize: 1, length: 2 } as any);
+        expect(component.pageSize).toBe(1);
+        expect(component.pagedSections.length).toBe(1);
+    });
 });

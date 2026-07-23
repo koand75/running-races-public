@@ -13,7 +13,17 @@
         </div>
     </div>
 
-    <table mat-table [dataSource]="waypoints">
+    <div class="filter-row">
+        <mat-form-field>
+            <mat-label>Keresés</mat-label>
+            <input matInput [(ngModel)]="searchTerm" (input)="updatePage()">
+        </mat-form-field>
+        <mat-checkbox [(ngModel)]="showMissingOnly" (change)="updatePage()">
+            Csak koordináta nélküliek
+        </mat-checkbox>
+    </div>
+
+    <table mat-table [dataSource]="pagedWaypoints">
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef>Név</th>
             <td mat-cell *matCellDef="let wp">
@@ -60,4 +70,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+    <mat-paginator [length]="totalCount" [pageSize]="pageSize" [pageSizeOptions]="[10, 25, 50]"
+        (page)="onPageChange($event)">
+    </mat-paginator>
 </div>

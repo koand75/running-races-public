@@ -13,11 +13,20 @@ import { MatDialog } from '@angular/material/dialog';
 import { WaypointDialog } from '../waypoint-dialog/waypoint-dialog';
 import { AuthService } from '../../../../services/auth';
 import { ConfirmationDialogComponent } from '../../../../components/confirmation-dialog/confirmation-dialog';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-waypoints',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatTableModule, MatButtonModule, MatIconModule, MatInputModule, MatFormFieldModule, RouterLink],
+  imports: [CommonModule, FormsModule,
+    MatTableModule, MatButtonModule,
+    MatIconModule, MatInputModule,
+    MatFormFieldModule, RouterLink,
+    MatPaginatorModule, MatCheckboxModule    
+  ],
   templateUrl: './waypoints.html',
   styleUrl: './waypoints.css'
 })
@@ -26,17 +35,57 @@ export class Waypoints implements OnInit {
   private authService = inject(AuthService);
   isAdmin(): boolean { return this.authService.isAdmin(); }
 
+  page = 1;
+  pageSize = 10;
+  totalCount = 0;
+  pagedWaypoints: WayPointModel[] = [];
+
   private waypointService = inject(WayPointService);
   waypoints: WayPointModel[] = [];
   displayedColumns = ['name', 'lat', 'lng', 'actions'];
   editingWaypoint: WayPointModel | null = null;
 
+  searchTerm = '';
+  showMissingOnly = false;
+
+  filteredWaypoints(): WayPointModel[] {
+    return this.waypoints.filter(wp => {
+      const matchesName = wp.name.toLowerCase().includes(this.searchTerm.toLowerCase());
+      const matchesMissing = !this.showMissingOnly || (!wp.lat && !wp.lng);
+      return matchesName && matchesMissing;
+    });
+  }
+
+  private route = inject(ActivatedRoute);
+
   ngOnInit(): void {
-    this.load();
+    this.route.queryParams.subscribe(params => {
+      if (params['search']) {
+        this.searchTerm = params['search'];
+      }
+      this.load();
+    });
   }
 
   load(): void {
-    this.waypointService.getAll().subscribe(wp => this.waypoints = wp);
+    this.waypointService.getAll().subscribe(wp => {
+      this.waypoints = wp;
+      this.totalCount = wp.length;
+      this.updatePage();
+    });
+  }
+
+  updatePage(): void {
+    const filtered = this.filteredWaypoints();
+    this.totalCount = filtered.length;
+    const start = (this.page - 1) * this.pageSize;
+    this.pagedWaypoints = filtered.slice(start, start + this.pageSize);
+  }
+
+  onPageChange(event: PageEvent): void {
+    this.page = event.pageIndex + 1;
+    this.pageSize = event.pageSize;
+    this.updatePage();
   }
 
   delete(id: number): void {

@@ -16,6 +16,10 @@
                 <mat-icon matListItemIcon>group</mat-icon>
                 Csapatok
             </a>
+            <a mat-list-item routerLink="/ub/map" (click)="closeMenu()" class="submenu-item">
+                <mat-icon matListItemIcon>map</mat-icon>
+                Térkép
+            </a>
             @if (isAdmin()) {
             <a mat-list-item routerLink="/admin/races" (click)="closeMenu()">
                 <mat-icon matListItemIcon>admin_panel_settings</mat-icon>

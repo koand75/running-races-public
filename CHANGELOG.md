@@ -35,6 +35,18 @@ this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Deployment pipeline
 
 ---
+## [0.8.2] - 2026-07-22
+
+### Added
+- Interactive map view (`/ub/map`) with Leaflet
+- Section routes displayed as polylines on the map
+- Waypoint markers with popup (section name, distance)
+- Double-click on marker navigates to waypoints list filtered by name
+- Start waypoint marked with green marker
+- Navigation from section list to waypoints list by clicking section name
+- Search and pagination on waypoints page
+- Search and pagination on sections page
+- Leaflet dependency added
 
 ## [0.8.1] - 2026-07-21
 

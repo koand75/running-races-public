@@ -57,4 +57,27 @@ describe('Waypoints', () => {
     component.delete(1);
     expect(mockWaypointService.delete).not.toHaveBeenCalled();
   });
+
+  it('should page waypoints correctly', () => {
+    expect(component.pagedWaypoints.length).toBe(2);
+    expect(component.totalCount).toBe(2);
+  });
+
+  it('should filter waypoints by search term', () => {
+    component.searchTerm = 'Tihany';
+    component.updatePage();
+    expect(component.pagedWaypoints.length).toBe(1);
+    expect(component.pagedWaypoints[0].name).toBe('Tihany');
+  });
+
+  it('should filter waypoints with missing coordinates', () => {
+    component.waypoints = [
+      { id: 1, name: 'Balatonfüred', lat: 46.95, lng: 17.89 },
+      { id: 2, name: 'Tihany', lat: null, lng: null }
+    ];
+    component.showMissingOnly = true;
+    component.updatePage();
+    expect(component.pagedWaypoints.length).toBe(1);
+    expect(component.pagedWaypoints[0].name).toBe('Tihany');
+  });
 });
