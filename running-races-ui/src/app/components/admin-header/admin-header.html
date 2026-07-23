@@ -1,0 +1,23 @@
+<header class="admin-header" *ngIf="isAuthenticated$ | async">
+  <div class="header-container">
+    <!-- Logo / Brand -->
+    <div class="brand" (click)="goToAdminHome()">
+      <img src="images/runner.svg" alt="Running Races Logo" class="logo-img">
+      <span class="brand-text">Running Races Admin</span>
+    </div>
+
+    <!-- Right side: User info + Logout -->
+    <div class="header-right">
+      <!-- User info -->
+      <div class="user-info">
+        <span class="user-icon">👤</span>
+        <span class="user-name">{{ authService.getUserRole() }}</span>
+      </div>
+
+      <!-- Logout button -->
+      <button mat-icon-button (click)="toggleMenu()">
+        <mat-icon style="color: #fffffe">menu</mat-icon>
+      </button>
+    </div>
+  </div>
+</header>

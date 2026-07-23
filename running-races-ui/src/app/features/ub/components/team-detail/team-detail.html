@@ -1,0 +1,105 @@
+<div class="container">
+    @if (team) {
+    <h1>{{ team.name }} ({{ team.year }})</h1>
+    <div class="header-actions">
+        <button mat-raised-button color="primary" [routerLink]="['plan']">
+            <mat-icon>map</mat-icon> Tervezés
+        </button>
+        <button mat-button routerLink="/ub/teams">
+            <mat-icon>arrow_back</mat-icon> Vissza
+        </button>
+    </div>
+    <h2>Futók ({{ runners.length }} fő)</h2>
+    <!-- Új futó hozzáadása -->
+    <div class="add-runner-form">
+        <mat-form-field>
+            <mat-label>Név</mat-label>
+            <input matInput [(ngModel)]="newRunner.name">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput [(ngModel)]="newRunner.email">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Alap tempó (perc:mp)</mat-label>
+            <input matInput type="text" [ngModel]="formatPace(newRunner.basePace || 360)"
+                (ngModelChange)="newRunner.basePace = parsePace($event)">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Megjegyzés</mat-label>
+            <input matInput [(ngModel)]="newRunner.notes">
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="addRunner()">
+            <mat-icon>add</mat-icon> Hozzáadás
+        </button>
+    </div>
+    <!-- Futók listája -->
+    <table mat-table [dataSource]="runners">
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Név</th>
+            <td mat-cell *matCellDef="let runner">
+                @if (editingRunner && editingRunner.id === runner.id) {
+                <input matInput [(ngModel)]="editingRunner.name">
+                } @else {
+                {{ runner.name }}
+                }
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef>Email</th>
+            <td mat-cell *matCellDef="let runner">
+                @if (editingRunner && editingRunner.id === runner.id) {
+                <input matInput [(ngModel)]="editingRunner.email">
+                } @else {
+                {{ runner.email }}
+                }
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="basePace">
+            <th mat-header-cell *matHeaderCellDef>Alap tempó</th>
+            <td mat-cell *matCellDef="let runner">
+                @if (editingRunner && editingRunner.id === runner.id) {
+                <input matInput type="text" [ngModel]="formatPace(editingRunner.basePace)"
+                    (ngModelChange)="editingRunner.basePace = parsePace($event)">
+                } @else {
+                {{ formatPace(runner.basePace) }} /km
+                }
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="notes">
+            <th mat-header-cell *matHeaderCellDef>Megjegyzés</th>
+            <td mat-cell *matCellDef="let runner">
+                @if (editingRunner && editingRunner.id === runner.id) {
+                <input matInput [(ngModel)]="editingRunner.notes">
+                } @else {
+                {{ runner.notes }}
+                }
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Műveletek</th>
+            <td mat-cell *matCellDef="let runner">
+                <div class="action-buttons">
+                    @if (editingRunner && editingRunner.id === runner.id) {
+                    <button mat-raised-button color="primary" (click)="saveRunner()">
+                        <mat-icon>save</mat-icon>
+                    </button>
+                    <button mat-button (click)="cancelEdit()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    } @else {
+                    <button mat-raised-button color="primary" (click)="editRunner(runner)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-raised-button color="warn" (click)="deleteRunner(runner.id)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                    }
+                </div>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    }
+</div>

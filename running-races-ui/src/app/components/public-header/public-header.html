@@ -1,0 +1,21 @@
+<header class="public-header">
+  <div class="header-container">
+    <!-- Logo + Brand -->
+    <div class="brand" (click)="goToHome()">
+      <img src="images/runner.svg" alt="Running Races Logo" class="logo-img">
+      <span class="brand-text">Running Races</span>
+    </div>
+
+    <!-- Right side: Login gomb -->
+    <div class="header-right">
+      @if (isAuthenticated$ | async) {
+      <mat-icon style="color: #fffffe">
+        {{ authService.isAdmin() ? 'admin_panel_settings' : 'person' }}
+      </mat-icon>
+      }
+      <button mat-icon-button (click)="toggleMenu()">
+        <mat-icon style="color: #fffffe">menu</mat-icon>
+      </button>
+    </div>
+  </div>
+</header>

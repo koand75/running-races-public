@@ -1,0 +1,63 @@
+<div class="container">
+    <div class="page-header">
+        <h1>Váltópontok</h1>
+        <div class="page-header-actions">
+            @if (isAdmin()) {
+            <button mat-raised-button color="primary" (click)="startAdd()">
+                <mat-icon>add</mat-icon> Új váltópont
+            </button>
+            }
+            <button mat-stroked-button routerLink="/ub/sections">
+                <mat-icon>arrow_back</mat-icon> Vissza
+            </button>
+        </div>
+    </div>
+
+    <table mat-table [dataSource]="waypoints">
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Név</th>
+            <td mat-cell *matCellDef="let wp">
+                @if (editingWaypoint && editingWaypoint.id === wp.id) {
+                <input matInput [(ngModel)]="editingWaypoint.name">
+                } @else {
+                {{ wp.name }}
+                }
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="lat">
+            <th mat-header-cell *matHeaderCellDef>Lat</th>
+            <td mat-cell *matCellDef="let wp">
+                @if (editingWaypoint && editingWaypoint.id === wp.id) {
+                <input matInput type="number" [(ngModel)]="editingWaypoint.lat">
+                } @else {
+                {{ wp.lat }}
+                }
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="lng">
+            <th mat-header-cell *matHeaderCellDef>Lng</th>
+            <td mat-cell *matCellDef="let wp">
+                @if (editingWaypoint && editingWaypoint.id === wp.id) {
+                <input matInput type="number" [(ngModel)]="editingWaypoint.lng">
+                } @else {
+                {{ wp.lng }}
+                }
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Műveletek</th>
+            <td mat-cell *matCellDef="let wp">
+                @if (isAdmin()) {
+                <button mat-raised-button color="primary" (click)="edit(wp)"><mat-icon>edit</mat-icon></button>
+                <button mat-raised-button color="warn" (click)="delete(wp.id)"><mat-icon>delete</mat-icon></button>
+                }
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>

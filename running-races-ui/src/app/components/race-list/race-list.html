@@ -1,0 +1,108 @@
+<div class="container">
+  <h1>{{ isAdminMode ? 'Futóversenyek kezelése (Admin)' : 'Futóversenyek' }}</h1>
+
+  @if (isAdminMode && isAdmin()) {
+  <div class="header-actions">
+    <button mat-raised-button color="primary" routerLink="/admin/races/new">+ Új verseny</button>
+  </div>
+  }
+
+  <div class="search-container">
+    <div class="select-wrapper">
+      <select [(ngModel)]="searchField" class="search-select">
+        <option value="all">Mindenhol</option>
+        <option value="name">Név</option>
+        <option value="location">Helyszín</option>
+      </select>
+      <span class="material-icons select-arrow">arrow_drop_down</span>
+    </div>
+
+    <input type="text" [(ngModel)]="searchTerm" placeholder="Keresés..." class="search-input"
+      (keyup.enter)="onSearch()" />
+
+    @if (isAdminMode) {
+    <div class="select-wrapper">
+      <select [(ngModel)]="isActiveFilter" class="search-select" (change)="onIsActiveFilterChange()">
+        <option value="active">Aktív versenyek</option>
+        <option value="inactive">Inaktív versenyek</option>
+        <option value="all">Összes verseny</option>
+      </select>
+
+      <span class="material-icons select-arrow">arrow_drop_down</span>
+    </div>
+    }
+
+    <button mat-raised-button color="primary" (click)="onSearch()">🔍 Keresés</button>
+    <button mat-button (click)="onClear()">✖</button>
+  </div>
+
+  @if (loading) {
+  <div>Betöltés...</div>
+  } @else if (error) {
+  <div class="error">{{ error }}</div>
+  } @else {
+  <table>
+    <thead>
+      <tr>
+        <th (click)="sortBy('name')">
+          Név
+          @if (sortColumn === 'name') {
+          <span>{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+          }
+        </th>
+        <th (click)="sortBy('date')">
+          Dátum
+          @if (sortColumn === 'date') {
+          <span>{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+          }
+        </th>
+        <th (click)="sortBy('location')">
+          Helyszín
+          @if (sortColumn === 'location') {
+          <span>{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+          }
+        </th>
+        <th (click)="sortBy('distance')">
+          Távolság (km)
+          @if (sortColumn === 'distance') {
+          <span>{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+          }
+        </th>
+
+        @if (isAdminMode && isAdmin()) {
+        <th>Műveletek</th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (race of races; track race.id) {
+      <tr>
+        <td>{{ race.name }}</td>
+        <td>{{ race.date | date:'yyyy.MM.dd.' }}</td>
+        <td>{{ race.location }}</td>
+        <td>{{ race.distance }}</td>
+        @if (isAdminMode && isAdmin()) {
+        <td>
+          <div class="action-buttons">
+            <button mat-raised-button color="primary" [routerLink]="['/admin/races', race.id, 'edit']">✏️
+              Szerkesztés</button>
+            @if (!race.isActive) {
+            <button mat-raised-button color="primary" (click)="restoreRace(race)">
+              <mat-icon>restore</mat-icon>
+            </button>
+            }
+            @if (!!race.isActive) {
+            <button mat-raised-button color="warn" (click)="deleteRace(race.id, race.name)">🗑️ Törlés</button>
+            }
+          </div>
+        </td>
+        }
+      </tr>
+      }
+    </tbody>
+  </table>
+  <mat-paginator [length]="totalCount" [pageIndex]="page - 1" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 20, 50]"
+    (page)="onPageChange($event)" showFirstLastButtons>
+  </mat-paginator>
+  }
+</div>

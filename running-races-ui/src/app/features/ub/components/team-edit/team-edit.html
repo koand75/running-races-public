@@ -1,0 +1,25 @@
+<div class="container">
+  @if (team) {
+    <h1>Csapat szerkesztése</h1>
+    <mat-form-field>
+      <mat-label>Név</mat-label>
+      <input matInput [(ngModel)]="team.name">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Év</mat-label>
+      <input matInput type="number" [(ngModel)]="team.year">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Indulás időpontja</mat-label>
+      <input matInput type="datetime-local" [(ngModel)]="team.startTime">
+    </mat-form-field>
+    <div class="actions">
+      <button mat-raised-button color="primary" (click)="save()">
+        <mat-icon>save</mat-icon> Mentés
+      </button>
+      <button mat-button routerLink="/ub/teams">
+        <mat-icon>arrow_back</mat-icon> Vissza
+      </button>
+    </div>
+  }
+</div>

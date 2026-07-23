@@ -1,0 +1,301 @@
+.planner-container {
+  height: calc(100vh - 90px);
+  display: flex;
+  flex-direction: column;
+}
+
+.planner-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background: #fffffe;
+  border-bottom: 1px solid #ddd;
+}
+
+.planner-header h1 {
+  margin: 0;
+  color: #232323;
+}
+
+.header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.planner-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Futók panel */
+.runners-panel {
+  width: 300px;
+  background: #f8f5f2;
+  padding: 16px;
+  overflow-y: auto;
+  border-right: 1px solid #ddd;
+}
+
+.runners-panel h2 {
+  margin: 0 0 16px 0;
+  color: #232323;
+}
+
+.runners-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+
+.runner-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;  /* kisebb padding */
+  background: #fffffe;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  cursor: grab;
+  transition: all 0.2s;
+}
+
+
+.runner-card:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.runner-card.selected {
+  border-width: 3px;
+  background: #e8f5f5;
+}
+
+.runner-card:active {
+  cursor: grabbing;
+}
+
+
+.runner-color {
+  width: 8px;
+  height: 24px;  /* rövidebb */
+  border-radius: 4px;
+}
+
+
+.runner-info {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.runner-name {
+  font-weight: 600;
+  color: #232323;
+}
+
+.runner-pace {
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+}
+
+.runner-stats {
+  font-size: 11px;
+  font-weight: 600;
+  color: #078080;
+}
+
+
+/* Szakaszok panel */
+.sections-panel {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  background: #fffffe;
+}
+
+.sections-panel h2 {
+  margin: 0 0 16px 0;
+  color: #232323;
+}
+
+.sections-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.section-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: #f8f5f2;
+  border-radius: 4px;
+  min-height: 40px;
+  transition: all 0.2s;
+}
+
+.section-row.has-runner {
+  background: #fffffe;
+  border: 1px solid #ddd;
+}
+
+.section-row.highlight {
+  background: #e8f5f5;
+  cursor: pointer;
+}
+
+.section-row.highlight:hover {
+  background: #d5e8e8;
+}
+
+.section-order {
+  width: 30px;
+  font-weight: 700;
+  color: #078080;
+  text-align: center;
+}
+
+.section-info {
+  flex: 1;
+}
+
+.section-name {
+  font-weight: 500;
+  color: #232323;
+}
+
+.section-distance {
+  font-size: 12px;
+  color: #666;
+}
+
+.assignment {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  color: #fffffe;
+}
+
+.assigned-runner {
+  font-weight: 500;
+}
+
+.pace-input {
+  width: 60px;
+  padding: 4px;
+  border: none;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 12px;
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  color: #fffffe;
+  cursor: pointer;
+  padding: 2px;
+  display: flex;
+  opacity: 0.8;
+}
+
+.remove-btn:hover {
+  opacity: 1;
+}
+
+.remove-btn mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.empty-slot {
+  color: #999;
+  font-size: 12px;
+  font-style: italic;
+}
+
+/* CDK Drag & Drop */
+.cdk-drag-preview {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0.5;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .planner-content {
+    flex-direction: column;
+  }
+
+  .runners-panel {
+    width: 550px;
+    max-height: 200px;
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .runners-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .runner-card {
+    flex: 0 0 auto;
+    width: auto;
+  }
+
+  .runner-stats {
+    display: none;
+  }
+}
+
+.section-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-info {
+  display: flex;
+  gap: 16px;
+  flex: 1;
+  flex-wrap: wrap;
+}
+
+.section-name { flex: 2; min-width: 150px; }
+.section-distance { flex: 1; min-width: 80px; }
+.section-cumulative { flex: 1; min-width: 100px; }
+.section-time { flex: 1; min-width: 80px; }
+
+.section-block {
+  border-left: 4px solid #ddd;
+  margin-bottom: 8px;
+  border-radius: 4px;
+}
+
+.block-header {
+  padding: 4px 8px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.selected-block {
+  outline: 3px solid #f45d48;  
+  outline-offset: 2px;
+  background-color: #f45d48;
+}

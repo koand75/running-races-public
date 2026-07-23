@@ -1,0 +1,256 @@
+h1 {
+  color: #232323;
+  margin-bottom: 30px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fffffe;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #078080;
+  color: #fffffe;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s;
+}
+
+th:hover {
+  background-color: #065f5f;
+}
+
+th span {
+  margin-left: 5px;
+  font-size: 0.8em;
+}
+
+tr:hover {
+  background-color: #f8f5f2
+}
+
+.error {
+  color: red;
+  padding: 10px;
+  background: #f8f5f2;
+  border-radius: 4px;
+}
+
+.header-actions {
+  margin-bottom: 20px;
+}
+
+.btn-new {
+  background-color: #078080;
+  color: #fffffe;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+.btn-new:hover {
+  background-color: #065f5f;
+}
+
+.btn-delete {
+  background-color: #f45d48;
+  color: #fffffe;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.btn-delete:hover {
+  background-color: #e04a38;
+}
+
+.search-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.select-wrapper {
+  min-width: 200px;
+  width: 100%;  /* Teljes szélesség */
+  max-width: 100%;  /* Mobilon se akadjon meg */
+  position: relative;
+  display: inline-block;
+  width: 200px;  /* tetszőleges */
+}
+
+.search-select {
+  -webkit-appearance: none;  /* natív nyíl eltüntetése */
+  -moz-appearance: none;
+  appearance: none;
+
+  width: 100%;
+  padding: 10px 30px 10px 10px;  /* jobbra hely a nyílhoz */
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.select-arrow {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;  /* kattintás ne zavarja a select-et */
+  font-size: 20px;  /* méret igény szerint */
+  color: gray;
+}
+
+
+.search-input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #078080
+}
+
+.btn-search {
+  background-color: #078080;
+  color: #fffffe;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+.btn-search:hover {
+  background-color: #065f5f;
+}
+
+.btn-clear {
+  background-color: #232323;
+  color: #fffffe;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+.btn-clear:hover {
+  background-color: #616161;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-edit {
+  background-color: #078080;
+  color: #fffffe;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.btn-edit:hover {
+  background-color: #065f5f;
+}
+
+@media (max-width: 768px) {
+
+  .search-container {
+    flex-direction: column;    /* Törés oszlopba */
+    align-items: stretch;    /* Teljes szélesség */
+    gap: 8px;
+  }
+
+  .search-select,
+  .search-input,
+  .btn-search,
+  .btn-clear {
+    font-size: large;
+    width: 100%;    /* Teljes szélesség */
+    box-sizing: border-box;    /* Padding beleértve */
+  }
+
+  .select-wrapper {
+    width: 100%;  /* Teljes szélesség */
+    max-width: 100%;  /* Mobilon se akadjon meg */
+    position: relative;
+    display: block;
+  }
+
+  table, thead, tbody, th, td, tr {
+    display: block;
+    font-size: large;
+  }
+
+  thead tr {
+    display: none;    /* fejlécet elrejtjük */
+  }
+
+  tr {
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+
+  td {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    border: none;
+    border-bottom: 1px solid #eee;
+  }
+
+  td::before {
+    content: attr(data-label);    /* cella label a bal oldalon */
+    font-weight: bold;
+  }
+}
+
+/* Paginator styling */
+::ng-deep .mat-mdc-paginator {
+  background: #fffffe;
+  border-radius: 8px;
+  margin-top: 16px;
+}
+
+::ng-deep .mat-mdc-paginator-container {
+  color: #232323;
+}
+
+::ng-deep .mat-mdc-select-value {
+  color: #232323;
+}
+
+::ng-deep .mat-mdc-paginator-icon {
+  fill: #078080;
+}

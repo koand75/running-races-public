@@ -1,0 +1,94 @@
+<div class="planner-container">
+  <!-- Fejléc -->
+  <div class="planner-header">
+    <h1>{{ team?.name }} – Szakasz tervező</h1>
+    <div class="team-info">{{ team?.startTime | date:'yyyy.MM.dd HH:mm' }}</div>
+    <div class="header-actions">
+      <button mat-raised-button color="primary" (click)="save()" [disabled]="!hasChanges">
+        <mat-icon>save</mat-icon> Mentés
+      </button>
+      <button mat-stroked-button routerLink="/ub/teams">
+        <mat-icon>arrow_back</mat-icon> Vissza
+      </button>            
+    </div>
+  </div>
+
+  <div class="planner-content" cdkDropListGroup>
+    <!-- Bal oldal: Futók -->
+    <div class="runners-panel">
+      <h2>Futók</h2>
+      <button mat-raised-button (click)="downloadTxt()">
+        <mat-icon>download</mat-icon> Letöltés
+      </button>
+      <div class="runners-list" cdkDropList [cdkDropListSortingDisabled]="true">
+        @for (runner of runners; track runner.id) {
+        <div class="runner-card" [class.selected]="selectedRunner?.id === runner.id"
+          [style.border-color]="getRunnerColor(runner.id)" cdkDrag [cdkDragData]="runner"
+          (click)="selectRunner(runner)">
+          <div class="runner-color" [style.background-color]="getRunnerColor(runner.id)"></div>
+          <div class="runner-info">
+            <div class="runner-name">{{ runner.name }}</div>
+            <div class="runner-pace">{{ formatPace(runner.basePace) }} /km</div>
+            <div class="runner-stats">
+              @for (block of getRunnerBlocks(runner.id); track $index) {
+              <div>{{ block }}</div>
+              }
+            </div>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+
+    <!-- Jobb oldal: Szakaszok -->
+    <div class="sections-panel">
+      <h2>Szakaszok</h2>
+      <div class="sections-list">
+        @for (block of getBlocks(); track $index) {
+        <div class="section-block" [style.border-color]="block.runnerId ? getRunnerColor(block.runnerId) : '#ddd'"
+          [class.selected-block]="selectedBlock === block" (click)="onBlockClick(block)">
+          <div class="block-header">
+            {{ block.runnerId ? getRunnerName(block.runnerId) : 'Üres' }} – {{ block.totalKm | number:'1.1-1' }} km
+          </div>
+          @for (section of block.sections; track section.id) {
+          <div class="section-row" cdkDropList #sectionDrop="cdkDropList" [cdkDropListData]="section"
+            [class.has-runner]="assignments.has(section.id)"
+            [class.highlight]="selectedRunner && !assignments.has(section.id)"
+            (cdkDropListDropped)="onDrop($event, section)"
+            (click)="onSectionClick(section)">
+
+            <div class="section-order">{{ section.order }}</div>
+            <div class="section-info">
+              <div class="section-name">{{ section.name }}</div>
+              <div class="section-distance">{{ section.distance }} km</div>
+              <div class="section-cumulative">Össz: {{ getCumulativeKm(section.order) | number:'1.1-1' }} km</div>
+              <div class="section-time">Idő: {{ getCumulativeTime(section.order) }}</div>
+              <div class="section-absolutetime">Rajt: {{ getCumulativeTimeAbsolute(section.order) }}</div>
+            </div>
+
+            @if (assignments.get(section.id); as assignment) {
+            <div class="assignment" [style.background-color]="getRunnerColor(assignment.runnerId)">
+              <span class="assigned-runner">{{ getRunnerName(assignment.runnerId) }}</span>
+              <input type="text" class="pace-input" [value]="formatPace(assignment.customPace)"
+                (change)="updateCustomPace(section.id, parsePace($any($event.target).value))"
+                (click)="$event.stopPropagation()">
+              <button class="remove-btn" (click)="removeAssignment(section.id); $event.stopPropagation()">
+                <mat-icon>close</mat-icon>
+              </button>
+            </div>
+            } @else {
+            <div class="empty-slot">
+              @if (selectedRunner) {
+              Kattints a hozzárendeléshez
+              } @else {
+              Húzz ide futót
+              }
+            </div>
+            }
+          </div>
+          }
+        </div>
+        }
+      </div>
+    </div>
+  </div>

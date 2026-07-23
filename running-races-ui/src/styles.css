@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Atma:wght@300;400;500;600;700&display=swap');
+
+* {
+  font-family: 'Atma', sans-serif;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #fffffe;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-sizing: border-box;
+  min-height: calc(100vh - 90px);
+}
+
+button[mat-raised-button] {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+button[mat-raised-button][color="primary"] {
+  background-color: #078080;
+  color: #fffffe;
+  border: none;
+}
+
+button[mat-raised-button][color="primary"]:hover {
+  background-color: #065f5f;
+}
+
+button[mat-raised-button][color="warn"] {
+  background-color: #f45d48;
+  color: #fffffe;
+  border: none;
+  margin: 2px;
+}
+
+button[mat-raised-button][color="warn"]:hover {
+  background-color: #e04a38;
+}
+
+button[mat-button] {
+  background-color: #232323;
+  color: #fffffe;
+}
+
+
+button[mat-button]:hover {
+  background-color: #3a3a3a;
+}
+
+button[mat-raised-button] mat-icon,
+button[mat-button] mat-icon {
+  vertical-align: middle;
+  margin-right: 4px;
+}
+
+button[mat-raised-button]:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+
+button[mat-raised-button]:disabled,
+button[mat-raised-button]:disabled:hover {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+
+button[mat-raised-button][color="login"] {
+  background-color:  #fffffe;
+  color: #232323;
+  border: none;
+}
+
+button[mat-raised-button][color="login"]:hover {
+  background-color: #d5e8e8;
+}

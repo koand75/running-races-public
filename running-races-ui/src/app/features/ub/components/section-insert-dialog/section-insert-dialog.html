@@ -1,0 +1,33 @@
+<h2 mat-dialog-title>{{ data.section ? 'Szakasz szerkesztése' : 'Új szakasz beszúrása' }}</h2>
+<mat-dialog-content>
+
+  <mat-form-field>
+    <mat-label>Táv (km)</mat-label>
+    <input matInput type="number" [(ngModel)]="newSection.distance">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Kezdőpont</mat-label>
+    <input matInput [formControl]="startWayPointControl" [matAutocomplete]="startAuto">
+    <mat-autocomplete #startAuto="matAutocomplete" [displayWith]="displayWayPoint"
+      (optionSelected)="newSection.startWayPointId = $event.option.value.id">
+      @for (wp of filteredStartWayPoints$ | async; track wp.id) {
+      <mat-option [value]="wp">{{ wp.name }}</mat-option>
+      }
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Végpont</mat-label>
+    <input matInput [formControl]="endWayPointControl" [matAutocomplete]="endAuto">
+    <mat-autocomplete #endAuto="matAutocomplete" [displayWith]="displayWayPoint"
+      (optionSelected)="newSection.endWayPointId = $event.option.value.id">
+      @for (wp of filteredEndWayPoints$ | async; track wp.id) {
+      <mat-option [value]="wp">{{ wp.name }}</mat-option>
+      }
+    </mat-autocomplete>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-stroked-button (click)="cancel()">Mégsem</button>
+  <button mat-raised-button color="primary" (click)="save()">Mentés</button>
+</mat-dialog-actions>

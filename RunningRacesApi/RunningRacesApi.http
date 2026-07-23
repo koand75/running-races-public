@@ -1,0 +1,7 @@
+@RunningRacesApi_HostAddress = https://localhost:7156
+
+### Get all races
+GET {{RunningRacesApi_HostAddress}}/api/races
+Accept: application/json
+
+###

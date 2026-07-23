@@ -1,0 +1,124 @@
+.admin-header {
+    background: #065f5f;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  .header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+  }
+  
+  /* ==================== Brand / Logo ==================== */
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  
+  .brand:hover {
+    opacity: 0.8;
+  }
+  
+  .logo {
+    font-size: 28px;
+  }
+  
+  .brand-text {
+    color: #fffffe;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  
+  /* ==================== Right side ==================== */
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  /* ==================== User info ==================== */
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #fffffe;
+    font-size: 14px;
+    padding: 6px 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+  }
+  
+  .user-icon {
+    font-size: 18px;
+  }
+  
+  .user-name {
+    font-weight: 500;
+  }
+  
+  /* ==================== Logout button ==================== */
+  .btn-logout {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: #f45d48;
+    color: #fffffe;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .btn-logout:hover {
+    background: #e04a38;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .btn-logout:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .logout-icon {
+    font-size: 16px;
+  }
+  
+  /* ==================== Responsive ==================== */
+  @media (max-width: 768px) {
+    .brand-text {
+      display: none;
+    }
+  
+    .user-name {
+      display: none;
+    }
+  
+    .btn-logout span:not(.logout-icon) {
+      display: none;
+    }
+  }
+  
+  .logo-img {
+    height: 50px;
+    width: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    object-fit: contain;
+    background: white;
+    padding: 4px;
+  }

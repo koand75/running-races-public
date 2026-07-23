@@ -1,0 +1,27 @@
+mat-sidenav-container {
+    height: 100vh;
+}
+
+mat-sidenav {
+    width: 250px;
+    background: #fffffe;
+    padding: 16px 0;
+}
+
+mat-sidenav mat-icon {
+    color: #078080;
+}
+
+.submenu-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px 4px;
+    font-weight: 600;
+    color: #078080;
+    font-size: 14px;
+}
+
+.submenu-item {
+    padding-left: 32px !important;
+}

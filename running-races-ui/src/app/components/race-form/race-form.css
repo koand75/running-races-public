@@ -1,0 +1,101 @@
+
+
+.form-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+  }
+  
+  h1 {
+    color: #232323;
+    margin-bottom: 30px;
+  }
+  
+  .error {
+    color: red;
+    padding: 10px;
+    background: #fffffe;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+  
+  form {
+    background: #fffffe;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    max-width: 600px;
+    margin: 0 auto;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #232323;
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+  
+  input:focus {
+    outline: none;
+    border-color: #078080;
+  }
+  
+  .error-text {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+    display: block;
+  }
+  
+  .form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 30px;
+  }
+  
+  button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  button[type="submit"] {
+    background-color: #078080;
+    color: #fffffe;
+    flex: 1;
+  }
+  
+  button[type="submit"]:hover:not(:disabled) {
+    background-color: #065f5f;
+  }
+  
+  button[type="submit"]:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  button[type="button"] {
+    background-color: #f45d48;
+    color: #fffffe;
+  }
+  
+  button[type="button"]:hover {
+    background-color: #e04a38;
+  }

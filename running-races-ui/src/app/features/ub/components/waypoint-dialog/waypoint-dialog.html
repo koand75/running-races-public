@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>{{ data ? 'Váltópont szerkesztése' : 'Új váltópont' }}</h2>
+<mat-dialog-content>
+    <mat-form-field>
+        <mat-label>Név</mat-label>
+        <input matInput [(ngModel)]="waypoint.name">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Lat</mat-label>
+        <input matInput type="number" [(ngModel)]="waypoint.lat">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Lng</mat-label>
+        <input matInput type="number" [(ngModel)]="waypoint.lng">
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button (click)="cancel()">Mégsem</button>
+    <button mat-raised-button color="primary" (click)="save()">Mentés</button>
+</mat-dialog-actions>
