@@ -35,6 +35,13 @@ this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Deployment pipeline
 
 ---
+## [0.8.3] - 2026-07-24
+
+### Added
+- Team map view (`/ub/teams/:id/map`) with runner assignments colored by runner
+- Polyline click shows runner name popup
+- `MapService` for shared map initialization and marker creation
+
 ## [0.8.2] - 2026-07-22
 
 ### Added

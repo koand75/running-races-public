@@ -9,7 +9,7 @@
       </button>
       <button mat-stroked-button routerLink="/ub/teams">
         <mat-icon>arrow_back</mat-icon> Vissza
-      </button>            
+      </button>
     </div>
   </div>
 
@@ -43,6 +43,9 @@
     <!-- Jobb oldal: Szakaszok -->
     <div class="sections-panel">
       <h2>Szakaszok</h2>
+      <button mat-stroked-button [routerLink]="['/ub/teams', teamId, 'map']">
+        <mat-icon>map</mat-icon> Térkép
+      </button>
       <div class="sections-list">
         @for (block of getBlocks(); track $index) {
         <div class="section-block" [style.border-color]="block.runnerId ? getRunnerColor(block.runnerId) : '#ddd'"
@@ -54,8 +57,7 @@
           <div class="section-row" cdkDropList #sectionDrop="cdkDropList" [cdkDropListData]="section"
             [class.has-runner]="assignments.has(section.id)"
             [class.highlight]="selectedRunner && !assignments.has(section.id)"
-            (cdkDropListDropped)="onDrop($event, section)"
-            (click)="onSectionClick(section)">
+            (cdkDropListDropped)="onDrop($event, section)" (click)="onSectionClick(section)">
 
             <div class="section-order">{{ section.order }}</div>
             <div class="section-info">

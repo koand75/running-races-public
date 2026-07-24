@@ -36,6 +36,13 @@ ez a projekt követi a [Semantic Versioning](https://semver.org/spec/v2.0.0.html
 - Telepítési pipeline
 
 ---
+## [0.8.3] - 2026-07-24
+
+### Hozzáadva
+- Csapat térkép nézet (`/ub/teams/:id/map`) futónként színezett szakaszokkal
+- Vonalra kattintva megjelenik a futó neve
+- `MapService` a közös térkép inicializáláshoz és marker létrehozáshoz
+
 ## [0.8.2] - 2026-07-22
 
 ### Hozzáadva

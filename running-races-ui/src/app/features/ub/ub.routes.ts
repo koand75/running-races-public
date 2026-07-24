@@ -27,5 +27,8 @@ export const UB_ROUTES: Routes = [
   },
   {
     path: 'map', loadComponent: () => import('./components/map/map').then(m => m.MapComponent)
+  },
+  {
+    path: 'teams/:id/map', loadComponent: () => import('./components/team-map/team-map').then(m => m.TeamMapComponent)
   }
 ];
