@@ -1,121 +1,88 @@
-﻿using FluentAssertions;
-
+﻿using Moq;
+using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-
-using RunningRacesApi.Data;
 using RunningRacesApi.Models;
+using RunningRacesApi.Services;
 
 namespace RunningRaces.Tests.Controllers;
 
-public class WayPointControllerTests : IDisposable
+public class WayPointControllerTests
 {
-    private readonly AppDbContext _context;
+    private readonly Mock<IWayPointService> _mockService;
     private readonly WayPointController _controller;
 
     public WayPointControllerTests()
     {
-        var options = new DbContextOptionsBuilder<AppDbContext>()
-            .UseInMemoryDatabase(Guid.NewGuid().ToString())
-            .Options;
-        _context = new AppDbContext(options);
-        _controller = new WayPointController(_context);
+        _mockService = new Mock<IWayPointService>();
+        _controller = new WayPointController(_mockService.Object);
     }
 
-    public void Dispose() => _context.Dispose();
-
     [Fact]
-    public async Task GetAll_ReturnsAllWayPoints()
+    public async Task GetAll_ReturnsOk()
     {
-        // Arrange
-        _context.WayPoints.AddRange(
-            new WayPoint { Name = "Balatonfüred", Lat = 46.95, Lng = 17.89 },
-            new WayPoint { Name = "Tihany", Lat = 46.91, Lng = 17.88 }
-        );
-        await _context.SaveChangesAsync();
+        var pagedResult = new PagedResult<WayPoint>
+        {
+            Items = new List<WayPoint> { new WayPoint { Name = "Balatonfüred" } },
+            TotalCount = 1
+        };
+        _mockService.Setup(s => s.GetAllAsync(It.IsAny<BaseSearchModel>()))
+            .ReturnsAsync(pagedResult);
 
-        // Act
         var result = await _controller.GetAll();
 
-        // Assert
         var ok = result.Result as OkObjectResult;
         ok.Should().NotBeNull();
-        var list = ok!.Value as IEnumerable<WayPoint>;
-        list.Should().HaveCount(2);
     }
 
     [Fact]
-    public async Task Create_AddsWayPoint_ReturnsCreated()
+    public async Task Create_ReturnsCreated()
     {
-        // Arrange
-        var wp = new WayPoint { Name = "Keszthely", Lat = 46.76, Lng = 17.24 };
+        var wp = new WayPoint { Id = 1, Name = "Keszthely" };
+        _mockService.Setup(s => s.CreateAsync(It.IsAny<WayPoint>())).ReturnsAsync(wp);
 
-        // Act
         var result = await _controller.Create(wp);
 
-        // Assert
         result.Result.Should().BeOfType<CreatedAtActionResult>();
-        _context.WayPoints.Should().HaveCount(1);
     }
 
     [Fact]
     public async Task Update_ExistingWayPoint_ReturnsOk()
     {
-        // Arrange
-        var wp = new WayPoint { Name = "Siófok", Lat = 46.90, Lng = 18.05 };
-        _context.WayPoints.Add(wp);
-        await _context.SaveChangesAsync();
+        var wp = new WayPoint { Id = 1, Name = "Siófok Updated" };
+        _mockService.Setup(s => s.UpdateAsync(1, It.IsAny<WayPoint>())).ReturnsAsync(wp);
 
-        // Act
-        var result = await _controller.Update(wp.Id, new WayPoint { Name = "Siófok Updated", Lat = 46.91, Lng = 18.06 });
+        var result = await _controller.Update(1, wp);
 
-        // Assert
         result.Should().BeOfType<OkObjectResult>();
-        _context.WayPoints.First().Name.Should().Be("Siófok Updated");
     }
 
     [Fact]
     public async Task Update_NonExistingWayPoint_ReturnsNotFound()
     {
-        // Act
-        var result = await _controller.Update(999, new WayPoint { Name = "X" });
+        _mockService.Setup(s => s.UpdateAsync(999, It.IsAny<WayPoint>())).ReturnsAsync((WayPoint?)null);
 
-        // Assert
+        var result = await _controller.Update(999, new WayPoint());
+
         result.Should().BeOfType<NotFoundResult>();
     }
 
     [Fact]
-    public async Task Delete_WayPointNotInUse_ReturnsNoContent()
+    public async Task Delete_NotInUse_ReturnsNoContent()
     {
-        // Arrange
-        var wp = new WayPoint { Name = "Zamárdi" };
-        _context.WayPoints.Add(wp);
-        await _context.SaveChangesAsync();
+        _mockService.Setup(s => s.DeleteAsync(1)).ReturnsAsync(true);
 
-        // Act
-        var result = await _controller.Delete(wp.Id);
+        var result = await _controller.Delete(1);
 
-        // Assert
         result.Should().BeOfType<NoContentResult>();
-        _context.WayPoints.Should().BeEmpty();
     }
 
     [Fact]
-    public async Task Delete_WayPointInUse_ReturnsBadRequest()
+    public async Task Delete_InUse_ReturnsBadRequest()
     {
-        // Arrange
-        var wp = new WayPoint { Name = "Balatonalmádi" };
-        _context.WayPoints.Add(wp);
-        await _context.SaveChangesAsync();
+        _mockService.Setup(s => s.DeleteAsync(1)).ReturnsAsync(false);
 
-        var section = new Section { Name = "Test", Order = 1, Distance = 5, StartWayPointId = wp.Id };
-        _context.Sections.Add(section);
-        await _context.SaveChangesAsync();
+        var result = await _controller.Delete(1);
 
-        // Act
-        var result = await _controller.Delete(wp.Id);
-
-        // Assert
         result.Should().BeOfType<BadRequestObjectResult>();
     }
 }

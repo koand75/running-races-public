@@ -35,6 +35,15 @@ this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Deployment pipeline
 
 ---
+## [0.8.4] - 2026-08-18
+
+### Changed
+- WayPoint refactored to 3-layer architecture (Controller → Service → Repository)
+- `BaseSearchModel` introduced for shared search/pagination parameters
+- `RaceSearchModel` now inherits from `BaseSearchModel`
+- API URLs centralized using Angular environment files
+- Docker support added (Dockerfile, docker-compose, nginx.conf)
+
 ## [0.8.3] - 2026-07-24
 
 ### Added

@@ -17,15 +17,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddTransient<DatabaseSeeder>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite("Data Source=races.db"));
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IRaceRepository, RaceRepository>();
+builder.Services.AddScoped<IWayPointRepository, WayPointRepository>();
 builder.Services.AddScoped<IRaceService, RaceService>();
 builder.Services.AddScoped<ISectionService, SectionService>();
 builder.Services.AddScoped<ISectionImportService, SectionImportService>();
 builder.Services.AddScoped<ITeamService, TeamService>();
 builder.Services.AddScoped<IRunnerService, RunnerService>();
 builder.Services.AddScoped<IRunnerSectionService, RunnerSectionService>();
+builder.Services.AddScoped<IWayPointRepository, WayPointRepository>();
+builder.Services.AddScoped<IWayPointService, WayPointService>();
 builder.Services.AddSingleton<ITokenBlacklistService, TokenBlacklistService>();
 
 
@@ -103,13 +106,12 @@ builder.Services.AddSwaggerGen(options =>
         { jwtSecurityScheme, Array.Empty<string>() }
     });
 
-    // XML kommentek beolvasása
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     options.IncludeXmlComments(xmlPath);
 });
 
-// CORS engedélyezése Angular számára
+// CORS enable for Angular 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngular", policy =>
@@ -125,9 +127,11 @@ var app = builder.Build();
 // Seed test user on startup
 using (var scope = app.Services.CreateScope())
 {
-    var services = scope.ServiceProvider;
-    var seeder = services.GetRequiredService<DatabaseSeeder>();
-    await seeder.SeedRolesAndUsers(services);
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate(); 
+
+    var seeder = scope.ServiceProvider.GetRequiredService<DatabaseSeeder>();
+    await seeder.SeedRolesAndUsers(scope.ServiceProvider);
 }
 
 // Configure the HTTP request pipeline.
@@ -140,7 +144,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowAngular");
 
 app.UseMiddleware<JwtBlacklistMiddleware>();
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 

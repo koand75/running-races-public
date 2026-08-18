@@ -36,6 +36,15 @@ ez a projekt követi a [Semantic Versioning](https://semver.org/spec/v2.0.0.html
 - Telepítési pipeline
 
 ---
+## [0.8.4] - 2026-08-18
+
+### Változott
+- WayPoint 3-rétegű architektúrára refaktorálva (Controller → Service → Repository)
+- `BaseSearchModel` bevezetve a közös keresési/lapozási paraméterekhez
+- `RaceSearchModel` mostantól a `BaseSearchModel`-ből örököl
+- API URL-ek egységesítve Angular environment fájlokkal
+- Docker támogatás hozzáadva (Dockerfile, docker-compose, nginx.conf)
+
 ## [0.8.3] - 2026-07-24
 
 ### Hozzáadva
