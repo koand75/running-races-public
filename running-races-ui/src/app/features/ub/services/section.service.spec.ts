@@ -3,12 +3,13 @@ import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { SectionService } from './section.service';
 import { Section } from '../models/ub.models';
+import { environment } from '../../../../../src/environments/environment';
 
 describe('SectionService', () => {
     let service: SectionService;
     let httpMock: HttpTestingController;
 
-    const apiUrl = 'https://localhost:7156/api/section';
+    const apiUrl = `${environment.apiUrl}/section`;
     const mockSection: Section = { id: 1, name: 'S1', distance: 5, order: 1, startWayPointId: 1, endWayPointId: 2 };
 
     beforeEach(() => {

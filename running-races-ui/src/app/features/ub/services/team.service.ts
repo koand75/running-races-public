@@ -2,13 +2,14 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Team } from '../models/ub.models';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TeamService {
   private http = inject(HttpClient);
-  private apiUrl = 'https://localhost:7156/api/team';
+  private apiUrl = `${environment.apiUrl}/team`;
 
   getAll(): Observable<Team[]> {
     return this.http.get<Team[]>(this.apiUrl);

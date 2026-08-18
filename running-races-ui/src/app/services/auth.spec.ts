@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
 import { AuthService } from './auth';
+import { environment } from '../../../src/environments/environment';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -48,7 +49,7 @@ describe('AuthService', () => {
     });
 
     // Mock HTTP response
-    const req = httpMock.expectOne('https://localhost:7156/api/auth/login');
+    const req = httpMock.expectOne(`${environment.apiUrl}/auth/login`);
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual({ email, password });
     req.flush(mockResponse);
@@ -62,7 +63,7 @@ describe('AuthService', () => {
     service.logout();
     
     // Mock HTTP POST response
-    const req = httpMock.expectOne('https://localhost:7156/api/auth/logout');
+    const req = httpMock.expectOne(`${environment.apiUrl}/auth/logout`);
     expect(req.request.method).toBe('POST');
     req.flush({ message: 'Successfully logged out' });
     

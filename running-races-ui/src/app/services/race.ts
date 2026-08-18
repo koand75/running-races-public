@@ -4,13 +4,14 @@ import { RaceSearchModel } from '../models/race-search.model';
 import { Observable } from 'rxjs';
 import { Race } from '../models/race.model';
 import { PagedResult } from '../models/paged-result.model';
+import { environment } from '../../../src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RaceService {
   private http = inject(HttpClient);
-  private apiUrl = 'https://localhost:7156/api/races';
+  private apiUrl = `${environment.apiUrl}/races`;
 
   getRaces(endpoint: 'public' | 'admin', searchModel: RaceSearchModel): Observable<PagedResult<Race>> {
 

@@ -3,12 +3,13 @@ import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TeamService } from './team.service';
 import { Team } from '../models/ub.models';
+import { environment } from '../../../../environments/environment';
 
 describe('TeamService', () => {
     let service: TeamService;
     let httpMock: HttpTestingController;
 
-    const apiUrl = 'https://localhost:7156/api/team';
+    const apiUrl = `${environment.apiUrl}/team`;
     const mockTeam: Team = { id: 1, name: 'Teszt Csapat', year: 2025 };
 
     beforeEach(() => {

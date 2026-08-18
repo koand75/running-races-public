@@ -2,13 +2,14 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Section } from '../models/ub.models';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SectionService {
   private http = inject(HttpClient); 
-  private apiUrl = 'https://localhost:7156/api/section';
+  private apiUrl = `${environment.apiUrl}/section`;
 
   getAll(): Observable<Section[]> {
     return this.http.get<Section[]>(this.apiUrl);
@@ -33,7 +34,7 @@ export class SectionService {
   importCsv(file: File): Observable<{ imported: number }> {
     const formData = new FormData();
     formData.append('file', file);
-    return this.http.post<{ imported: number }>('api/section-import', formData);
+    return this.http.post<{ imported: number }>('${environment.apiUrl}/section-import', formData);
   }
 
   insertAfter(afterOrder: number, section: Section): Observable<Section> {

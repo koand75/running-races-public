@@ -3,13 +3,12 @@ import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { RunnerSectionService } from './runner-section.service';
 import { RunnerSection } from '../models/ub.models';
+import { environment } from '../../../../../src/environments/environment'
 
 describe('RunnerSectionService', () => {
     let service: RunnerSectionService;
     let httpMock: HttpTestingController;
-
-    const baseUrl = 'https://localhost:7156/api';
-
+   
     beforeEach(() => {
         TestBed.configureTestingModule({
             providers: [provideHttpClient(), provideHttpClientTesting()]
@@ -29,7 +28,7 @@ describe('RunnerSectionService', () => {
             { id: 1, sectionId: 1, runnerId: 1, customPace: 360 }
         ];
         service.getByTeam(1).subscribe(data => expect(data).toEqual(mockData));
-        httpMock.expectOne(`${baseUrl}/team/1/assignments`).flush(mockData);
+        httpMock.expectOne(`${environment.apiUrl}/team/1/assignments`).flush(mockData);
     });
 
     it('should save all assignments', () => {
@@ -37,7 +36,7 @@ describe('RunnerSectionService', () => {
             { sectionId: 1, runnerId: 1, customPace: 360 }
         ];
         service.saveAll(1, assignments).subscribe();
-        const req = httpMock.expectOne(`${baseUrl}/team/1/assignments`);
+        const req = httpMock.expectOne(`${environment.apiUrl}/team/1/assignments`);
         expect(req.request.method).toBe('PUT');
         req.flush(null);
     });

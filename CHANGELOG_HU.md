@@ -45,6 +45,11 @@ ez a projekt követi a [Semantic Versioning](https://semver.org/spec/v2.0.0.html
 - API URL-ek egységesítve Angular environment fájlokkal
 - Docker támogatás hozzáadva (Dockerfile, docker-compose, nginx.conf)
 
+### Hozzáadva - Frontend
+- Angular environment fájlok (`environment.ts`, `environment.development.ts`)
+- Minden service API URL-je egységesítve environment konfigurációval
+- `fileReplacements` beállítva az `angular.json`-ban dev/prod váltáshoz
+
 ## [0.8.3] - 2026-07-24
 
 ### Hozzáadva

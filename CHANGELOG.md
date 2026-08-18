@@ -44,6 +44,11 @@ this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - API URLs centralized using Angular environment files
 - Docker support added (Dockerfile, docker-compose, nginx.conf)
 
+### Added - Frontend
+- Angular environment files (`environment.ts`, `environment.development.ts`)
+- All service API URLs centralized via environment configuration
+- `fileReplacements` configured in `angular.json` for dev/prod switching
+
 ## [0.8.3] - 2026-07-24
 
 ### Added
