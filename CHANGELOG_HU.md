@@ -36,6 +36,14 @@ ez a projekt követi a [Semantic Versioning](https://semver.org/spec/v2.0.0.html
 - Telepítési pipeline
 
 ---
+## [0.8.5] - 2026-08-18
+
+### Hozzáadva
+- Docker támogatás (Dockerfile a backendhez és frontendhez)
+- docker-compose.yml lokális container orchestrációhoz
+- nginx.conf Angular statikus fájlok kiszolgálásához
+
+
 ## [0.8.4] - 2026-08-18
 
 ### Változott
@@ -44,6 +52,7 @@ ez a projekt követi a [Semantic Versioning](https://semver.org/spec/v2.0.0.html
 - `RaceSearchModel` mostantól a `BaseSearchModel`-ből örököl
 - API URL-ek egységesítve Angular environment fájlokkal
 - Docker támogatás hozzáadva (Dockerfile, docker-compose, nginx.conf)
+- Automatikus adatbázis migráció container induláskor
 
 ### Hozzáadva - Frontend
 - Angular environment fájlok (`environment.ts`, `environment.development.ts`)

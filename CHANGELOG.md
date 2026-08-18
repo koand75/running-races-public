@@ -35,6 +35,13 @@ this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Deployment pipeline
 
 ---
+## [0.8.5] - 2026-08-18
+
+### Added
+- Docker support (Dockerfile for backend and frontend)
+- docker-compose.yml for local container orchestration
+- nginx.conf for Angular static file serving
+
 ## [0.8.4] - 2026-08-18
 
 ### Changed
@@ -43,6 +50,7 @@ this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - `RaceSearchModel` now inherits from `BaseSearchModel`
 - API URLs centralized using Angular environment files
 - Docker support added (Dockerfile, docker-compose, nginx.conf)
+- Automatic database migration on container startup
 
 ### Added - Frontend
 - Angular environment files (`environment.ts`, `environment.development.ts`)
