@@ -63,4 +63,20 @@ describe('SectionService', () => {
         expect(req.request.method).toBe('POST');
         req.flush(mockSection);
     });
+
+    it('should export sections as csv', () => {
+        const mockBlob = new Blob(['test'], { type: 'text/csv' });
+        service.exportCsv().subscribe(data => expect(data).toBeInstanceOf(Blob));
+        const req = httpMock.expectOne(`${environment.apiUrl}/section-export?includeId=false`);
+        expect(req.request.method).toBe('GET');
+        req.flush(mockBlob);
+    });
+
+    it('should export sections with id', () => {
+        const mockBlob = new Blob(['test'], { type: 'text/csv' });
+        service.exportCsv(true).subscribe(data => expect(data).toBeInstanceOf(Blob));
+        const req = httpMock.expectOne(`${environment.apiUrl}/section-export?includeId=true`);
+        expect(req.request.method).toBe('GET');
+        req.flush(mockBlob);
+    });
 });

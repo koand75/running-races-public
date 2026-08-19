@@ -89,4 +89,5 @@ describe('SectionList', () => {
         expect(component.pageSize).toBe(1);
         expect(component.pagedSections.length).toBe(1);
     });
+    
 });

@@ -1,9 +1,10 @@
-﻿using Xunit;
+﻿using FluentAssertions;
+
 using Moq;
-using FluentAssertions;
-using RunningRacesApi.Services;
-using RunningRacesApi.Repositories;
+
 using RunningRacesApi.Models;
+using RunningRacesApi.Repositories;
+using RunningRacesApi.Services;
 
 namespace RunningRaces.Tests.Services;
 

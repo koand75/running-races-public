@@ -35,6 +35,16 @@ this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Deployment pipeline
 
 ---
+## [0.8.6] - 2026-08-18
+
+### Added
+- CSV export for sections (`GET /api/section-export`)
+- Optional ID inclusion in export (`?includeId=true`)
+- `ICsvExportService` - generic CSV export service
+- `SectionExportDto` for flattened export data
+- Export button on section list page
+- `CsvExportServiceTests` - header, column order, null value tests
+
 ## [0.8.5] - 2026-08-18
 
 ### Added

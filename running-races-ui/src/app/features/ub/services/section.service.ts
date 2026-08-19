@@ -8,7 +8,7 @@ import { environment } from '../../../../environments/environment';
   providedIn: 'root'
 })
 export class SectionService {
-  private http = inject(HttpClient); 
+  private http = inject(HttpClient);
   private apiUrl = `${environment.apiUrl}/section`;
 
   getAll(): Observable<Section[]> {
@@ -39,5 +39,9 @@ export class SectionService {
 
   insertAfter(afterOrder: number, section: Section): Observable<Section> {
     return this.http.post<Section>(`${this.apiUrl}/insert-after/${afterOrder}`, section);
+  }
+
+  exportCsv(includeId: boolean = false): Observable<Blob> {
+    return this.http.get(`${environment.apiUrl}/section-export?includeId=${includeId}`, { responseType: 'blob' });
   }
 }

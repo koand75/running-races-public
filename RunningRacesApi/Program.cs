@@ -29,6 +29,7 @@ builder.Services.AddScoped<IRunnerService, RunnerService>();
 builder.Services.AddScoped<IRunnerSectionService, RunnerSectionService>();
 builder.Services.AddScoped<IWayPointRepository, WayPointRepository>();
 builder.Services.AddScoped<IWayPointService, WayPointService>();
+builder.Services.AddScoped<ICsvExportService, CsvExportService>();
 builder.Services.AddSingleton<ITokenBlacklistService, TokenBlacklistService>();
 
 
@@ -128,7 +129,7 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.Migrate(); 
+    db.Database.Migrate();
 
     var seeder = scope.ServiceProvider.GetRequiredService<DatabaseSeeder>();
     await seeder.SeedRolesAndUsers(scope.ServiceProvider);

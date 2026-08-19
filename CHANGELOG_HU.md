@@ -36,6 +36,16 @@ ez a projekt követi a [Semantic Versioning](https://semver.org/spec/v2.0.0.html
 - Telepítési pipeline
 
 ---
+## [0.8.6] - 2026-08-18
+
+### Hozzáadva
+- CSV export szakaszokhoz (`GET /api/section-export`)
+- Opcionális ID szerepeltetés az exportban (`?includeId=true`)
+- `ICsvExportService` - generikus CSV export service
+- `SectionExportDto` a lapított export adatokhoz
+- Export gomb a szakaszok listáján
+- `CsvExportServiceTests` - fejléc, oszlopsorrend, null érték tesztek
+
 ## [0.8.5] - 2026-08-18
 
 ### Hozzáadva

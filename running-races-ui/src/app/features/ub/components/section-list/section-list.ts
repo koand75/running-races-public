@@ -143,4 +143,15 @@ export class SectionListComponent implements OnInit {
       .filter(s => Number(s.order) <= sectionOrderNum)
       .reduce((sum, s) => sum + Number(s.distance), 0);
   }
+
+  exportCsv(includeId: boolean = false): void {
+    this.sectionService.exportCsv(includeId).subscribe(blob => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'sections.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+  }
 }
