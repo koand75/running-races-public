@@ -12,7 +12,8 @@ public interface IWayPointRepository
     /// </summary>
     Task<PagedResult<WayPoint>> GetAllAsync(BaseSearchModel? searchModel = null);
     Task<WayPoint> CreateAsync(WayPoint wayPoint);
+
+    Task<WayPoint?> GetByIdAsync(int? id);
     Task<WayPoint?> UpdateAsync(int id, WayPoint wayPoint);
     Task<bool> DeleteAsync(int id);
-
 }

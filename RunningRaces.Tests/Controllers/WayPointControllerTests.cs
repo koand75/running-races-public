@@ -28,7 +28,7 @@ public class WayPointControllerTests
         _mockService.Setup(s => s.GetAllAsync(It.IsAny<BaseSearchModel>()))
             .ReturnsAsync(pagedResult);
 
-        var result = await _controller.GetAll();
+        var result = await _controller.GetAll(null);
 
         var ok = result.Result as OkObjectResult;
         ok.Should().NotBeNull();

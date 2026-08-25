@@ -10,4 +10,6 @@ public interface ISectionService
     Task UpdateAsync(Section section);
     Task DeleteAsync(int id);
     Task<Section> InsertAfterAsync(int afterOrder, Section section);
+
+    Task ReplaceAllAsync(List<Section> sections);
 }

@@ -17,6 +17,10 @@ public class WayPointService : IWayPointService
         return await _repository.GetAllAsync(searchModel);
     }
 
+    public async Task<WayPoint> GetByIdAsync(int? id) {
+        return await _repository.GetByIdAsync(id);
+    }
+    
     public async Task<WayPoint> CreateAsync(WayPoint wayPoint)
     {
         return await _repository.CreateAsync(wayPoint);

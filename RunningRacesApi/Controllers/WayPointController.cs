@@ -16,9 +16,14 @@ public class WayPointController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<WayPoint>>> GetAll()
+    public async Task<ActionResult<IEnumerable<WayPoint>>> GetAll(int? pageSize)
     {
-        return Ok(await _service.GetAllAsync());
+        var searchModel = new BaseSearchModel
+        {
+            PageSize = pageSize.HasValue ? pageSize.Value : 10
+        };
+
+        return Ok(await _service.GetAllAsync(searchModel));
     }
 
     [HttpPost]

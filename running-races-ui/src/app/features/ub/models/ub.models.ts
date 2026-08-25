@@ -42,3 +42,29 @@ export interface RunnerSection {
   section?: Section;
   runner?: Runner;
 }
+
+export interface SectionExportDto {
+  id: number;
+  order: number;
+  distance: number;
+  startWayPointName?: string | null;
+  startLat?: number | null;
+  startLng?: number | null;
+  endWayPointName?: string | null;
+  endLat?: number | null;
+  endLng?: number | null;
+  description?: string | null;
+}
+
+export interface SectionImportPreviewDto extends SectionExportDto {
+  startWayPointStatus: WayPointMatchStatus;
+  endWayPointStatus: WayPointMatchStatus;
+  matchedStartWayPointIds: number[];
+  matchedEndWayPointIds: number[];
+}
+
+export enum WayPointMatchStatus {
+  NotFound = 2,
+  Partial = 1,
+  Exact = 0
+}

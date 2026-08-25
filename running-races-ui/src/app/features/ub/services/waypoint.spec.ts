@@ -31,7 +31,7 @@ describe('WayPoint', () => {
     ];
     const pagedResult = { items: mockData, totalCount: 1, page: 1, pageSize: 10 };
     service.getAll().subscribe(data => expect(data).toEqual(mockData));
-    httpMock.expectOne(apiUrl).flush(pagedResult);
+    httpMock.expectOne(`${apiUrl}?pageSize=1000`).flush(pagedResult);
   });
 
   it('should create a waypoint', () => {

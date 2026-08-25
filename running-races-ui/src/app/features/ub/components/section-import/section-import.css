@@ -1,0 +1,11 @@
+.status-exact {
+    color: green;
+}
+
+.status-partial {
+    color: orange;
+}
+
+.status-not-found {
+    color: red;
+}

@@ -14,7 +14,7 @@ export class WayPoint {
   private apiUrl = `${environment.apiUrl}/waypoint`;
 
   getAll(): Observable<WayPointModel[]> {
-    return this.http.get<PagedResult<WayPointModel>>(this.apiUrl).pipe(
+    return this.http.get<PagedResult<WayPointModel>>(`${this.apiUrl}?pageSize=1000`).pipe(
       map(result => result.items)
     );
   }

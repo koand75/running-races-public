@@ -1,0 +1,9 @@
+.csv-row {
+    font-weight: bold;
+    background-color: #f5f5f5;
+}
+
+tr:hover {
+    cursor: pointer;
+    background-color: #e0f7fa;
+}

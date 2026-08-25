@@ -7,8 +7,7 @@
   </div>
 
   <div class="header-actions">
-    <input type="file" #fileInput accept=".csv" (change)="onFileSelected($event)" hidden>
-    <button mat-raised-button color="primary" (click)="fileInput.click()">
+     <button mat-stroked-button routerLink="/ub/sections/import">
       <mat-icon>upload</mat-icon> CSV Import
     </button>
     <button mat-raised-button color="primary" (click)="exportCsv()">

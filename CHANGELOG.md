@@ -35,6 +35,29 @@ this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Deployment pipeline
 
 ---
+## [0.9.0] - 2026-08-25
+
+### Added
+- Section import page (`/ub/sections/import`) with two-step preview flow
+- CSV preview with WayPoint matching (Exact/Partial/NotFound status)
+- `SectionImportPreviewDto` with status and matched WayPoint IDs
+- `WayPointMatchStatus` enum (Exact, Partial, NotFound)
+- `SectionImportDialog` for WayPoint selection with autocomplete
+- `SectionImportDto` for structured import payload
+- `ICsvExportService` - generic CSV export service
+- `SectionExportDto` for flattened export data
+- CSV export for sections (`GET /api/section-export`) with optional ID
+- Export button on section list page
+- `IWayPointMatchHelper` replaced with public `Match` method in `SectionImportService`
+- `WayPointController` full CRUD with service/repository layer
+- `BaseSearchModel` for shared pagination parameters
+- `RaceSearchModel` inherits from `BaseSearchModel`
+
+### Changed
+- Section import refactored to preview + confirm flow
+- `WayPoint` service/repository layer introduced (replaced direct DbContext usage)
+- `ISectionService.ReplaceAllAsync` added for atomic section replacement
+
 ## [0.8.6] - 2026-08-18
 
 ### Added

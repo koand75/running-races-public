@@ -79,17 +79,6 @@ export class SectionListComponent implements OnInit {
     this.updatePage();
   }
 
-  onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files?.length) {
-      const file = input.files[0];
-      this.sectionService.importCsv(file).subscribe(result => {
-        alert(`${result.imported} szakasz importálva`);
-        this.loadSections();
-      });
-    }
-  }
-
   editSection(section: Section): void {
     const dialogRef = this.dialog.open(SectionInsertDialog, {
       data: { section },

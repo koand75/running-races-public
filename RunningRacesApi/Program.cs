@@ -27,7 +27,6 @@ builder.Services.AddScoped<ISectionImportService, SectionImportService>();
 builder.Services.AddScoped<ITeamService, TeamService>();
 builder.Services.AddScoped<IRunnerService, RunnerService>();
 builder.Services.AddScoped<IRunnerSectionService, RunnerSectionService>();
-builder.Services.AddScoped<IWayPointRepository, WayPointRepository>();
 builder.Services.AddScoped<IWayPointService, WayPointService>();
 builder.Services.AddScoped<ICsvExportService, CsvExportService>();
 builder.Services.AddSingleton<ITokenBlacklistService, TokenBlacklistService>();
@@ -117,7 +116,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngular", policy =>
     {
-        policy.WithOrigins("http://localhost:4200")
+        policy.WithOrigins("http://localhost:4200", "https://localhost:4200")
               .AllowAnyHeader()
               .AllowAnyMethod();
     });

@@ -36,6 +36,28 @@ ez a projekt követi a [Semantic Versioning](https://semver.org/spec/v2.0.0.html
 - Telepítési pipeline
 
 ---
+## [0.9.0] - 2026-08-25
+
+### Hozzáadva
+- Szakasz import oldal (`/ub/sections/import`) kétlépéses előnézeti folyamattal
+- CSV előnézet WayPoint azonosítással (Exact/Partial/NotFound státusz)
+- `SectionImportPreviewDto` státusszal és azonosított WayPoint ID-kkal
+- `WayPointMatchStatus` enum (Exact, Partial, NotFound)
+- `SectionImportDialog` WayPoint kiválasztáshoz autocomplete-tel
+- `SectionImportDto` strukturált import adatokhoz
+- `ICsvExportService` - generikus CSV export service
+- `SectionExportDto` lapított export adatokhoz
+- CSV export szakaszokhoz (`GET /api/section-export`) opcionális ID-val
+- Export gomb a szakaszok listáján
+- `WayPointController` teljes CRUD service/repository réteggel
+- `BaseSearchModel` közös lapozási paraméterekhez
+- `RaceSearchModel` mostantól a `BaseSearchModel`-ből örököl
+
+### Változott
+- Szakasz import átalakítva előnézet + megerősítés folyamatra
+- `WayPoint` service/repository réteg bevezetve (DbContext közvetlen használata helyett)
+- `ISectionService.ReplaceAllAsync` hozzáadva az atomikus szakasz cseréhez
+
 ## [0.8.6] - 2026-08-18
 
 ### Hozzáadva

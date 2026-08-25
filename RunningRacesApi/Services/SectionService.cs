@@ -31,6 +31,7 @@ public class SectionService : ISectionService
                     .FirstOrDefaultAsync(s => s.Id == id);
     }
 
+
     public async Task<Section> CreateAsync(Section section)
     {
         var startWp = await _context.WayPoints.FindAsync(section.StartWayPointId);
@@ -82,5 +83,11 @@ public class SectionService : ISectionService
 
         await _context.SaveChangesAsync();
         return section;
+    }
+    public async Task ReplaceAllAsync(List<Section> sections)
+    {
+        _context.Sections.RemoveRange(_context.Sections);
+        _context.Sections.AddRange(sections);
+        await _context.SaveChangesAsync();
     }
 }

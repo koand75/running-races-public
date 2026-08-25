@@ -47,6 +47,10 @@ public class WayPointRepository : IWayPointRepository
         return wayPoint;
     }
 
+    public async Task<WayPoint?> GetByIdAsync(int? id)
+    {
+        return await _context.WayPoints.FindAsync(id);
+    }
     public async Task<WayPoint?> UpdateAsync(int id, WayPoint wayPoint)
     {
         var existing = await _context.WayPoints.FindAsync(id);

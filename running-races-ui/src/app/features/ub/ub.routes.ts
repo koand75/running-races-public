@@ -30,5 +30,8 @@ export const UB_ROUTES: Routes = [
   },
   {
     path: 'teams/:id/map', loadComponent: () => import('./components/team-map/team-map').then(m => m.TeamMapComponent)
+  },
+  {
+    path: 'sections/import', loadComponent: () => import('./components/section-import/section-import').then(m => m.SectionImport)
   }
 ];
