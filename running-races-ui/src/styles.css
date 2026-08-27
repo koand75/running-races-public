@@ -1,25 +1,114 @@
 @import url('https://fonts.googleapis.com/css2?family=Atma:wght@300;400;500;600;700&display=swap');
 
+/* ==================== Reset & Base ==================== */
 * {
   font-family: 'Atma', sans-serif;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
 }
 
+/* ==================== Layout ==================== */
 .container {
   max-width: 1000px;
   margin: 0 auto;
   padding: 20px;
   background: #fffffe;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
   min-height: calc(100vh - 90px);
 }
 
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.page-header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+/* ==================== Tables ==================== */
+table {
+  width: 100%;
+}
+
+th,
+td {
+  padding: 8px;
+}
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.action-buttons button {
+  min-width: 36px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==================== Sidenav ==================== */
+mat-sidenav-container {
+  height: 100vh;
+}
+
+mat-sidenav {
+  width: 250px;
+  background: #fffffe;
+  padding: 16px 0;
+}
+
+mat-sidenav mat-icon {
+  color: #078080;
+}
+
+.submenu-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px 4px;
+  font-weight: 600;
+  color: #078080;
+  font-size: 14px;
+}
+
+.submenu-item {
+  padding-left: 32px !important;
+}
+
+/* ==================== Status indicators ==================== */
+.status-exact {
+  color: green;
+}
+
+.status-partial {
+  color: orange;
+}
+
+.status-not-found {
+  color: red;
+}
+
+/* ==================== Material Buttons ==================== */
 button[mat-raised-button] {
   padding: 5px 10px;
   border: none;
@@ -55,7 +144,6 @@ button[mat-button] {
   color: #fffffe;
 }
 
-
 button[mat-button]:hover {
   background-color: #3a3a3a;
 }
@@ -66,12 +154,6 @@ button[mat-button] mat-icon {
   margin-right: 4px;
 }
 
-button[mat-raised-button]:disabled {
-  background-color: #ccc;
-  color: #666;
-  cursor: not-allowed;
-}
-
 button[mat-raised-button]:disabled,
 button[mat-raised-button]:disabled:hover {
   background-color: #ccc;
@@ -80,11 +162,16 @@ button[mat-raised-button]:disabled:hover {
 }
 
 button[mat-raised-button][color="login"] {
-  background-color:  #fffffe;
+  background-color: #fffffe;
   color: #232323;
   border: none;
 }
 
 button[mat-raised-button][color="login"]:hover {
   background-color: #d5e8e8;
+}
+
+/* ==================== Info button ==================== */
+.info-btn {
+  color: #078080;
 }
