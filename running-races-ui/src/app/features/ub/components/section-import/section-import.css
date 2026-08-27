@@ -9,3 +9,10 @@
 .status-not-found {
     color: red;
 }
+
+.header-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 16px;
+}

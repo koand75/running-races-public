@@ -11,6 +11,9 @@
         <button mat-raised-button color="primary" [disabled]="!canImport()" (click)="executeImport()">
             <mat-icon>save</mat-icon> Importálás
         </button>
+        <a mat-stroked-button href="/samples/sampleSections.csv" download>
+            <mat-icon>download</mat-icon> Mintafájl letöltése
+        </a>
 
     </div>
     @if (previewResult) {

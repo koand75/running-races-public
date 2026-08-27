@@ -1,478 +1,336 @@
-# ğŸƒ Running Races 3.0 - Management Application
+# ?? Running Races - Management Application
 
-Full-stack futÃ³versenyek kezelÅ‘ alkalmazÃ¡s modern technolÃ³giÃ¡kkal. ASP.NET Core backend JWT autentikÃ¡ciÃ³val + Angular 20 standalone frontend.
+Full-stack running race management application with modern technologies. ASP.NET Core backend with JWT authentication + Angular 20 standalone frontend.
 
 ---
 
-## ğŸš€ Tech Stack
+## ?? Tech Stack
 
 ### Backend
 - **ASP.NET Core 8.0** - Web API
 - **Entity Framework Core 8.0** - ORM
-- **ASP.NET Identity** - FelhasznÃ¡lÃ³kezelÃ©s & jelszÃ³ hashing
+- **ASP.NET Identity** - User management & password hashing
 - **SQLite** - Database (Development)
-- **JWT Bearer Authentication** - BiztonsÃ¡g
-- **Swagger/OpenAPI** - API dokumentÃ¡ciÃ³
+- **JWT Bearer Authentication** - Security
+- **Swagger/OpenAPI** - API documentation
 - **xUnit 2.6.5** - Testing framework
 - **Moq 4.20.70** - Mocking library
 - **FluentAssertions 6.12.0** - Readable assertions
 
 ### Frontend
-- **Angular 20.3** - SPA Framework (Standalone Components)
+- **Angular 20** - SPA Framework (Standalone Components)
 - **TypeScript 5.9** - Type safety
 - **RxJS 7.8** - Reactive programming
-- **Angular Material 20.2** - UI Components
+- **Angular Material 20** - UI Components
+- **Angular CDK** - Drag & drop
+- **Leaflet** - Interactive maps
 - **Angular Router** - Routing + Guards
 - **jwt-decode** - Token parsing
 - **Atma Font** - Custom typography
 
 ---
 
-## ğŸ“‚ Projekt StruktÃºra
+## ?? Project Structure
 
 ```
 RunningRaces/
-â”œâ”€â”€ RunningRacesApi/                  # ğŸ”™ Backend API
-â”‚   â”œâ”€â”€ Controllers/
-â”‚   â”‚   â”œâ”€â”€ RacesController.cs        # CRUD + keresÃ©s/szÅ±rÃ©s
-â”‚   â”‚   â””â”€â”€ AuthController.cs         # JWT login/logout endpoint
-â”‚   â”‚
-â”‚   â”œâ”€â”€ Services/                     # ğŸ“‹ Ãœzleti logika rÃ©teg
-â”‚   â”‚   â”œâ”€â”€ IRaceService.cs
-â”‚   â”‚   â”œâ”€â”€ RaceService.cs            # ValidÃ¡ciÃ³ + public/admin logika
-â”‚   â”‚   â”œâ”€â”€ ITokenBlacklistService.cs
-â”‚   â”‚   â””â”€â”€ TokenBlacklistService.cs  # JWT token blacklist (logout)
-â”‚   â”‚
-â”‚   â”œâ”€â”€ Repositories/                 # ğŸ’¾ AdatelÃ©rÃ©si rÃ©teg
-â”‚   â”‚   â”œâ”€â”€ IRaceRepository.cs
-â”‚   â”‚   â””â”€â”€ RaceRepository.cs         # EF Core LINQ queries
-â”‚   â”‚
-â”‚   â”œâ”€â”€ Data/
-â”‚   â”‚   â”œâ”€â”€ AppDbContext.cs           # EF Core DbContext + seed
-â”‚   â”‚   â””â”€â”€ DatabaseSeeder.cs         # SzerepkÃ¶rÃ¶k Ã©s felhasznÃ¡lÃ³k seed
-â”‚   â”‚
-â”‚   â”œâ”€â”€ Middleware/
-â”‚   â”‚   â””â”€â”€ JwtBlacklistMiddleware.cs # Token blacklist ellenÅ‘rzÃ©s
-â”‚   â”‚
-â”‚   â”œâ”€â”€ Migrations/
-â”‚   â”‚   â”œâ”€â”€ 20251117125614_InitialCreate.cs
-â”‚   â”‚   â”œâ”€â”€ 20251117170945_AddAuditFields.cs
-â”‚   â”‚   â”œâ”€â”€ 20251208103052_AddIdentity.cs
-â”‚   â”‚   â”œâ”€â”€ 20260227100214_AddUltraBalatonTables.cs
-â”‚   â”‚   â”œâ”€â”€ 20260328131132_AddTeamStartTime.cs
-â”‚   â”‚   â”œâ”€â”€ 20260328131654_UpdateTeamStartTimeToDateTime.cs
-â”‚   â”‚   â”œâ”€â”€ 20260410085812_AddWayPointTable.cs
-â”‚   â”‚   â”œâ”€â”€ 20260410090229_AddWayPointsToSection.cs
-â”‚   â”‚   â””â”€â”€ 20260410123705_RemoveStartEndPointFromSection.cs
-â”‚   â”‚
-â”‚   â”œâ”€â”€ Models/
-â”‚   â”‚   â”œâ”€â”€ Race.cs                   # Domain model
-â”‚   â”‚   â”œâ”€â”€ ApplicationUser.cs        # Identity user extension
-â”‚   â”‚   â”œâ”€â”€ RaceSearchModel.cs        # DTO - keresÃ©si paramÃ©terek
-â”‚   â”‚   â””â”€â”€ DTOs/
-â”‚   â”‚       â”œâ”€â”€ LoginDto.cs
-â”‚   â”‚       â””â”€â”€ RegisterDto.cs
-â”‚   â”‚
-â”‚   â”œâ”€â”€ Properties/
-â”‚   â”‚   â””â”€â”€ launchSettings.json       # Ports: 7156 (HTTPS), 5066 (HTTP)
-â”‚   â”‚
-â”‚   â”œâ”€â”€ Program.cs                    # DI container + middleware + CORS
-â”‚   â”œâ”€â”€ appsettings.json              # JWT config + connection strings
-â”‚   â””â”€â”€ RunningRacesApi.csproj
-â”‚
-â”œâ”€â”€ RunningRacesApi.Tests/            # ğŸ§ª Unit & Integration Tests
-â”‚   â”œâ”€â”€ Controllers/
-â”‚   â”‚   â”œâ”€â”€ RacesControllerTests.cs   # 11 teszt
-â”‚   â”‚   â””â”€â”€ AuthControllerTests.cs    # 3 teszt
-â”‚   â”œâ”€â”€ Services/
-â”‚   â”‚   â””â”€â”€ RaceServiceTests.cs       # 16 teszt
-â”‚   â”œâ”€â”€ Repositories/
-â”‚   â”‚   â””â”€â”€ RaceRepositoryTests.cs    # 18 teszt
-â”‚   â””â”€â”€ RunningRacesApi.Tests.csproj
-â”‚
-â”œâ”€â”€ running-races-ui/                 # ğŸŒ Angular Frontend
-â”‚   â”œâ”€â”€ src/
-â”‚   â”‚   â”œâ”€â”€ app/
-â”‚   â”‚   â”‚   â”œâ”€â”€ components/
-â”‚   â”‚   â”‚   â”‚   â”œâ”€â”€ race-list/        # Public + Admin lista
-â”‚   â”‚   â”‚   â”‚   â”œâ”€â”€ race-form/        # Create + Edit form
-â”‚   â”‚   â”‚   â”‚   â”œâ”€â”€ login/            # JWT bejelentkezÃ©s
-â”‚   â”‚   â”‚   â”‚   â”œâ”€â”€ admin-header/     # Admin fejlÃ©c (logout)
-â”‚   â”‚   â”‚   â”‚   â”œâ”€â”€ public-header/    # Public fejlÃ©c (login gomb)
-â”‚   â”‚   â”‚   â”‚   â”œâ”€â”€ admin-layout/     # Admin oldalak layout wrappere
-â”‚   â”‚   â”‚   â”‚   â”œâ”€â”€ public-layout/    # Public oldalak layout wrappere
-â”‚   â”‚   â”‚   â”‚   â””â”€â”€ delete-confirmation-dialog/
-â”‚   â”‚   â”‚   â”‚
-â”‚   â”‚   â”‚   â”œâ”€â”€ services/
-â”‚   â”‚   â”‚   â”‚   â”œâ”€â”€ auth.ts           # JWT kezelÃ©s + localStorage
-â”‚   â”‚   â”‚   â”‚   â””â”€â”€ race.ts           # HTTP API calls
-â”‚   â”‚   â”‚   â”‚
-â”‚   â”‚   â”‚   â”œâ”€â”€ models/
-â”‚   â”‚   â”‚   â”‚   â”œâ”€â”€ race.model.ts
-â”‚   â”‚   â”‚   â”‚   â””â”€â”€ race-search.model.ts
-â”‚   â”‚   â”‚   â”‚
-â”‚   â”‚   â”‚   â”œâ”€â”€ guards/
-â”‚   â”‚   â”‚   â”‚   â””â”€â”€ admin.guard.ts    # CanActivate - JWT check
-â”‚   â”‚   â”‚   â”‚
-â”‚   â”‚   â”‚   â”œâ”€â”€ interceptors/
-â”‚   â”‚   â”‚   â”‚   â””â”€â”€ auth.interceptor.ts  # Auto Bearer token
-â”‚   â”‚   â”‚   â”‚
-â”‚   â”‚   â”‚   â”œâ”€â”€ app.ts                # Root component
-â”‚   â”‚   â”‚   â”œâ”€â”€ app.config.ts         # Providers
-â”‚   â”‚   â”‚   â””â”€â”€ app.routes.ts         # Routing config
-â”‚   â”‚   â”‚
-â”‚   â”‚   â”œâ”€â”€ main.ts
-â”‚   â”‚   â”œâ”€â”€ index.html
-â”‚   â”‚   â”œâ”€â”€ styles.css                # Global styles + Atma font
-â”‚   â”‚   â””â”€â”€ custom-theme.scss         # Material theme
-â”‚   â”‚
-â”‚   â”œâ”€â”€ angular.json
-â”‚   â”œâ”€â”€ package.json
-â”‚   â””â”€â”€ tsconfig.json
-â”‚
-â”œâ”€â”€ .gitignore
-â”œâ”€â”€ RunningRaces.sln
-â”œâ”€â”€ README.md                         # Ez a fÃ¡jl
-â””â”€â”€ CHANGELOG.md                      # VerziÃ³kezelÃ©s
+©À©¤©¤ RunningRacesApi/                  # ?? Backend API
+©¦   ©À©¤©¤ Controllers/
+©¦   ©¦   ©À©¤©¤ RacesController.cs
+©¦   ©¦   ©À©¤©¤ AuthController.cs
+©¦   ©¦   ©À©¤©¤ TeamController.cs
+©¦   ©¦   ©À©¤©¤ RunnerController.cs
+©¦   ©¦   ©À©¤©¤ SectionController.cs
+©¦   ©¦   ©À©¤©¤ SectionImportController.cs
+©¦   ©¦   ©À©¤©¤ SectionExportController.cs
+©¦   ©¦   ©À©¤©¤ RunnerSectionController.cs
+©¦   ©¦   ©¸©¤©¤ WayPointController.cs
+©¦   ©¦
+©¦   ©À©¤©¤ Services/                     # Business logic layer
+©¦   ©À©¤©¤ Repositories/                 # Data access layer
+©¦   ©À©¤©¤ Models/                       # Domain models + DTOs
+©¦   ©À©¤©¤ Data/                         # DbContext + Seeder
+©¦   ©À©¤©¤ Middleware/                   # JWT blacklist
+©¦   ©À©¤©¤ Helpers/                      # CSV export
+©¦   ©¸©¤©¤ Enums/                        # WayPointMatchStatus
+©¦
+©À©¤©¤ RunningRacesApi.Tests/            # ?? Unit Tests
+©¦
+©À©¤©¤ running-races-ui/                 # ?? Angular Frontend
+©¦   ©À©¤©¤ src/app/
+©¦   ©¦   ©À©¤©¤ components/               # Shared components
+©¦   ©¦   ©À©¤©¤ features/
+©¦   ©¦   ©¦   ©¸©¤©¤ ub/                   # UltraBalaton module
+©¦   ©¦   ©¦       ©À©¤©¤ components/
+©¦   ©¦   ©¦       ©¦   ©À©¤©¤ section-list/
+©¦   ©¦   ©¦       ©¦   ©À©¤©¤ section-import/
+©¦   ©¦   ©¦       ©¦   ©À©¤©¤ section-import-dialog/
+©¦   ©¦   ©¦       ©¦   ©À©¤©¤ team-list/
+©¦   ©¦   ©¦       ©¦   ©À©¤©¤ team-detail/
+©¦   ©¦   ©¦       ©¦   ©À©¤©¤ team-edit/
+©¦   ©¦   ©¦       ©¦   ©À©¤©¤ planner/
+©¦   ©¦   ©¦       ©¦   ©À©¤©¤ waypoints/
+©¦   ©¦   ©¦       ©¦   ©À©¤©¤ map/
+©¦   ©¦   ©¦       ©¦   ©¸©¤©¤ team-map/
+©¦   ©¦   ©¦       ©À©¤©¤ services/
+©¦   ©¦   ©¦       ©¸©¤©¤ models/
+©¦   ©¦   ©À©¤©¤ guards/
+©¦   ©¦   ©À©¤©¤ interceptors/
+©¦   ©¦   ©¸©¤©¤ services/
+©¦   ©À©¤©¤ public/
+©¦   ©¦   ©¸©¤©¤ samples/
+©¦   ©¦       ©¸©¤©¤ sampleSections.csv    # Sample import file
+©¦   ©¸©¤©¤ src/environments/             # API URL configuration
+©¦
+©À©¤©¤ Dockerfile                        # Backend Docker
+©À©¤©¤ docker-compose.yml                # Full stack orchestration
+©À©¤©¤ .gitignore
+©À©¤©¤ RunningRaces.sln
+©À©¤©¤ CHANGELOG.md
+©¸©¤©¤ CHANGELOG_HU.md
 ```
 
 ---
 
-## ğŸ—ï¸ ArchitektÃºra
+## ??? Architecture
 
 ### Backend - 3-Layer Pattern
 
 ```
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚   Controller    â”‚  â† HTTP Endpoints (ASP.NET Core)
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-         â”‚
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â–¼â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚    Service      â”‚  â† Business Logic (Validations, Rules)
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-         â”‚
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â–¼â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚   Repository    â”‚  â† Data Access (EF Core)
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-         â”‚
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â–¼â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚   DbContext     â”‚  â† Database (SQLite)
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-```
-
-### Frontend - Component-Based Architecture
-
-```
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚           Router                         â”‚
-â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
-â”‚              â”‚                           â”‚
-â”‚  /races      â”‚  /admin/*                 â”‚
-â”‚  (Public)    â”‚  (Protected)              â”‚
-â”‚              â”‚                           â”‚
-â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â–¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”               â”‚
-â”‚  â”‚  RaceListComponent    â”‚               â”‚
-â”‚  â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚               â”‚
-â”‚  â”‚  â”‚ PublicHeader     â”‚ â”‚               â”‚
-â”‚  â”‚  â”‚ AdminHeader      â”‚ â”‚               â”‚
-â”‚  â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚               â”‚
-â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜               â”‚
-â”‚              â”‚                           â”‚
-â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â–¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”               â”‚
-â”‚  â”‚  RaceService          â”‚               â”‚
-â”‚  â”‚  AuthService          â”‚               â”‚
-â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜               â”‚
-â”‚              â”‚                           â”‚
-â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â–¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”               â”‚
-â”‚  â”‚  HttpClient           â”‚               â”‚
-â”‚  â”‚  (AuthInterceptor)    â”‚               â”‚
-â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜               â”‚
-â”‚              â”‚                           â”‚
-â”‚              â–¼                           â”‚
-â”‚      Backend API (JWT)                   â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+©°©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©´
+©¦   Controller    ©¦  ¡û HTTP Endpoints
+©¸©¤©¤©¤©¤©¤©¤©¤©¤©Ğ©¤©¤©¤©¤©¤©¤©¤©¤©¼
+         ©¦
+©°©¤©¤©¤©¤©¤©¤©¤©¤¨‹©¤©¤©¤©¤©¤©¤©¤©¤©´
+©¦    Service      ©¦  ¡û Business Logic
+©¸©¤©¤©¤©¤©¤©¤©¤©¤©Ğ©¤©¤©¤©¤©¤©¤©¤©¤©¼
+         ©¦
+©°©¤©¤©¤©¤©¤©¤©¤©¤¨‹©¤©¤©¤©¤©¤©¤©¤©¤©´
+©¦   Repository    ©¦  ¡û Data Access (EF Core)
+©¸©¤©¤©¤©¤©¤©¤©¤©¤©Ğ©¤©¤©¤©¤©¤©¤©¤©¤©¼
+         ©¦
+©°©¤©¤©¤©¤©¤©¤©¤©¤¨‹©¤©¤©¤©¤©¤©¤©¤©¤©´
+©¦   DbContext     ©¦  ¡û SQLite Database
+©¸©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¼
 ```
 
 ---
 
-## ğŸ”‘ API Endpoints
+## ?? API Endpoints
 
 ### Base URL
 - **Development:** `https://localhost:7156/api`
 - **Swagger UI:** `https://localhost:7156/swagger`
 
-### Public Endpoints (No Authentication)
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `POST` | `/auth/login` | BejelentkezÃ©s â†’ JWT token |
-| `GET` | `/races/public` | **Csak aktÃ­v** versenyek (IsActive forced to true) |
-| `GET` | `/races/{id}` | Egy verseny rÃ©szletei |
-
-### Protected Endpoints (JWT Required)
+### Race Endpoints
 
 | Method | Endpoint | Role | Description |
 |--------|----------|------|-------------|
-| `POST` | `/auth/logout` | Any | KijelentkezÃ©s (token blacklist) |
-| `GET` | `/races/admin` | Any | **Ã–sszes** verseny (IsActive opcionÃ¡lis) |
-| `POST` | `/races` | Admin | Ãšj verseny lÃ©trehozÃ¡sa |
-| `PUT` | `/races/{id}` | Admin | Verseny mÃ³dosÃ­tÃ¡sa |
-| `DELETE` | `/races/{id}` | Admin | Verseny tÃ¶rlÃ©se (soft delete) |
+| `GET` | `/races/public` | Public | Active races only |
+| `GET` | `/races/admin` | Any | All races |
+| `POST` | `/races` | Admin | Create race |
+| `PUT` | `/races/{id}` | Admin | Update race |
+| `DELETE` | `/races/{id}` | Admin | Soft delete |
+| `PATCH` | `/races/{id}/restore` | Admin | Restore deleted race |
 
-**Authentication Header:**
-```
-Authorization: Bearer <JWT_TOKEN>
-```
+### UltraBalaton Endpoints
 
----
-
-## ğŸ” AutentikÃ¡ciÃ³ & JogosultsÃ¡gkezelÃ©s
-
-### Teszt FiÃ³kok
-
-| SzerepkÃ¶r | Email | JelszÃ³ | JogosultsÃ¡gok |
-|-----------|-------|--------|---------------|
-| **Admin** | admin@runningraceandi.com | Admin123! | Teljes CRUD hozzÃ¡fÃ©rÃ©s |
-| **User** | test@runningraceandi.com | Test123! | Csak olvasÃ¡si jog |
-
-### SzerepkÃ¶rÃ¶k
-
-- **Admin**: Versenyek lÃ©trehozÃ¡sa, mÃ³dosÃ­tÃ¡sa, tÃ¶rlÃ©se + inaktÃ­v versenyek elÃ©rÃ©se
-- **User**: AktÃ­v versenyek megtekintÃ©se (authentikÃ¡lt)
-- **Public**: AktÃ­v versenyek listÃ¡zÃ¡sa (nÃ©vtelen)
-
-### BiztonsÃ¡gi FunkciÃ³k
-
-- âœ… ASP.NET Identity integrÃ¡ciÃ³
-- âœ… Automatikus jelszÃ³ hashing
-- âœ… JWT token alapÃº autentikÃ¡ciÃ³
-- âœ… Token blacklist (biztonsÃ¡gos logout)
-- âœ… SzerepkÃ¶r-alapÃº jogosultsÃ¡gkezelÃ©s
-- âœ… Route guards (frontend vÃ©delem)
+| Method | Endpoint | Role | Description |
+|--------|----------|------|-------------|
+| `GET` | `/section` | Public | All sections with waypoints |
+| `POST` | `/section-import/preview` | Admin | CSV preview with waypoint matching |
+| `POST` | `/section-import` | Admin | Import sections from DTO list |
+| `GET` | `/section-export` | Auth | Export sections as CSV |
+| `GET` | `/waypoint` | Public | All waypoints |
+| `POST` | `/waypoint` | Admin | Create waypoint |
+| `PUT` | `/waypoint/{id}` | Admin | Update waypoint |
+| `DELETE` | `/waypoint/{id}` | Admin | Delete waypoint (if not in use) |
+| `GET` | `/team` | Auth | All teams |
+| `GET` | `/runner` | Auth | Runners by team |
+| `PUT` | `/team/{id}/assignments` | Auth | Save planner assignments |
 
 ---
 
-## ğŸ” KeresÃ©s & SzÅ±rÃ©s
+## ?? Authentication & Authorization
 
-### Query Parameters
+### Test Accounts
 
-```typescript
-{
-  searchTerm?: string;      // "budapest", "maraton", etc.
-  searchField?: string;     // "name" | "location" | "all"
-  sortBy?: string;          // "name" | "date" | "location" | "distance"
-  sortDirection?: string;   // "asc" | "desc"
-  isActive?: boolean;       // true | false | undefined (admin only)
-}
-```
+| Role | Email | Password | Permissions |
+|------|-------|----------|-------------|
+| **Admin** | admin@runningraceandi.com | Admin123! | Full CRUD access |
+| **User** | test@runningraceandi.com | Test123! | Read-only |
 
-### PÃ©lda LekÃ©rdezÃ©sek
+### Security Features
 
-```http
-# Public - AktÃ­v versenyek Budapesten, dÃ¡tum szerint
-GET /api/races/public?searchTerm=budapest&searchField=location&sortBy=date
-
-# Admin - InaktÃ­v versenyek
-GET /api/races/admin?isActive=false
-
-# Admin - Ã–sszes verseny nÃ©v szerint rendezve
-GET /api/races/admin?sortBy=name&sortDirection=desc
-```
+- ? ASP.NET Identity integration
+- ? Automatic password hashing
+- ? JWT token authentication
+- ? Token blacklist (secure logout)
+- ? Role-based authorization
+- ? Route guards (frontend protection)
+- ? Auth interceptor (auto Bearer token)
 
 ---
 
-## ğŸ“Š AdatbÃ¡zis
+## ??? UltraBalaton Module
 
-### Race TÃ¡bla
+The UB module manages team-based ultra marathon planning:
 
-| MezÅ‘ | TÃ­pus | Nullable | LeÃ­rÃ¡s |
-|------|-------|----------|--------|
-| `Id` | `Guid` | âŒ | Primary Key |
-| `Name` | `string` | âŒ | Verseny neve |
-| `Date` | `DateTime` | âŒ | Verseny dÃ¡tuma |
-| `Location` | `string` | âŒ | HelyszÃ­n vÃ¡rosa |
-| `Distance` | `double` | âŒ | TÃ¡volsÃ¡g (km) |
-| `IsActive` | `bool` | âŒ | Soft delete flag (default: true) |
-| `CreatedAt` | `DateTime` | âŒ | LÃ©trehozÃ¡s idÅ‘pontja (UTC) |
-| `ModifiedAt` | `DateTime` | âœ… | MÃ³dosÃ­tÃ¡s idÅ‘pontja |
-
-### Seed Data (4 verseny)
-
-```
-1. Budapest Marathon        - 2025.10.05 - 42.2 km
-2. Balaton Supermarathon    - 2025.07.12 - 195 km
-3. SPAR Budapest Half       - 2025.09.14 - 21.1 km
-4. Telekom VivicittÃ¡        - 2025.04.06 - 10 km
-```
+- **Sections** ¨C 58 race sections with waypoints and distances
+- **Waypoints** ¨C GPS coordinates for each transition point
+- **Teams** ¨C Teams with start time
+- **Runners** ¨C Team members with base pace
+- **Planner** ¨C Drag & drop runner-section assignment
+- **Map** ¨C Interactive Leaflet map with section routes
+- **Team Map** ¨C Runner assignments visualized per team
+- **Import/Export** ¨C CSV import with waypoint matching preview
 
 ---
 
-## ğŸ› ï¸ FejlesztÃ©s
+## ??? Development Setup
 
-### ElÅ‘feltÃ©telek
+### Prerequisites
 
-- **.NET 8 SDK** - [LetÃ¶ltÃ©s](https://dotnet.microsoft.com/download)
-- **Node.js 18+** - [LetÃ¶ltÃ©s](https://nodejs.org/)
+- **.NET 8 SDK** - [Download](https://dotnet.microsoft.com/download)
+- **Node.js 20+** - [Download](https://nodejs.org/)
 - **Angular CLI 20+** - `npm install -g @angular/cli`
-- **Visual Studio 2022** vagy **VS Code**
-- **Git**
+- **Docker** (optional) - [Download](https://www.docker.com/)
 
-### ğŸš€ Backend IndÃ­tÃ¡s
+### Backend Setup
 
 ```bash
-# 1. Navigate to backend
 cd RunningRacesApi
-
-# 2. Restore packages
 dotnet restore
-
-# 3. Database migration (SQLite)
 dotnet ef database update
-
-# 4. Run API
 dotnet run
-
-# âœ… API elÃ©rhetÅ‘: https://localhost:7156
-# âœ… Swagger UI: https://localhost:7156/swagger
+# API: https://localhost:7156
+# Swagger: https://localhost:7156/swagger
 ```
 
-### ğŸŒ Frontend IndÃ­tÃ¡s
+### Frontend Setup
 
 ```bash
-# 1. Navigate to frontend
 cd running-races-ui
-
-# 2. Install dependencies
 npm install
-
-# 3. Start dev server
 ng serve
-
-# âœ… App elÃ©rhetÅ‘: http://localhost:4200
+# App: http://localhost:4200
 ```
 
-### ğŸ§ª Tesztek FuttatÃ¡sa
+### Docker Setup
 
-#### Backend Tests (48 teszt)
+```bash
+# Build and start all services
+docker-compose up --build
+
+# Backend: http://localhost:7156
+# Frontend: http://localhost:4200
+```
+
+---
+
+## ?? Tests
+
+### Backend Tests
+
 ```bash
 cd RunningRacesApi.Tests
 dotnet test
-
-# Verbose output
-dotnet test --logger "console;verbosity=detailed"
 ```
 
-**Teszt lefedettsÃ©g:**
-| RÃ©teg | Tesztek | StÃ¡tusz |
-|-------|---------|---------|
-| Repository | 18 | âœ… |
-| Service | 16 | âœ… |
-| Controller | 11 | âœ… |
-| Auth | 3 | âœ… |
+| Layer | Tests | Status |
+|-------|-------|--------|
+| Repository | 18 | ? |
+| Service | 16 | ? |
+| Controller | 17 | ? |
+| Auth | 3 | ? |
 
-#### Frontend Tests
+### Frontend Tests
+
 ```bash
 cd running-races-ui
-ng test
-
-# Single run (CI/CD)
-ng test --watch=false --code-coverage
+ng test --watch=false
 ```
 
-**Teszt lefedettsÃ©g:**
-| RÃ©teg | Tesztek | StÃ¡tusz |
-|-------|---------|---------|
-| AuthService | 6 | âœ… |
-| Components | - | ğŸ”„ Tervezett |
+| Layer | Tests | Status |
+|-------|-------|--------|
+| Services | 30+ | ? |
+| Components | 60+ | ? |
+| Guards | 4 | ? |
 
 ---
 
-## ğŸ“ ImplementÃ¡lt FunkciÃ³k
+## ? Implemented Features
 
-### âœ… Backend
-- 3-layer architektÃºra (Controller â†’ Service â†’ Repository)
-- ASP.NET Identity felhasznÃ¡lÃ³kezelÃ©s
-- JWT autentikÃ¡ciÃ³ token blacklist-tel
-- SzerepkÃ¶r-alapÃº jogosultsÃ¡gkezelÃ©s (Admin/User)
-- CRUD mÅ±veletek versenyekhez
-- KeresÃ©s, szÅ±rÃ©s, rendezÃ©s
-- Soft delete (IsActive flag)
-- Public/Admin endpoint szÃ©tvÃ¡lasztÃ¡s
-- Swagger API dokumentÃ¡ciÃ³
-- Unit tesztek (48 teszt)
-
-### âœ… Frontend
-- Angular 20 Standalone Components
-- JWT interceptor (auto Bearer token)
-- Route guards (admin vÃ©delem)
-- SzerepkÃ¶r-alapÃº UI (feltÃ©teles megjelenÃ­tÃ©s)
-- Material Dialog (tÃ¶rlÃ©s megerÅ‘sÃ­tÃ©s)
-- ReszponzÃ­v design
-- AuthService tesztek
-
-### ğŸ”„ Tervezett
-- E2E tesztek (Cypress/Playwright)
-- CI/CD pipeline (GitHub Actions)
+### Backend
+- 3-layer architecture (Controller ¡ú Service ¡ú Repository)
+- ASP.NET Identity user management
+- JWT authentication with token blacklist
+- Role-based authorization (Admin/User)
+- CRUD for races, sections, teams, runners, waypoints
+- CSV import with waypoint matching (Exact/Partial/NotFound)
+- CSV export for sections
+- Generic `CsvExportService`
+- `BaseSearchModel` for shared pagination
+- Soft delete + restore for races
 - Docker support
-- Refresh tokens
-- Email notifications
-- Structured logging (Serilog)
+
+### Frontend
+- Angular 20 Standalone Components
+- UltraBalaton module (sections, teams, planner, map)
+- Interactive Leaflet maps (global + team-specific)
+- Drag & drop planner with block swapping
+- Section import with two-step preview flow
+- CSV export with optional ID
+- Environment-based API URL configuration
+- MatSidenav hamburger menu
+- Role-based UI
+- 90+ unit tests
 
 ---
 
-## ğŸ› Ismert LimitÃ¡ciÃ³k
+## ?? Known Limitations
 
-### FejlesztÅ‘i KÃ¶rnyezet
-- âš ï¸ JWT secret az appsettings.json-ben placeholder Ã©rtÃ©k â€” **nyilvÃ¡nosan elÃ©rhetÅ‘ szerverre telepÃ­tÃ©s elÅ‘tt cserÃ©ld le sajÃ¡t, egyedi, min. 32 karakteres kulcsra** (env variable vagy user secrets ajÃ¡nlott, ne kerÃ¼ljÃ¶n repÃ³ba)
-- âš ï¸ CORS nyitva localhost:4200-ra
-- âš ï¸ SQLite (production: SQL Server/PostgreSQL)
-
-### Technikai Debt
-- âŒ Nincs refresh token mechanizmus
-- âŒ Nincs rate limiting
-- âŒ Nincs Error Handling Middleware
-- âŒ Frontend komponens tesztek hiÃ¡nyoznak
-- âŒ JWT token `localStorage`-ban tÃ¡rolva (XSS-nek kitett; HttpOnly cookie lenne biztonsÃ¡gosabb)
+- JWT secret is a placeholder ¡ª **replace before production deployment**
+- CORS open to localhost:4200
+- SQLite (use PostgreSQL/SQL Server for production)
+- JWT stored in localStorage (XSS risk; HttpOnly cookie recommended)
+- No refresh token mechanism
+- No rate limiting
 
 ---
 
-## ğŸ“š DokumentÃ¡ciÃ³
+## ?? Documentation
 
-- [CHANGELOG.md](CHANGELOG.md) - VerziÃ³kezelÃ©s
-- [Swagger API Docs](https://localhost:7156/swagger) - API dokumentÃ¡ciÃ³ (futtatÃ¡s kÃ¶zben)
+- [CHANGELOG.md](CHANGELOG.md) - Version history (English)
+- [CHANGELOG_HU.md](CHANGELOG_HU.md) - Version history (Hungarian)
+- [Swagger](https://localhost:7156/swagger) - API docs (while running)
 
 ---
 
-## ğŸ‘¤ SzerzÅ‘
+## ?? Author
 
-**KovÃ¡cs Andrea**
+**Kov¨¢cs Andrea**
 - GitHub: [@koand75](https://github.com/koand75)
 
 ---
 
-## ğŸ“ˆ StatisztikÃ¡k
+## ?? License
 
-| Metrika | Ã‰rtÃ©k |
-|---------|-------|
-| Backend kÃ³d | ~8,000 sor (C#) |
-| Frontend kÃ³d | ~2,500 sor (TypeScript/HTML/CSS) |
-| Backend tesztek | 48 unit teszt |
-| Frontend tesztek | 6 unit teszt |
-| Angular komponensek | 8 standalone component |
-| API vÃ©gpontok | 8 endpoint |
-| **VerziÃ³** | **0.8.0** |
-| **UtolsÃ³ frissÃ­tÃ©s** | **2026-03-29** |
+This project is not under an open source license.
+The code is viewable but may not be used, modified, or distributed
+without written permission from the author.
+
+? 2026 Kov¨¢cs Andrea ¡ª All Rights Reserved
 
 ---
 
-## ğŸ“„ License
-
-Ez a projekt jelenleg nincs nyÃ­lt forrÃ¡skÃ³dÃº licenc alatt.
-A kÃ³d megtekinthetÅ‘, de nem hasznÃ¡lhatÃ³ fel, nem mÃ³dosÃ­thatÃ³,
-nem terjeszthetÅ‘ a szerzÅ‘ Ã­rÃ¡sos engedÃ©lye nÃ©lkÃ¼l.
-
-Â© 2026 KovÃ¡cs Andrea â€” All Rights Reserved
-
----
-
-**â­ Ha tetszik a projekt, adj egy star-ot a GitHub-on!** â­
+| Metric | Value |
+|--------|-------|
+| Backend code | ~12,000 lines (C#) |
+| Frontend code | ~6,000 lines (TypeScript/HTML/CSS) |
+| Backend tests | 54 unit tests |
+| Frontend tests | 90+ unit tests |
+| Angular components | 20+ standalone components |
+| API endpoints | 20+ endpoints |
+| **Version** | **0.9.0** |
+| **Last updated** | **2026-08-27** |
