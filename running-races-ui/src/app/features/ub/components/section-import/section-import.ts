@@ -9,13 +9,11 @@ import { WayPoint as WayPointService } from '../../services/waypoint';
 import { WayPoint as WayPointModel } from '../../models/ub.models';
 import { SectionImportDialog } from '../section-import-dialog/section-import-dialog';
 import { WayPointMatchStatus } from '../../models/ub.models';
-import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-section-import',
   imports: [MatIcon, MatIconModule,
-    MatButtonModule, MatTableModule,
-    RouterLink],
+    MatButtonModule, MatTableModule],
   templateUrl: './section-import.html',
   styleUrl: './section-import.css',
 })
