@@ -33,7 +33,7 @@
     }
 
     <button mat-raised-button color="primary" (click)="onSearch()">🔍 Keresés</button>
-    <button mat-button (click)="onClear()">✖</button>
+    <button mat-raised-button color="secondary" (click)="onClear()">✖</button>
   </div>
 
   @if (loading) {

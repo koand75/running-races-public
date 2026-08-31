@@ -1,0 +1,11 @@
+.add-team-form {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    align-items: center;
+}
+
+.add-team-form button {
+    align-self: center;
+    margin-bottom: 22px;
+}

@@ -5,14 +5,13 @@ import { SectionService } from '../../services/section.service';
 import { Section } from '../../models/ub.models';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterLink } from '@angular/router';
 import { Router } from '@angular/router';
 import { MapService } from '../../services/map';
 
 @Component({
   selector: 'app-map',
   standalone: true,
-  imports: [MatIconModule, MatButtonModule, RouterLink],
+  imports: [MatIconModule, MatButtonModule],
   templateUrl: './map.html',
   styleUrl: './map.css'
 })

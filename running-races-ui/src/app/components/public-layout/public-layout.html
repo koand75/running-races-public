@@ -12,10 +12,12 @@
                 <mat-icon matListItemIcon>linear_scale</mat-icon>
                 Szakaszok
             </a>
+            @if (isAuthenticated$ | async) {
             <a mat-list-item routerLink="/ub/teams" (click)="closeMenu()" class="submenu-item">
                 <mat-icon matListItemIcon>group</mat-icon>
                 Csapatok
             </a>
+            }
             <a mat-list-item routerLink="/ub/map" (click)="closeMenu()" class="submenu-item">
                 <mat-icon matListItemIcon>map</mat-icon>
                 Térkép

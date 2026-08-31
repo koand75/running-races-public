@@ -10,7 +10,7 @@ import { authGuard } from './guards/auth-guard';
 export const routes: Routes = [
   { path: '', redirectTo: '/races', pathMatch: 'full' },
 
-  // 🌐 PUBLIC ROUTES (nincs guard)
+  // PUBLIC ROUTES 
   {
     path: '',
     component: PublicLayoutComponent,
@@ -19,13 +19,12 @@ export const routes: Routes = [
       { path: 'login', component: LoginComponent },
       {
         path: 'ub',
-        canActivate: [authGuard],
         loadChildren: () => import('./features/ub/ub.routes').then(m => m.UB_ROUTES)
       }
     ]
   },
 
-  // 🔐 ADMIN ROUTES (védett adminGuard-dal)
+  //  ADMIN ROUTES 
   {
     path: 'admin',
     component: AdminLayoutComponent,

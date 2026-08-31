@@ -6,14 +6,14 @@ export const adminGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  if (authService.isAuthenticated()) {
-    return true;  
+  if (authService.isAdmin()) {
+    return true;
   }
 
   console.warn('Access denied. Redirecting to login...');
-  router.navigate(['/login'], { 
-    queryParams: { returnUrl: state.url }  
+  router.navigate(['/login'], {
+    queryParams: { returnUrl: state.url }
   });
-  
+
   return false;
 };

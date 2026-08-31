@@ -66,6 +66,26 @@ td {
   justify-content: center;
 }
 
+button[mat-raised-button][color="secondary"] {
+  background-color: #888;
+  color: #fffffe;
+}
+
+button[mat-mini-fab].btn-edit {
+  background-color: #078080;
+  color: #fffffe;
+}
+
+button[mat-mini-fab].btn-add {
+  background-color: #888;
+  color: #fffffe;
+}
+
+button[mat-mini-fab].btn-delete {
+  background-color: #f45d48;
+  color: #fffffe;
+}
+
 /* ==================== Sidenav ==================== */
 mat-sidenav-container {
   height: 100vh;
