@@ -1,30 +1,30 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using RunningRacesApi.Models;
+using RunningRacesApi.Models.DTOs;
 using RunningRacesApi.Services;
 
 namespace RunningRacesApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class RacesController : ControllerBase
+public class RacesController(IRaceService service, IMapper mapper) : ControllerBase
 {
-    private readonly IRaceService _service;  
-
-    public RacesController(IRaceService service)
-    {
-        _service = service;
-    }
+    private readonly IRaceService _service = service;
+    private readonly IMapper _mapper = mapper;
 
     /// <summary>
     /// Get active races
     /// </summary>
     [HttpGet("public")]
-    public async Task<ActionResult<PagedResult<Race>>> GetPublicRaces([FromQuery] RaceSearchModel searchModel)
+    public async Task<ActionResult<PagedResult<RaceDto>>> GetPublicRaces([FromQuery] RaceSearchModel searchModel)
     {
-        var races = await _service.GetPublicRacesAsync(searchModel);
-        return Ok(races);
+        var result = await _service.GetPublicRacesAsync(searchModel);
+
+        return Ok(_mapper.Map<PagedResult<RaceDto>>(result));
     }
 
     /// <summary>
@@ -32,17 +32,17 @@ public class RacesController : ControllerBase
     /// </summary>
     [HttpGet("admin")]
     [Authorize]
-    public async Task<ActionResult<PagedResult<Race>>> GetAdminRaces([FromQuery] RaceSearchModel searchModel)
+    public async Task<ActionResult<PagedResult<RaceDto>>> GetAdminRaces([FromQuery] RaceSearchModel searchModel)
     {
-        var races = await _service.GetAdminRacesAsync(searchModel);
-        return Ok(races);
+        var result = await _service.GetAdminRacesAsync(searchModel);
+        return Ok(_mapper.Map<PagedResult<RaceDto>>(result));
     }
 
     /// <summary>
     /// Get race details
     /// </summary>
     [HttpGet("{id}")]
-    public async Task<ActionResult<Race>> GetRaceById(Guid id)
+    public async Task<ActionResult<RaceDto>> GetRaceById(Guid id)
     {
         try
         {
@@ -53,7 +53,7 @@ public class RacesController : ControllerBase
                 return NotFound(new { message = "Race not found." });
             }
 
-            return Ok(race);
+            return Ok(_mapper.Map<RaceDto>(race));
         }
         catch (ArgumentException ex)
         {
@@ -66,11 +66,11 @@ public class RacesController : ControllerBase
     /// </summary>
     [HttpPost]
     [Authorize(Roles = "Admin")]
-    public async Task<ActionResult<Race>> CreateRace([FromBody] Race race)
+    public async Task<ActionResult<RaceDto>> CreateRace([FromBody] RaceDto race)
     {
         try
         {
-            var createdRace = await _service.CreateRaceAsync(race);
+            var createdRace = await _service.CreateRaceAsync(_mapper.Map<Race>(race));
             return CreatedAtAction(nameof(GetRaceById), new { id = createdRace.Id }, createdRace);
         }
         catch (ArgumentException ex)
@@ -88,12 +88,12 @@ public class RacesController : ControllerBase
     /// </summary>
     [HttpPut("{id}")]
     [Authorize(Roles = "Admin")]
-    public async Task<ActionResult<Race>> UpdateRace(Guid id, [FromBody] Race race)
+    public async Task<ActionResult<RaceDto>> UpdateRace(Guid id, [FromBody] RaceDto race)
     {
         try
         {
-            var updatedRace = await _service.UpdateRaceAsync(id, race);
-            return Ok(updatedRace);  
+            var updatedRace = await _service.UpdateRaceAsync(id, _mapper.Map<Race>(race));
+            return Ok(updatedRace);
         }
         catch (ArgumentException ex)
         {
@@ -135,7 +135,7 @@ public class RacesController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpPatch("{id}/restore")]
-    [Authorize(Roles = "Admin")]    
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Restore(Guid id)
     {
         await _service.RestoreRaceAsync(id);

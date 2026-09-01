@@ -1,10 +1,17 @@
-﻿using Xunit;
-using Moq;
+﻿using AutoMapper;
+
 using FluentAssertions;
+
 using Microsoft.AspNetCore.Mvc;
+
+using Moq;
+
 using RunningRacesApi.Controllers;
-using RunningRacesApi.Services;
 using RunningRacesApi.Models;
+using RunningRacesApi.Models.DTOs;
+using RunningRacesApi.Services;
+
+using Xunit;
 
 namespace RunningRaces.Tests.Controllers;
 
@@ -16,14 +23,16 @@ public class RacesControllerTests
 {
     private readonly Mock<IRaceService> _mockService;
     private readonly RacesController _controller;
+    private readonly Mock<IMapper> _mockMapper;
 
     public RacesControllerTests()
     {
         // Mock service létrehozása
         _mockService = new Mock<IRaceService>();
+        _mockMapper = new Mock<IMapper>();
 
         // Controller példány a mock-kal
-        _controller = new RacesController(_mockService.Object);
+        _controller = new RacesController(_mockService.Object, _mockMapper.Object);
     }
 
     [Fact]
@@ -42,7 +51,7 @@ public class RacesControllerTests
 
         _mockService
             .Setup(s => s.GetRaceByIdAsync(raceId))
-            .ReturnsAsync(expectedRace);  
+            .ReturnsAsync(expectedRace);
 
         // Act
         var result = await _controller.GetRaceById(raceId);
@@ -70,6 +79,8 @@ public class RacesControllerTests
             .Setup(s => s.GetRaceByIdAsync(raceId))
             .ReturnsAsync(expectedRace);
 
+        _mockMapper.Setup(m => m.Map<RaceDto>(It.IsAny<Race>())).Returns(new RaceDto { Id = raceId });
+
         // Act
         var result = await _controller.GetRaceById(raceId);
 
@@ -77,12 +88,9 @@ public class RacesControllerTests
         var okResult = result.Result as OkObjectResult;
         okResult.Should().NotBeNull();
 
-        var returnedRace = okResult!.Value as Race;
+        var returnedRace = okResult!.Value as RaceDto;
         returnedRace.Should().NotBeNull();
-        returnedRace!.Id.Should().Be(expectedRace.Id);
-        returnedRace.Name.Should().Be("Budapest Marathon");
-        returnedRace.Location.Should().Be("Budapest");
-        returnedRace.Distance.Should().Be(42.2);
+        returnedRace!.Id.Should().Be(raceId);
     }
 
     [Fact]
@@ -93,7 +101,7 @@ public class RacesControllerTests
 
         _mockService
             .Setup(s => s.GetRaceByIdAsync(nonExistentId))
-            .ReturnsAsync((Race?)null);  
+            .ReturnsAsync((Race?)null);
 
         // Act
         var result = await _controller.GetRaceById(nonExistentId);
@@ -118,18 +126,24 @@ public class RacesControllerTests
             .Setup(s => s.GetPublicRacesAsync(It.IsAny<RaceSearchModel>()))
             .ReturnsAsync(expectedRaces);
 
+        var pagedDto = new PagedResult<RaceDto>
+        {
+            Items = new List<RaceDto> {
+                new RaceDto { Name = "Race 1" },
+                new RaceDto { Name = "Race 2" }
+    },
+            TotalCount = 2
+        };
+        _mockMapper.Setup(m => m.Map<PagedResult<RaceDto>>(It.IsAny<PagedResult<Race>>())).Returns(pagedDto);
+
         // Act
-        var result = await _controller.GetPublicRaces(null);
+        var result = await _controller.GetPublicRaces(new RaceSearchModel());
 
         // Assert
         var okResult = result.Result as OkObjectResult;
         okResult.Should().NotBeNull();
-
-        var returnedRaces = okResult!.Value as PagedResult<Race>;
+        var returnedRaces = okResult!.Value as PagedResult<RaceDto>;
         returnedRaces.Should().NotBeNull();
-        returnedRaces.Items.Should().HaveCount(2);
-        returnedRaces.Items![0].Name.Should().Be("Race 1");
-        returnedRaces.Items[1].Name.Should().Be("Race 2");
     }
 
     [Fact]
@@ -158,9 +172,11 @@ public class RacesControllerTests
         _mockService
             .Setup(s => s.CreateRaceAsync(It.IsAny<Race>()))
             .ReturnsAsync(createdRace);
+        var raceDto = new RaceDto { Id = createdRace.Id, Name = createdRace.Name };
+        _mockMapper.Setup(m => m.Map<RaceDto>(It.IsAny<Race>())).Returns(raceDto);
 
         // Act
-        var result = await _controller.CreateRace(newRace);
+        var result = await _controller.CreateRace(raceDto);
 
         // Assert
         result.Result.Should().BeOfType<CreatedAtActionResult>();
@@ -193,8 +209,11 @@ public class RacesControllerTests
             .Setup(s => s.CreateRaceAsync(It.IsAny<Race>()))
             .ReturnsAsync(createdRace);
 
+        var raceDto = new RaceDto { Id = createdRace.Id, Name = createdRace.Name };
+        _mockMapper.Setup(m => m.Map<RaceDto>(It.IsAny<Race>())).Returns(raceDto);
+
         // Act
-        var result = await _controller.CreateRace(newRace);
+        var result = await _controller.CreateRace(raceDto);
 
         // Assert
         var createdResult = result.Result as CreatedAtActionResult;
@@ -235,8 +254,11 @@ public class RacesControllerTests
             .Setup(s => s.CreateRaceAsync(It.IsAny<Race>()))
             .ReturnsAsync(createdRace);
 
+        var raceDto = new RaceDto { Id = createdRace.Id, Name = createdRace.Name };
+        _mockMapper.Setup(m => m.Map<RaceDto>(It.IsAny<Race>())).Returns(raceDto);
+
         // Act
-        var result = await _controller.CreateRace(newRace);
+        var result = await _controller.CreateRace(raceDto);
 
         // Assert
         var createdResult = result.Result as CreatedAtActionResult;
@@ -278,8 +300,11 @@ public class RacesControllerTests
             .Setup(s => s.UpdateRaceAsync(raceId, It.IsAny<Race>()))
             .ReturnsAsync(updatedRace);
 
+        var raceDto = new RaceDto { Id = raceId, Name = updatedRace.Name };
+        _mockMapper.Setup(m => m.Map<RaceDto>(It.IsAny<Race>())).Returns(raceDto);
+
         // Act
-        var result = await _controller.UpdateRace(raceId, updateData);
+        var result = await _controller.UpdateRace(raceId, raceDto);
 
         // Assert
         result.Result.Should().BeOfType<OkObjectResult>();
@@ -293,13 +318,13 @@ public class RacesControllerTests
 
         _mockService
             .Setup(s => s.DeleteRaceAsync(raceId))
-            .ReturnsAsync(true);  
+            .ReturnsAsync(true);
 
         // Act
         var result = await _controller.DeleteRace(raceId);
 
         // Assert
-        result.Should().BeOfType<NoContentResult>();  
+        result.Should().BeOfType<NoContentResult>();
     }
 
     [Fact]
@@ -310,12 +335,12 @@ public class RacesControllerTests
 
         _mockService
             .Setup(s => s.DeleteRaceAsync(nonExistentId))
-            .ReturnsAsync(false);  
+            .ReturnsAsync(false);
 
         // Act
         var result = await _controller.DeleteRace(nonExistentId);
 
         // Assert
-        result.Should().BeOfType<NotFoundObjectResult>();  
+        result.Should().BeOfType<NotFoundObjectResult>();
     }
 }

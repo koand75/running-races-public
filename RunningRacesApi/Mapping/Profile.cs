@@ -18,5 +18,11 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.EndWayPointName, opt => opt.MapFrom(src => src.EndWayPoint != null ? src.EndWayPoint.Name : null))
             .ForMember(dest => dest.EndLat, opt => opt.MapFrom(src => src.EndWayPoint != null ? src.EndWayPoint.Lat : null))
             .ForMember(dest => dest.EndLng, opt => opt.MapFrom(src => src.EndWayPoint != null ? src.EndWayPoint.Lng : null));
+
+        CreateMap<Race, RaceDto>();
+        CreateMap<PagedResult<Race>, PagedResult<RaceDto>>()
+            .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items));
+
+        CreateMap<RaceDto, Race>();
     }
 }
