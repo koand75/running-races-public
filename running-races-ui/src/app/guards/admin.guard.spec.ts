@@ -12,8 +12,7 @@ describe('adminGuard', () => {
         TestBed.runInInjectionContext(() => adminGuard(...guardParameters));
 
     beforeEach(() => {
-        mockAuthService = jasmine.createSpyObj('AuthService', ['isAuthenticated']);
-        mockRouter = jasmine.createSpyObj('Router', ['navigate']);
+        mockAuthService = jasmine.createSpyObj('AuthService', ['isAuthenticated', 'isAdmin']); mockRouter = jasmine.createSpyObj('Router', ['navigate']);
 
         TestBed.configureTestingModule({
             providers: [
@@ -25,13 +24,14 @@ describe('adminGuard', () => {
     });
 
     it('should allow access when authenticated', () => {
+        mockAuthService.isAdmin.and.returnValue(true);
         mockAuthService.isAuthenticated.and.returnValue(true);
         const result = executeGuard({} as any, { url: '/admin/races' } as any);
         expect(result).toBeTrue();
     });
 
     it('should deny access and redirect to login when not authenticated', () => {
-        mockAuthService.isAuthenticated.and.returnValue(false);
+        mockAuthService.isAdmin.and.returnValue(false);
         const result = executeGuard({} as any, { url: '/admin/races' } as any);
         expect(result).toBeFalse();
         expect(mockRouter.navigate).toHaveBeenCalledWith(['/login'], { queryParams: { returnUrl: '/admin/races' } });
