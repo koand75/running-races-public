@@ -71,7 +71,7 @@ public class RacesController(IRaceService service, IMapper mapper) : ControllerB
         try
         {
             var createdRace = await _service.CreateRaceAsync(_mapper.Map<Race>(race));
-            return CreatedAtAction(nameof(GetRaceById), new { id = createdRace.Id }, createdRace);
+            return CreatedAtAction(nameof(GetRaceById), new { id = createdRace.Id }, _mapper.Map<RaceDto>(createdRace));
         }
         catch (ArgumentException ex)
         {

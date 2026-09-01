@@ -32,5 +32,9 @@ public class MappingProfile : Profile
         CreateMap<WayPoint, WayPointDto>();
         CreateMap<WayPointDto, WayPoint>();
         CreateMap<PagedResult<WayPoint>, PagedResult<WayPointDto>>();
+
+        CreateMap<Section, SectionDto>();
+        CreateMap<SectionDto, Section>();
+        CreateMap<PagedResult<Section>, PagedResult<SectionDto>>();
     }
 }
