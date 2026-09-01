@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using RunningRacesApi.Models.DTOs;
@@ -12,11 +14,15 @@ public class SectionExportController : ControllerBase
 {
     private readonly ISectionService _sectionService;
     private readonly ICsvExportService _csvExportService;
+    private readonly IMapper _mapper;
 
-    public SectionExportController(ISectionService sectionService, ICsvExportService csvExportService)
+    public SectionExportController(ISectionService sectionService,
+        ICsvExportService csvExportService,
+        IMapper mapper)
     {
         _sectionService = sectionService;
         _csvExportService = csvExportService;
+        _mapper = mapper;
     }
 
     [HttpGet]
@@ -25,22 +31,10 @@ public class SectionExportController : ControllerBase
     {
         var sections = await _sectionService.GetAllAsync();
 
-        var sectiosnToExport = sections.Select(s => new SectionExportDto
-        {
-            Id = s.Id,
-            Order = s.Order,
-            Distance = s.Distance,
-            StartWayPointName = s.StartWayPoint?.Name,
-            StartLat = s.StartWayPoint?.Lat,
-            StartLng = s.StartWayPoint?.Lng,
-            EndWayPointName = s.EndWayPoint?.Name,
-            EndLat = s.EndWayPoint?.Lat,
-            EndLng = s.EndWayPoint?.Lng,
-            Description = s.Description
-        });
+        var sectiosnToExport = _mapper.Map<IEnumerable<SectionExportDto>>(sections);
 
-        var columns = new List<string> { 
-            "Order", 
+        var columns = new List<string> {
+            "Order",
             "Distance",
             "StartWayPointName",
             "StartLat",

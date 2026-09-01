@@ -1,4 +1,6 @@
-﻿using RunningRacesApi.Enums;
+﻿using AutoMapper;
+
+using RunningRacesApi.Enums;
 using RunningRacesApi.Models;
 using RunningRacesApi.Models.DTOs;
 
@@ -10,11 +12,13 @@ public class SectionImportService : ISectionImportService
 {
     private readonly ISectionService _sectionService;
     private readonly IWayPointService _wayPointService;
+    private readonly IMapper _mapper;
 
-    public SectionImportService(ISectionService sectionService, IWayPointService wayPointService)
+    public SectionImportService(ISectionService sectionService, IWayPointService wayPointService, IMapper mapper)
     {
         _sectionService = sectionService;
         _wayPointService = wayPointService;
+        _mapper = mapper;
     }
 
     public async Task<int> ImportAsync(List<SectionImportDto> sectionsImport)
@@ -23,15 +27,7 @@ public class SectionImportService : ISectionImportService
 
         foreach (var item in sectionsImport)
         {
-            var section = new Section
-            {
-                Order = item.Order,
-                Distance = item.Distance,
-                Description = item.Description,
-                StartWayPointId = item.StartWayPointId,
-                EndWayPointId = item.EndWayPointId
-            };
-
+            var section = _mapper.Map<Section>(item);       
             var startWp = await _wayPointService.GetByIdAsync(section.StartWayPointId);
             var endWp = await _wayPointService.GetByIdAsync(section.EndWayPointId);
 

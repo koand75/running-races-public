@@ -36,6 +36,17 @@ ez a projekt követi a [Semantic Versioning](https://semver.org/spec/v2.0.0.html
 - Telepítési pipeline
 
 ---
+## [0.9.1] - 2026-08-28
+
+### Hozzáadva
+- AutoMapper 16.2.0 integrálva DTO mappinghez
+- `MappingProfile` Section → SectionExportDto és SectionImportDto → Section mappingekkel
+
+### Változott
+- NuGet csomagok frissítve a legújabb .NET 9 kompatibilis verziókra
+- `SectionExportController` AutoMapper-t használ manuális mapping helyett
+- `SectionImportService` AutoMapper-t használ manuális mapping helyett
+
 ## [0.9.0] - 2026-08-25
 
 ### Hozzáadva

@@ -1,3 +1,5 @@
+using AutoMapper;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -5,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 using RunningRacesApi.Data;
+using RunningRacesApi.Mapping;
 using RunningRacesApi.Middleware;
 using RunningRacesApi.Models;
 using RunningRacesApi.Repositories;
@@ -15,6 +18,10 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddTransient<DatabaseSeeder>();
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.AddProfile<MappingProfile>();
+});
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));

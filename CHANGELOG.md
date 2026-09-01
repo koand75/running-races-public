@@ -35,6 +35,17 @@ this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Deployment pipeline
 
 ---
+## [0.9.1] - 2026-08-28
+
+### Added
+- AutoMapper 16.2.0 integrated for DTO mapping
+- `MappingProfile` with Section → SectionExportDto and SectionImportDto → Section mappings
+
+### Changed
+- NuGet packages updated to latest compatible versions (.NET 9)
+- `SectionExportController` uses AutoMapper instead of manual mapping
+- `SectionImportService` uses AutoMapper instead of manual mapping
+
 ## [0.9.0] - 2026-08-25
 
 ### Added
