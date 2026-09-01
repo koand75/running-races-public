@@ -7,7 +7,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { WayPoint as WayPointService } from '../../services/waypoint';
 import { WayPoint as WayPointModel } from '../../models/ub.models';
-import { SectionImportDialog } from '../section-import-dialog/section-import-dialog';
 import { WayPointMatchStatus } from '../../models/ub.models';
 import { ConfirmationDialogComponent } from '../../../../components/confirmation-dialog/confirmation-dialog';
 import { MatOptionModule } from '@angular/material/core';
@@ -64,25 +63,6 @@ export class SectionImport {
   }
 
   displayedColumns = ['order', 'name', 'distance'];
-
-  openDetail(section: SectionImportPreviewDto, type: 'start' | 'end'): void {
-    const dialogRef = this.dialog.open(SectionImportDialog, {
-      data: { section, type, wayPoints: this.wayPoints },
-      width: '800px'
-    });
-
-    dialogRef.afterClosed().subscribe(selectedId => {
-      if (selectedId !== undefined && selectedId !== null) {
-        if (type === 'start') {
-          section.matchedStartWayPointIds = [selectedId];
-          section.startWayPointStatus = WayPointMatchStatus.Exact;
-        } else {
-          section.matchedEndWayPointIds = [selectedId];
-          section.endWayPointStatus = WayPointMatchStatus.Exact;
-        }
-      }
-    });
-  }
 
   ngOnInit(): void {
     this.waypointService.getAll().subscribe(wp => this.wayPoints = wp);
