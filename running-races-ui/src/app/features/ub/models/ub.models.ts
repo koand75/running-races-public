@@ -68,3 +68,16 @@ export enum WayPointMatchStatus {
   Partial = 1,
   Exact = 0
 }
+
+export interface WayPointIssueDto {
+  name?: string | null;
+  lat?: number | null;
+  lng?: number | null;
+  status: WayPointMatchStatus;
+  matchedIds: number[];
+}
+
+export interface SectionImportPreviewResultDto {
+  sections: SectionImportPreviewDto[];
+  wayPointIssues: WayPointIssueDto[];
+}

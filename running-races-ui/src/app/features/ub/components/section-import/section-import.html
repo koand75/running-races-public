@@ -16,7 +16,58 @@
         </a>
 
     </div>
-    @if (previewResult) {
+
+    @if (wayPointIssues && wayPointIssues.length > 0) {
+    <div class="waypoint-issues">
+        <h2>Problémás váltópontok</h2>
+        <table mat-table [dataSource]="wayPointIssues">
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>Név</th>
+                <td mat-cell *matCellDef="let issue">{{ issue.name }}</td>
+            </ng-container>
+            <ng-container matColumnDef="lat">
+                <th mat-header-cell *matHeaderCellDef>Lat</th>
+                <td mat-cell *matCellDef="let issue">{{ issue.lat }}</td>
+            </ng-container>
+            <ng-container matColumnDef="lng">
+                <th mat-header-cell *matHeaderCellDef>Lng</th>
+                <td mat-cell *matCellDef="let issue">{{ issue.lng }}</td>
+            </ng-container>
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Döntés</th>
+                <td mat-cell *matCellDef="let issue">
+                    <div class="action-buttons">
+                        <button mat-mini-fab class="btn-edit" (click)="resolveIssue(issue, 'keep')">
+                            <mat-icon>add</mat-icon>
+                        </button>
+
+                        @if (issue.status === 1) {
+                        <mat-form-field style="width: 200px">
+                            <mat-label>Felülír</mat-label>
+                            <input matInput [matAutocomplete]="overwriteAuto">
+                            <mat-autocomplete #overwriteAuto="matAutocomplete"
+                                (optionSelected)="overwriteWayPoint(issue, $event.option.value.id)">
+                                @for (id of issue.matchedIds; track id) {
+                                @if (getWayPoint(id); as wp) {
+                                <mat-option [value]="wp">{{ wp.name }} ({{ wp.lat }}, {{ wp.lng }})</mat-option>
+                                }
+                                }
+                            </mat-autocomplete>
+                        </mat-form-field>
+                        }
+
+                        <button mat-mini-fab class="btn-delete" (click)="resolveIssue(issue, 'discard')">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </div>
+
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="['name', 'lat', 'lng', 'actions']"></tr>
+            <tr mat-row *matRowDef="let row; columns: ['name', 'lat', 'lng', 'actions'];"></tr>
+        </table>
+    </div>
+    } @else if (previewResult) {
     <table mat-table [dataSource]="previewResult">
         <ng-container matColumnDef="order">
             <th mat-header-cell *matHeaderCellDef>#</th>

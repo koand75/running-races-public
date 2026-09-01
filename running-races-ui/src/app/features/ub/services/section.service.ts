@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Section, SectionImportPreviewDto } from '../models/ub.models';
+import { Section, SectionImportPreviewResultDto } from '../models/ub.models';
 import { environment } from '../../../../environments/environment';
 
 @Injectable({
@@ -31,10 +31,10 @@ export class SectionService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
-  previewCsv(file: File): Observable<SectionImportPreviewDto[]> {
+  previewCsv(file: File): Observable<SectionImportPreviewResultDto> {
     const formData = new FormData();
     formData.append('file', file);
-    return this.http.post<SectionImportPreviewDto[]>(`${environment.apiUrl}/section-import/preview`, formData);
+    return this.http.post<SectionImportPreviewResultDto>(`${environment.apiUrl}/section-import/preview`, formData);
   }
 
   insertAfter(afterOrder: number, section: Section): Observable<Section> {

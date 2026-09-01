@@ -27,7 +27,7 @@ public class SectionImportService : ISectionImportService
 
         foreach (var item in sectionsImport)
         {
-            var section = _mapper.Map<Section>(item);       
+            var section = _mapper.Map<Section>(item);
             var startWp = await _wayPointService.GetByIdAsync(section.StartWayPointId);
             var endWp = await _wayPointService.GetByIdAsync(section.EndWayPointId);
 
@@ -42,7 +42,7 @@ public class SectionImportService : ISectionImportService
         return sections.Count;
     }
 
-    public async Task<IEnumerable<SectionImportPreviewDto>> PreviewAsync(IFormFile file)
+    public async Task<SectionImportPreviewResultDto> PreviewAsync(IFormFile file)
     {
         var sections = new List<SectionImportPreviewDto>();
 
@@ -81,7 +81,47 @@ public class SectionImportService : ISectionImportService
         var wayPoints = await _wayPointService.GetAllAsync(searchModel);
         var matched = Match(sections, wayPoints.Items);
 
-        return matched;
+
+        var issues = new List<WayPointIssueDto>();
+
+        foreach (var section in matched)
+        {
+            if (section.StartWayPointStatus != WayPointMatchStatus.Exact)
+            {
+                if (!issues.Any(i => i.Name == section.StartWayPointName))
+                {
+                    issues.Add(new WayPointIssueDto
+                    {
+                        Name = section.StartWayPointName,
+                        Lat = section.StartLat,
+                        Lng = section.StartLng,
+                        Status = section.StartWayPointStatus,
+                        MatchedIds = section.MatchedStartWayPointIds
+                    });
+                }
+            }
+
+            if (section.EndWayPointStatus != WayPointMatchStatus.Exact)
+            {
+                if (!issues.Any(i => i.Name == section.EndWayPointName))
+                {
+                    issues.Add(new WayPointIssueDto
+                    {
+                        Name = section.EndWayPointName,
+                        Lat = section.EndLat,
+                        Lng = section.EndLng,
+                        Status = section.EndWayPointStatus,
+                        MatchedIds = section.MatchedEndWayPointIds
+                    });
+                }
+            }
+        }
+
+        return new SectionImportPreviewResultDto
+        {
+            Sections = matched,
+            WayPointIssues = issues
+        };
     }
 
     public IEnumerable<SectionImportPreviewDto> Match(IEnumerable<SectionImportPreviewDto> sections, IEnumerable<WayPoint> wayPoints)
