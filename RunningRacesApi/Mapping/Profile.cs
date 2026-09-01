@@ -28,5 +28,9 @@ public class MappingProfile : Profile
         CreateMap<Runner, RunnerDto>();
         CreateMap<PagedResult<Runner>, PagedResult<RunnerDto>>()
             .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items));
+
+        CreateMap<WayPoint, WayPointDto>();
+        CreateMap<WayPointDto, WayPoint>();
+        CreateMap<PagedResult<WayPoint>, PagedResult<WayPointDto>>();
     }
 }

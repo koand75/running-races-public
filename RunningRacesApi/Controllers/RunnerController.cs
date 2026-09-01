@@ -7,8 +7,6 @@ using RunningRacesApi.Models;
 using RunningRacesApi.Models.DTOs;
 using RunningRacesApi.Services;
 
-using System.Diagnostics;
-
 namespace RunningRacesApi.Controllers;
 
 [ApiController]
