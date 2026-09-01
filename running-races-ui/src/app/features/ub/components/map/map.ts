@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { MapService } from '../../services/map';
+import 'leaflet-polylinedecorator';
 
 @Component({
   selector: 'app-map',
@@ -53,10 +54,24 @@ export class MapComponent implements OnInit, OnDestroy {
       const start = section.startWayPoint;
       const end = section.endWayPoint;
       if (start?.lat && start?.lng && end?.lat && end?.lng) {
-        L.polyline(
+        const line = L.polyline(
           [[start.lat, start.lng], [end.lat, end.lng]],
           { color: '#078080', weight: 3 }
         ).addTo(this.map);
+
+        (L as any).polylineDecorator(line, {
+          patterns: [
+            {
+              offset: '50%',
+              repeat: 0,
+              symbol: (L as any).Symbol.arrowHead({
+                pixelSize: 6,
+                polygon: true,
+                pathOptions: { color: '#078080', weight: 2 }
+              })
+            }
+          ]
+        }).addTo(this.map);
 
         this.mapService.createMarker(
           start.lat, start.lng, start.name,
