@@ -35,6 +35,24 @@ this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Deployment pipeline
 
 ---
+## [0.10.0] - 2026-09-02
+
+### Added
+- Two-step section import flow with waypoint issue resolution
+- `WayPointIssueDto` - problematic waypoint tracking during import
+- `SectionImportPreviewResultDto` - wrapper with sections and waypoint issues
+- Waypoint issue actions: keep (create new), overwrite (update existing), discard
+- AutoMapper 16.2.0 integration for DTO mapping
+- `RaceDto`, `RunnerDto`, `WayPointDto`, `SectionDto` response DTOs
+- `MappingProfile` with entity → DTO mappings
+
+### Changed
+- NuGet packages updated to .NET 9 compatible versions
+- `WayPoint`, `Runner`, `Race`, `Section` controllers use DTOs instead of entities
+- `SectionImportService.PreviewAsync` returns `SectionImportPreviewResultDto`
+- Section import page shows waypoint issues before section preview
+- Removed `SectionImportDialog` - replaced by inline waypoint issue resolution
+
 ## [0.9.1] - 2026-08-28
 
 ### Added

@@ -36,6 +36,24 @@ ez a projekt követi a [Semantic Versioning](https://semver.org/spec/v2.0.0.html
 - Telepítési pipeline
 
 ---
+## [0.10.0] - 2026-09-02
+
+### Hozzáadva
+- Kétlépéses szakasz import folyamat váltópont probléma kezeléssel
+- `WayPointIssueDto` - problémás váltópontok nyomon követése importáláskor
+- `SectionImportPreviewResultDto` - wrapper szakaszokkal és váltópont problémákkal
+- Váltópont probléma kezelési opciók: megtart (új létrehozása), felülír (meglévő frissítése), eldob
+- AutoMapper 16.2.0 integráció DTO mappinghez
+- `RaceDto`, `RunnerDto`, `WayPointDto`, `SectionDto` response DTO-k
+- `MappingProfile` entitás → DTO mappingekkel
+
+### Változott
+- NuGet csomagok frissítve .NET 9 kompatibilis verziókra
+- `WayPoint`, `Runner`, `Race`, `Section` controllerek DTO-kat használnak entitások helyett
+- `SectionImportService.PreviewAsync` `SectionImportPreviewResultDto`-t ad vissza
+- Szakasz import oldal váltópont problémákat mutat a szakasz preview előtt
+- `SectionImportDialog` eltávolítva - inline váltópont probléma kezeléssel helyettesítve
+
 ## [0.9.1] - 2026-08-28
 
 ### Hozzáadva
