@@ -11,7 +11,7 @@ namespace RunningRacesApi.Controllers;
 
 [ApiController]
 [Route("api/team/{teamId}/[controller]")]
-public class RunnerControllre(IRunnerService runnerService, IMapper mapper) : ControllerBase
+public class RunnerController(IRunnerService runnerService, IMapper mapper) : ControllerBase
 {
     private readonly IRunnerService _runnerService = runnerService;
     private readonly IMapper _mapper = mapper;
@@ -20,7 +20,7 @@ public class RunnerControllre(IRunnerService runnerService, IMapper mapper) : Co
     public async Task<ActionResult<IEnumerable<RunnerDto>>> GetByTeam(int teamId)
     {
         var result = await _runnerService.GetByTeamAsync(teamId);
-        return Ok(_mapper.Map<PagedResult<RunnerDto>>(result));
+        return Ok(_mapper.Map<IEnumerable<RunnerDto>>(result));
     }
 
     [HttpGet("{id}")]

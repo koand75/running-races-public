@@ -28,6 +28,7 @@ public class MappingProfile : Profile
         CreateMap<Runner, RunnerDto>();
         CreateMap<PagedResult<Runner>, PagedResult<RunnerDto>>()
             .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items));
+        CreateMap<ICollection<Runner>, List<RunnerDto>>();
 
         CreateMap<WayPoint, WayPointDto>();
         CreateMap<WayPointDto, WayPoint>();
@@ -36,5 +37,9 @@ public class MappingProfile : Profile
         CreateMap<Section, SectionDto>();
         CreateMap<SectionDto, Section>();
         CreateMap<PagedResult<Section>, PagedResult<SectionDto>>();
+
+        CreateMap<Team, TeamDto>();
+        CreateMap<TeamDto, Team>();
+        CreateMap<PagedResult<Runner>, PagedResult<RunnerDto>>();
     }
 }
