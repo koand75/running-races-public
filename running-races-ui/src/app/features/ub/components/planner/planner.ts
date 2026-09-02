@@ -52,8 +52,8 @@ export class PlannerComponent implements OnInit {
     teamId!: number;
     sections: Section[] = [];
     runners: Runner[] = [];
-    assignments: Map<number, RunnerSection> = new Map(); 
-    runnerStats: Map<number, RunnerStats> = new Map(); 
+    assignments: Map<number, RunnerSection> = new Map();
+    runnerStats: Map<number, RunnerStats> = new Map();
 
     selectedRunner: Runner | null = null;
     team: Team | null = null;
@@ -87,15 +87,15 @@ export class PlannerComponent implements OnInit {
     selectRunner(runner: Runner): void {
         this.selectedRunner = this.selectedRunner?.id === runner.id ? null : runner;
     }
-   
+
     onSectionClick(section: Section): void {
 
         if (!this.selectedRunner) return;
 
         const existing = this.assignments.get(section.id);
-        if (existing?.runnerId === this.selectedRunner.id) {            
+        if (existing?.runnerId === this.selectedRunner.id) {
             this.assignments.delete(section.id);
-        } else {            
+        } else {
             this.assignments.set(section.id, {
                 sectionId: section.id,
                 runnerId: this.selectedRunner.id,
@@ -110,8 +110,8 @@ export class PlannerComponent implements OnInit {
 
     // Drag & drop
     onDrop(event: CdkDragDrop<any>, section: Section): void {
-       
-        const runner = event.item.data as Runner;     
+
+        const runner = event.item.data as Runner;
 
         this.assignments.set(section.id, {
             sectionId: section.id,
@@ -159,21 +159,21 @@ export class PlannerComponent implements OnInit {
             if (assignment) {
                 const stats = this.runnerStats.get(assignment.runnerId)!;
                 if (!stats) return;
-                
-                if (currentRunnerId === assignment.runnerId) {                   
+
+                if (currentRunnerId === assignment.runnerId) {
                     currentBlock.km += section.distance;
                     currentBlock.sections++;
-                } else {                  
+                } else {
                     if (currentRunnerId !== null && currentBlock.sections > 0) {
                         const prevStats = this.runnerStats.get(currentRunnerId)!;
                         prevStats.blocks.push({ ...currentBlock });
-                    }                   
+                    }
                     currentRunnerId = assignment.runnerId;
                     currentBlock = { km: section.distance, sections: 1, startOrder: section.order };
                 }
 
                 stats.totalKm += section.distance;
-            } else {             
+            } else {
                 if (currentRunnerId !== null && currentBlock.sections > 0) {
                     const prevStats = this.runnerStats.get(currentRunnerId)!;
                     prevStats.blocks.push({ ...currentBlock });
@@ -276,7 +276,7 @@ export class PlannerComponent implements OnInit {
         if (!this.team?.startTime) return this.getCumulativeTime(sectionOrder);
 
         const totalSeconds = this.sections
-            .filter(s => s.order < sectionOrder)  
+            .filter(s => s.order < sectionOrder)
             .reduce((sum, s) => {
                 const assignment = this.assignments.get(s.id);
                 const pace = assignment?.customPace || this.DEFAULT_PACE;
@@ -375,4 +375,16 @@ export class PlannerComponent implements OnInit {
         this.hasChanges = true;
         this.calculateAllStats();
     }
+
+    isDragging = false;
+
+    onDragStarted(event: any): void {
+        this.isDragging = true;
+    }
+
+    onDragEnded(): void {
+        this.isDragging = false;
+    }
+
+
 }

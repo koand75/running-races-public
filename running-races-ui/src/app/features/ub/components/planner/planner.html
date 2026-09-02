@@ -23,8 +23,8 @@
       <div class="runners-list" cdkDropList [cdkDropListSortingDisabled]="true">
         @for (runner of runners; track runner.id) {
         <div class="runner-card" [class.selected]="selectedRunner?.id === runner.id"
-          [style.border-color]="getRunnerColor(runner.id)" cdkDrag [cdkDragData]="runner"
-          (click)="selectRunner(runner)">
+          [style.border-color]="getRunnerColor(runner.id)" cdkDrag [cdkDragData]="runner" (click)="selectRunner(runner)"
+          (cdkDragStarted)="onDragStarted($event)" (cdkDragEnded)="onDragEnded()">
           <div class="runner-color" [style.background-color]="getRunnerColor(runner.id)"></div>
           <div class="runner-info">
             <div class="runner-name">{{ runner.name }}</div>
@@ -35,6 +35,7 @@
               }
             </div>
           </div>
+          <mat-icon style="cursor: grab; color: #ccc;">drag_indicator</mat-icon>
         </div>
         }
       </div>
@@ -56,7 +57,7 @@
           @for (section of block.sections; track section.id) {
           <div class="section-row" cdkDropList #sectionDrop="cdkDropList" [cdkDropListData]="section"
             [class.has-runner]="assignments.has(section.id)"
-            [class.highlight]="selectedRunner && !assignments.has(section.id)"
+            [class.highlight]="(selectedRunner || isDragging) && !assignments.has(section.id)"
             (cdkDropListDropped)="onDrop($event, section)" (click)="onSectionClick(section)">
 
             <div class="section-order">{{ section.order }}</div>

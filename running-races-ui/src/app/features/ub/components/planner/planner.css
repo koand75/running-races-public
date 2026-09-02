@@ -49,7 +49,8 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 12px;  /* kisebb padding */
+  padding: 8px 12px;
+  /* kisebb padding */
   background: #fffffe;
   border-radius: 8px;
   border: 2px solid transparent;
@@ -59,7 +60,7 @@
 
 
 .runner-card:hover {
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .runner-card.selected {
@@ -74,7 +75,8 @@
 
 .runner-color {
   width: 8px;
-  height: 24px;  /* rövidebb */
+  height: 24px;
+  /* rövidebb */
   border-radius: 4px;
 }
 
@@ -143,6 +145,7 @@
 .section-row.highlight {
   background: #e8f5f5;
   cursor: pointer;
+  border: 2px dashed #078080;
 }
 
 .section-row.highlight:hover {
@@ -157,8 +160,12 @@
 }
 
 .section-info {
+  display: flex;
+  gap: 16px;
   flex: 1;
+  flex-wrap: wrap;
 }
+
 
 .section-name {
   font-weight: 500;
@@ -220,7 +227,7 @@
 
 /* CDK Drag & Drop */
 .cdk-drag-preview {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .cdk-drag-placeholder {
@@ -259,23 +266,27 @@
   }
 }
 
-.section-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+
+
+.section-name {
+  flex: 2;
+  min-width: 150px;
 }
 
-.section-info {
-  display: flex;
-  gap: 16px;
+.section-distance {
   flex: 1;
-  flex-wrap: wrap;
+  min-width: 80px;
 }
 
-.section-name { flex: 2; min-width: 150px; }
-.section-distance { flex: 1; min-width: 80px; }
-.section-cumulative { flex: 1; min-width: 100px; }
-.section-time { flex: 1; min-width: 80px; }
+.section-cumulative {
+  flex: 1;
+  min-width: 100px;
+}
+
+.section-time {
+  flex: 1;
+  min-width: 80px;
+}
 
 .section-block {
   border-left: 4px solid #ddd;
@@ -290,7 +301,11 @@
 }
 
 .selected-block {
-  outline: 3px solid #f45d48;  
+  outline: 3px solid #f45d48;
   outline-offset: 2px;
   background-color: #f45d48;
+}
+
+.cdk-drop-list-dragging .section-row {
+  border: 2px dashed #078080;
 }
