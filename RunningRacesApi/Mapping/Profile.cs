@@ -41,5 +41,9 @@ public class MappingProfile : Profile
         CreateMap<Team, TeamDto>();
         CreateMap<TeamDto, Team>();
         CreateMap<PagedResult<Runner>, PagedResult<RunnerDto>>();
+
+        CreateMap<RunnerSection, RunnerSectionDto>();
+        CreateMap<RunnerSectionDto, RunnerSection>();
+        CreateMap<SaveRunnerSectionDto, RunnerSection>();
     }
 }
