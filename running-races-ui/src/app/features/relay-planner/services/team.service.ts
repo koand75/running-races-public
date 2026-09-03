@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Team } from '../models/ub.models';
+import { Team } from '../models/relay-planner.models';
 import { environment } from '../../../../environments/environment';
 
 @Injectable({

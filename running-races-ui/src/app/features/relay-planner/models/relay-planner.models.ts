@@ -81,3 +81,8 @@ export interface SectionImportPreviewResultDto {
   sections: SectionImportPreviewDto[];
   wayPointIssues: WayPointIssueDto[];
 }
+
+export enum RaceType {
+  None = 0,
+  Relay = 1
+}

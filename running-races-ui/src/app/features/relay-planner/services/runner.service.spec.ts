@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { RunnerService } from './runner.service';
-import { Runner } from '../models/ub.models';
+import { Runner } from '../models/relay-planner.models';
 import {environment} from  '../../../../../src/environments/environment'
 
 describe('RunnerService', () => {

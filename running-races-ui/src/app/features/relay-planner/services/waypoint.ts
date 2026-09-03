@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { WayPoint as WayPointModel } from '../models/ub.models';
+import { WayPoint as WayPointModel } from '../models/relay-planner.models';
 import { map } from 'rxjs/operators';
 import { PagedResult } from '../../../models/paged-result.model';
 import { environment } from '../../../../environments/environment';

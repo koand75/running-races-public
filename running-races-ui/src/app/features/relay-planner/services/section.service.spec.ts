@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { SectionService } from './section.service';
-import { Section } from '../models/ub.models';
+import { Section } from '../models/relay-planner.models';
 import { environment } from '../../../../../src/environments/environment';
 
 describe('SectionService', () => {

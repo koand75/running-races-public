@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TeamService } from './team.service';
-import { Team } from '../models/ub.models';
+import { Team } from '../models/relay-planner.models';
 import { environment } from '../../../../environments/environment';
 
 describe('TeamService', () => {

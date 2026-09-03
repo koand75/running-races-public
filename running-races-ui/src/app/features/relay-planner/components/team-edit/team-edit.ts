@@ -6,7 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { TeamService } from '../../services/team.service';
-import { Team } from '../../models/ub.models';
+import { Team } from '../../models/relay-planner.models';
 
 @Component({
   selector: 'app-team-edit',

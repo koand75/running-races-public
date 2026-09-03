@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { TeamEdit } from './team-edit';
 import { TeamService } from '../../services/team.service';
-import { Team } from '../../models/ub.models';
+import { Team } from '../../models/relay-planner.models';
 
 describe('TeamEdit', () => {
   let component: TeamEdit;

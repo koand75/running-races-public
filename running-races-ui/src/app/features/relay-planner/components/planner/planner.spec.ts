@@ -8,7 +8,7 @@ import { SectionService } from '../../services/section.service';
 import { RunnerService } from '../../services/runner.service';
 import { RunnerSectionService } from '../../services/runner-section.service';
 import { TeamService } from '../../services/team.service';
-import { Section, Runner, RunnerSection, Team } from '../../models/ub.models';
+import { Section, Runner, RunnerSection, Team } from '../../models/relay-planner.models';
 
 describe('Planner', () => {
   let component: PlannerComponent;

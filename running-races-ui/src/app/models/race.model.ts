@@ -1,3 +1,5 @@
+import { RaceType } from "../features/relay-planner/models/relay-planner.models";
+
 export interface Race {
   id: string;
   name: string;
@@ -5,4 +7,5 @@ export interface Race {
   location: string;
   distance: number;
   isActive?: boolean;
+  raceType?: RaceType;
 }

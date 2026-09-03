@@ -117,7 +117,7 @@ public class RaceRepository : IRaceRepository
         existingRace.Location = race.Location;
         existingRace.Distance = race.Distance;
         existingRace.ModifiedAt = DateTime.UtcNow;
-        existingRace.IsActive = race.IsActive;
+        existingRace.RaceType = race.RaceType;
 
         await _context.SaveChangesAsync();
         return existingRace;

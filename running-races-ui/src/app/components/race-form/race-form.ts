@@ -5,12 +5,15 @@ import { RaceService } from '../../services/race';
 import { Race } from '../../models/race.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../../services/auth';
-
+import { MatOptionModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { RaceType } from '../../features/relay-planner/models/relay-planner.models';
 
 @Component({
   selector: 'app-race-form',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, MatOptionModule, MatFormFieldModule, MatSelectModule],
   templateUrl: './race-form.html',
   styleUrl: './race-form.css'
 })
@@ -32,7 +35,8 @@ export class RaceFormComponent implements OnInit {
       name: ['', Validators.required],
       date: ['', Validators.required],
       location: ['', Validators.required],
-      distance: [0, [Validators.required, Validators.min(0.1)]]
+      distance: [0, [Validators.required, Validators.min(0.1)]],
+      raceType: [0]
     });
   }
 
@@ -45,7 +49,7 @@ export class RaceFormComponent implements OnInit {
     }
 
   }
- 
+
   loadRace(id: string): void {
     this.raceService.getRaceById(id).subscribe({
       next: (race) => {
@@ -56,7 +60,8 @@ export class RaceFormComponent implements OnInit {
           name: race.name,
           date: dateStr,
           location: race.location,
-          distance: race.distance
+          distance: race.distance,
+          raceType: race.raceType ?? 0
         });
       },
       error: (err) => {

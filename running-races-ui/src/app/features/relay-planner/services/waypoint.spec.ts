@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { WayPoint } from './waypoint';
-import { WayPoint as WayPointModel } from '../models/ub.models';
+import { WayPoint as WayPointModel } from '../models/relay-planner.models';
 import { environment } from '../../../../environments/environment';
 
 describe('WayPoint', () => {

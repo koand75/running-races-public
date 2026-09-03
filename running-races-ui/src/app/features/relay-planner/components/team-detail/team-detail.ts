@@ -9,7 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TeamService } from '../../services/team.service';
 import { RunnerService } from '../../services/runner.service';
-import { Team, Runner } from '../../models/ub.models';
+import { Team, Runner } from '../../models/relay-planner.models';
 import { ConfirmationDialogComponent } from '../../../../components/confirmation-dialog/confirmation-dialog';
 import { MatDialog } from '@angular/material/dialog';
 

@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Section, SectionImportPreviewResultDto } from '../models/ub.models';
+import { Section, SectionImportPreviewResultDto } from '../models/relay-planner.models';
 import { environment } from '../../../../environments/environment';
 
 @Injectable({

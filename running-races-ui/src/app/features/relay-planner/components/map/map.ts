@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as L from 'leaflet';
 import { inject } from '@angular/core';
 import { SectionService } from '../../services/section.service';
-import { Section } from '../../models/ub.models';
+import { Section } from '../../models/relay-planner.models';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';

@@ -8,7 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { RouterLink } from '@angular/router';
 import { WayPoint as WayPointService } from '../../services/waypoint';
-import { WayPoint as WayPointModel } from '../../models/ub.models';
+import { WayPoint as WayPointModel } from '../../models/relay-planner.models';
 import { MatDialog } from '@angular/material/dialog';
 import { WaypointDialog } from '../waypoint-dialog/waypoint-dialog';
 import { AuthService } from '../../../../services/auth';

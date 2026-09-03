@@ -7,7 +7,7 @@ import { MapService } from '../../services/map';
 import { SectionService } from '../../services/section.service';
 import { RunnerSectionService } from '../../services/runner-section.service';
 import { RunnerService } from '../../services/runner.service';
-import { Section, Runner, RunnerSection } from '../../models/ub.models';
+import { Section, Runner, RunnerSection } from '../../models/relay-planner.models';
 import { Router } from '@angular/router';
 
 @Component({

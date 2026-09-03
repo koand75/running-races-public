@@ -1,4 +1,6 @@
-﻿namespace RunningRacesApi.Models.DTOs;
+﻿using RunningRacesApi.Enums;
+
+namespace RunningRacesApi.Models.DTOs;
 public class RaceDto
 {
     public Guid Id { get; set; }
@@ -7,4 +9,5 @@ public class RaceDto
     public string Location { get; set; } = string.Empty;
     public double Distance { get; set; }
     public bool IsActive { get; set; }
+    public RaceType RaceType { get; set; }
 }

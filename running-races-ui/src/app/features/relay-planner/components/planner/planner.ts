@@ -10,9 +10,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { SectionService } from '../../services/section.service';
 import { RunnerService } from '../../services/runner.service';
 import { RunnerSectionService } from '../../services/runner-section.service';
-import { Section, Runner, RunnerSection } from '../../models/ub.models';
+import { Section, Runner, RunnerSection } from '../../models/relay-planner.models';
 import { TeamService } from '../../services/team.service';
-import { Team } from '../../models/ub.models';
+import { Team } from '../../models/relay-planner.models';
 
 interface RunnerStats {
     runner: Runner;

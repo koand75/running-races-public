@@ -6,7 +6,7 @@ import { of } from 'rxjs';
 import { SectionListComponent } from './section-list';
 import { SectionService } from '../../services/section.service';
 import { AuthService } from '../../../../services/auth';
-import { Section } from '../../models/ub.models';
+import { Section } from '../../models/relay-planner.models';
 
 describe('SectionList', () => {
     let component: SectionListComponent;

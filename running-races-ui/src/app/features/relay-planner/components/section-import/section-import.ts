@@ -1,13 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { SectionService } from '../../services/section.service';
-import { Section, SectionImportPreviewDto, WayPointIssueDto } from '../../models/ub.models';
+import { Section, SectionImportPreviewDto, WayPointIssueDto } from '../../models/relay-planner.models';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { WayPoint as WayPointService } from '../../services/waypoint';
-import { WayPoint as WayPointModel } from '../../models/ub.models';
-import { WayPointMatchStatus } from '../../models/ub.models';
+import { WayPoint as WayPointModel } from '../../models/relay-planner.models';
+import { WayPointMatchStatus } from '../../models/relay-planner.models';
 import { ConfirmationDialogComponent } from '../../../../components/confirmation-dialog/confirmation-dialog';
 import { MatOptionModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';

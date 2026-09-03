@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 import { TeamDetailComponent } from './team-detail';
 import { TeamService } from '../../services/team.service';
 import { RunnerService } from '../../services/runner.service';
-import { Team, Runner } from '../../models/ub.models';
+import { Team, Runner } from '../../models/relay-planner.models';
 import { MatDialog } from '@angular/material/dialog';
 
 describe('TeamDetail', () => {

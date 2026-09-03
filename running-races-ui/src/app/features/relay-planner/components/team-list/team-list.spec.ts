@@ -4,7 +4,7 @@ import { of } from 'rxjs';
 import { TeamListComponent } from './team-list';
 import { TeamService } from '../../services/team.service';
 import { AuthService } from '../../../../services/auth';
-import { Team } from '../../models/ub.models';
+import { Team } from '../../models/relay-planner.models';
 import { MatDialog } from '@angular/material/dialog';
 
 describe('TeamList', () => {
