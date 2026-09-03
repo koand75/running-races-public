@@ -24,6 +24,10 @@
                 <mat-icon matListItemIcon>admin_panel_settings</mat-icon>
                 Verseny adminisztráció
             </a>
+            <a mat-list-item routerLink="/pace-calculator" (click)="closeMenu()">
+                <mat-icon matListItemIcon>calculate</mat-icon>
+                Tempó kalkulátor
+            </a>
             <mat-divider></mat-divider>
             <a mat-list-item (click)="logout(); closeMenu()">
                 <mat-icon matListItemIcon>logout</mat-icon>

@@ -5,7 +5,7 @@ import { LoginComponent } from './components/login/login';
 import { adminGuard } from './guards/admin.guard';
 import { PublicLayoutComponent } from './components/public-layout/public-layout';
 import { AdminLayoutComponent } from './components/admin-layout/admin-layout';
-import { authGuard } from './guards/auth-guard';
+import { PaceCalculator } from './features/pace-calculator/pace-calculator';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/races', pathMatch: 'full' },
@@ -20,7 +20,8 @@ export const routes: Routes = [
       {
         path: 'ub',
         loadChildren: () => import('./features/ub/ub.routes').then(m => m.UB_ROUTES)
-      }
+      },
+      { path: 'pace-calculator', component: PaceCalculator }
     ]
   },
 

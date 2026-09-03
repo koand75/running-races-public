@@ -1,0 +1,8 @@
+.waypoint-issues table {
+  width: 100%;
+}
+
+.waypoint-issues .action-buttons {
+  display: flex;
+  gap: 8px;
+}

@@ -28,6 +28,10 @@
                 Verseny adminisztráció
             </a>
             }
+            <a mat-list-item routerLink="/pace-calculator" (click)="closeMenu()">
+                <mat-icon matListItemIcon>calculate</mat-icon>
+                Tempó kalkulátor
+            </a>
             <mat-divider></mat-divider>
             @if (isAuthenticated$ | async) {
             <a mat-list-item (click)="onLogout(); closeMenu()">

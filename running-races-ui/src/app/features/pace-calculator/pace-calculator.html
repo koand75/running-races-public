@@ -1,0 +1,68 @@
+<div class="container">
+    <div class="page-header">
+        <h1>Tempó kalkulátor</h1>
+    </div>
+
+    <div class="calculator-card">
+        <div class="field-group">
+            <label>Idő</label>
+            <div class="time-inputs">
+                <mat-form-field appearance="outline">
+                    <input matInput type="number" [(ngModel)]="timeHours" min="0" placeholder="Óra">
+                </mat-form-field>
+                <span>:</span>
+                <mat-form-field appearance="outline">
+                    <input matInput type="number" [(ngModel)]="timeMinutes" min="0" max="59" placeholder="Perc">
+                </mat-form-field>
+                <span>:</span>
+                <mat-form-field appearance="outline">
+                    <input matInput type="number" [(ngModel)]="timeSeconds" min="0" max="59" placeholder="Mp">
+                </mat-form-field>
+                <button class="btn-clear" (click)="clearTime()"><mat-icon>close</mat-icon></button>
+            </div>
+        </div>
+
+        <div class="field-group">
+            <label>Táv</label>
+            <div class="distance-inputs">
+                <mat-form-field appearance="outline">
+                    <input matInput type="number" [(ngModel)]="distance" min="0">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-select [(ngModel)]="distanceUnit">
+                        @for (opt of distanceOptions; track opt.label) {
+                        <mat-option [value]="opt.label">{{ opt.label }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+                <button class="btn-clear" (click)="clearDistance()"><mat-icon>close</mat-icon></button>
+            </div>
+        </div>
+
+        <div class="field-group">
+            <label>Tempó (/ km)</label>
+            <div class="time-inputs">
+                <mat-form-field appearance="outline">
+                    <input matInput type="number" [(ngModel)]="paceMinutes" min="0" placeholder="Perc">
+                </mat-form-field>
+                <span>:</span>
+                <mat-form-field appearance="outline">
+                    <input matInput type="number" [(ngModel)]="paceSeconds" min="0" max="59" placeholder="Mp">
+                </mat-form-field>
+                <button class="btn-clear" (click)="clearPace()"><mat-icon>close</mat-icon></button>
+            </div>
+        </div>
+
+        @if (filledCount() !== 2) { <p class="message">{{ filledCount() < 2
+                ? 'Töltsön ki pontosan 2 értéket a számoláshoz!' : 'Új számoláshoz töröljön ki egy értéket!' }}</p> }
+
+                <div class="calculator-actions">
+                    <button mat-raised-button color="primary" [disabled]="!canCalculate()" (click)="calculate()">
+                        <mat-icon>calculate</mat-icon> Számol
+                    </button>
+                    <button mat-stroked-button (click)="reset()">
+                        <mat-icon>refresh</mat-icon> Reset
+                    </button>
+                </div>
+    </div>
+</div>
