@@ -1,4 +1,6 @@
-﻿namespace RunningRacesApi.Models
+﻿using RunningRacesApi.Enums;
+
+namespace RunningRacesApi.Models
 {
     /// <summary>
     /// Futóverseny adatai
@@ -33,9 +35,10 @@
         /// </summary>
         /// <example>42.2</example>
         public double Distance { get; set; }
-
         public bool IsActive { get; set; } = true;
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime? ModifiedAt { get; set; }
+        public RaceType RaceType { get; set; }
+        public ICollection<Team> Teams { get; set; } = new List<Team>();
     }
 }

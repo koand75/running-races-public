@@ -28,12 +28,33 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
             entity.HasOne(s => s.StartWayPoint)
                 .WithMany() // Ha a WayPoint osztályban nincs ICollection<Section>
                 .HasForeignKey(s => s.StartWayPointId)
-                .OnDelete(DeleteBehavior.Restrict); // Fontos a Restrict, hogy ne legyen körkörös törlés
+                .OnDelete(DeleteBehavior.Restrict);
 
             // EndWayPoint kapcsolat definiálása
             entity.HasOne(s => s.EndWayPoint)
                 .WithMany()
                 .HasForeignKey(s => s.EndWayPointId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            entity.HasOne(s => s.Race)
+                .WithMany()
+                .HasForeignKey(s => s.RaceId)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        modelBuilder.Entity<WayPoint>(entity =>
+        {
+            entity.HasOne(s => s.Race)
+                .WithMany()
+                .HasForeignKey(s => s.RaceId)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        modelBuilder.Entity<RunnerSection>(entity =>
+        {
+            entity.HasOne(s => s.Race)
+                .WithMany()
+                .HasForeignKey(s => s.RaceId)
                 .OnDelete(DeleteBehavior.Restrict);
         });
 

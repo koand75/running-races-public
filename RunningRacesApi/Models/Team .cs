@@ -8,4 +8,6 @@ public class Team : BaseEntity
     public ICollection<Runner> Runners { get; set; } = new List<Runner>();
 
     public DateTime? StartTime { get; set; }
+
+    public ICollection<Race> Races { get; set; } = new List<Race>();
 }
