@@ -36,6 +36,12 @@ ez a projekt követi a [Semantic Versioning](https://semver.org/spec/v2.0.0.html
 - Telepítési pipeline
 
 ---
+## [0.10.1] - 2026-09-02
+
+### Hozzáadva
+- Tempó kalkulátor oldal (`/pace-calculator`) - idő, táv vagy tempó számítása bármely két értékből
+- Navigációs link az oldalsó menüben
+
 ## [0.10.0] - 2026-09-02
 
 ### Hozzáadva

@@ -35,6 +35,12 @@ this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Deployment pipeline
 
 ---
+## [0.10.1] - 2026-09-02
+
+### Added
+- Pace calculator page (`/pace-calculator`) - calculates time, distance or pace from any two values
+- Navigation link in sidebar menu
+
 ## [0.10.0] - 2026-09-02
 
 ### Added
