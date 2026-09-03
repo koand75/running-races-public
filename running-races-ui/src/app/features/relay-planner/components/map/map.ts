@@ -78,7 +78,7 @@ export class MapComponent implements OnInit, OnDestroy {
           `<b>${start.name}</b><br>${section.name} (${section.distance} km)`,
           section.order === 1
         )
-          .on('dblclick', () => this.router.navigate(['/ub/waypoints'], { queryParams: { search: start.name } }))
+          .on('dblclick', () => this.router.navigate(['/relay-planner/waypoints'], { queryParams: { search: start.name } }))
           .addTo(this.map);
       }
     });

@@ -7,7 +7,7 @@
       <button mat-raised-button color="primary" (click)="save()" [disabled]="!hasChanges">
         <mat-icon>save</mat-icon> Mentés
       </button>
-      <button mat-stroked-button routerLink="/ub/teams">
+      <button mat-stroked-button routerLink="/relay-planner/teams">
         <mat-icon>arrow_back</mat-icon> Vissza
       </button>
     </div>
@@ -44,7 +44,7 @@
     <!-- Jobb oldal: Szakaszok -->
     <div class="sections-panel">
       <h2>Szakaszok</h2>
-      <button mat-stroked-button [routerLink]="['/ub/teams', teamId, 'map']">
+      <button mat-stroked-button [routerLink]="['/relay-planner/teams', teamId, 'map']">
         <mat-icon>map</mat-icon> Térkép
       </button>
       <div class="sections-list">

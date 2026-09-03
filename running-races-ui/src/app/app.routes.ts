@@ -18,8 +18,8 @@ export const routes: Routes = [
       { path: 'races', component: RaceListComponent },
       { path: 'login', component: LoginComponent },
       {
-        path: 'ub',
-        loadChildren: () => import('./features/ub/ub.routes').then(m => m.UB_ROUTES)
+        path: 'relay-planner',
+        loadChildren: () => import('./features/relay-planner/relay-planner.routes').then(m => m.UB_ROUTES)
       },
       { path: 'pace-calculator', component: PaceCalculator }
     ]

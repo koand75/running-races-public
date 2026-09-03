@@ -30,7 +30,7 @@ export class TeamEdit implements OnInit {
   save(): void {
     if (!this.team) return;
     this.teamService.update(this.team).subscribe(() => {
-      this.router.navigate(['/ub/teams']);
+      this.router.navigate(['/relay-planner/teams']);
     });
   }
 }

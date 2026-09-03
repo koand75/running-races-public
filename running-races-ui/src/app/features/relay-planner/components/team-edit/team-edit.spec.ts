@@ -51,6 +51,6 @@ describe('TeamEdit', () => {
     spyOn(router, 'navigate');
     component.save();
     expect(mockTeamService.update).toHaveBeenCalledWith(mockTeam);
-    expect(router.navigate).toHaveBeenCalledWith(['/ub/teams']);
+    expect(router.navigate).toHaveBeenCalledWith(['/relay-planner/teams']);
   });
 });

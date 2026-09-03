@@ -4,13 +4,13 @@
   </div>
 
   <div class="header-actions">
-    <button mat-stroked-button routerLink="/ub/sections/import">
+    <button mat-stroked-button routerLink="/relay-planner/sections/import">
       <mat-icon>upload</mat-icon> CSV Import
     </button>
     <button mat-raised-button color="primary" (click)="exportCsv()">
       <mat-icon>download</mat-icon> Exportálás
     </button>
-    <button mat-stroked-button routerLink="/ub/waypoints">
+    <button mat-stroked-button routerLink="/relay-planner/waypoints">
       <mat-icon>place</mat-icon> Váltópontok
     </button>
   </div>
@@ -28,7 +28,7 @@
 
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>Név</th>
-      <td mat-cell *matCellDef="let section" style="cursor: pointer" [routerLink]="['/ub/waypoints']"
+      <td mat-cell *matCellDef="let section" style="cursor: pointer" [routerLink]="['/relay-planner/waypoints']"
         [queryParams]="{search: section.startWayPoint?.name}">
         {{ section.startWayPoint?.name ?? '?' }} - {{ section.endWayPoint?.name ?? '?' }}
       </td>
