@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RunningRacesApi.Data;
 
@@ -10,9 +11,11 @@ using RunningRacesApi.Data;
 namespace RunningRacesApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260907130024_AddStartEndDateToRace")]
+    partial class AddStartEndDateToRace
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.19");
@@ -274,7 +277,7 @@ namespace RunningRacesApi.Migrations
                         {
                             Id = new Guid("11111111-1111-1111-1111-111111111111"),
                             CreatedAt = new DateTime(2025, 1, 1, 10, 0, 0, 0, DateTimeKind.Utc),
-                            Date = new DateTime(2025, 10, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Distance = 42.200000000000003,
                             IsActive = true,
                             Location = "Budapest",
@@ -286,7 +289,7 @@ namespace RunningRacesApi.Migrations
                         {
                             Id = new Guid("11111111-1111-1111-1111-111111111112"),
                             CreatedAt = new DateTime(2025, 1, 1, 10, 0, 0, 0, DateTimeKind.Utc),
-                            Date = new DateTime(2025, 10, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Distance = 195.0,
                             IsActive = true,
                             Location = "Balatonfüred",
@@ -298,7 +301,7 @@ namespace RunningRacesApi.Migrations
                         {
                             Id = new Guid("11111111-1111-1111-1111-111111111113"),
                             CreatedAt = new DateTime(2025, 1, 1, 10, 0, 0, 0, DateTimeKind.Utc),
-                            Date = new DateTime(2025, 10, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Distance = 21.100000000000001,
                             IsActive = true,
                             Location = "Budapest",
@@ -310,7 +313,7 @@ namespace RunningRacesApi.Migrations
                         {
                             Id = new Guid("11111111-1111-1111-1111-111111111114"),
                             CreatedAt = new DateTime(2025, 1, 1, 10, 0, 0, 0, DateTimeKind.Utc),
-                            Date = new DateTime(2025, 10, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Distance = 10.0,
                             IsActive = true,
                             Location = "Budapest",

@@ -55,8 +55,8 @@ public class RaceRepository : IRaceRepository
                     ? query.OrderBy(r => r.Name)
                     : query.OrderByDescending(r => r.Name),
                 "date" => sortDirection == "asc"
-                    ? query.OrderBy(r => r.Date)
-                    : query.OrderByDescending(r => r.Date),
+                    ? query.OrderBy(r => r.StartDate)
+                    : query.OrderByDescending(r => r.StartDate),
                 "location" => sortDirection == "asc"
                     ? query.OrderBy(r => r.Location)
                     : query.OrderByDescending(r => r.Location),
@@ -113,7 +113,8 @@ public class RaceRepository : IRaceRepository
         }
 
         existingRace.Name = race.Name;
-        existingRace.Date = race.Date;
+        existingRace.StartDate = race.StartDate;
+        existingRace.EndDate = race.EndDate;
         existingRace.Location = race.Location;
         existingRace.Distance = race.Distance;
         existingRace.ModifiedAt = DateTime.UtcNow;
@@ -122,7 +123,6 @@ public class RaceRepository : IRaceRepository
         await _context.SaveChangesAsync();
         return existingRace;
     }
-
 
     public async Task<bool> DeleteAsync(Guid id)
     {

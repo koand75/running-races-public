@@ -25,6 +25,18 @@ namespace RunningRacesApi.Models
         public DateTime Date { get; set; }
 
         /// <summary>
+        /// Race start date (or event date if it's a single day)
+        /// </summary>
+        /// <example>2025-10-05</example>
+        public DateTime StartDate { get; set; }
+
+        /// <summary>
+        /// Race start date (or null date if it's a single day) 
+        /// </summary>
+        /// <example>2025-10-05</example>
+        public DateTime? EndDate { get; set; }
+
+        /// <summary>
         /// Helyszín városa
         /// </summary>
         /// <example>Budapest</example>
@@ -40,6 +52,6 @@ namespace RunningRacesApi.Models
         public DateTime? ModifiedAt { get; set; }
         public RaceType RaceType { get; set; }
         public ICollection<Team> Teams { get; set; } = new List<Team>();
-                public ICollection<Section> Sections { get; set; } = new List<Section>();
+        public ICollection<Section> Sections { get; set; } = new List<Section>();
     }
 }
