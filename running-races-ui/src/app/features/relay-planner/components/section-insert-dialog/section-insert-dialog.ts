@@ -12,6 +12,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { AsyncPipe } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-section-insert-dialog',
@@ -37,6 +38,8 @@ export class SectionInsertDialog implements OnInit {
   endWayPointControl = new FormControl<WayPointModel | string>('');
   filteredStartWayPoints$!: Observable<WayPointModel[]>;
   filteredEndWayPoints$!: Observable<WayPointModel[]>;
+  private route = inject(ActivatedRoute);
+  raceId: string = '';
 
   constructor(
     public dialogRef: MatDialogRef<SectionInsertDialog>,
@@ -60,7 +63,8 @@ export class SectionInsertDialog implements OnInit {
   }
 
   ngOnInit(): void {
-    this.waypointService.getAll().subscribe(wp => {
+    this.raceId = this.route.snapshot.paramMap.get('raceId') ?? '';
+    this.waypointService.getAll(this.raceId).subscribe(wp => {
       this.wayPoints = wp;
       this.filteredStartWayPoints$ = this.startWayPointControl.valueChanges.pipe(
         startWith(this.data.section?.startWayPoint ?? ''),

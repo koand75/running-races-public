@@ -21,6 +21,10 @@ export const routes: Routes = [
         path: 'relay-planner',
         loadChildren: () => import('./features/relay-planner/relay-planner.routes').then(m => m.UB_ROUTES)
       },
+      {
+        path: 'relay-planner/:raceId',
+        loadChildren: () => import('./features/relay-planner/relay-planner.routes').then(m => m.UB_ROUTES)
+      },
       { path: 'pace-calculator', component: PaceCalculator }
     ]
   },
@@ -34,6 +38,7 @@ export const routes: Routes = [
       { path: 'races', component: RaceListComponent },
       { path: 'races/new', component: RaceFormComponent },
       { path: 'races/:id/edit', component: RaceFormComponent }
+
     ]
   }
 ];

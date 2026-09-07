@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RunningRacesApi.Data;
 
@@ -10,9 +11,11 @@ using RunningRacesApi.Data;
 namespace RunningRacesApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260903205037_ModifyRaceIdInSEction")]
+    partial class ModifyRaceIdInSEction
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.19");
@@ -231,7 +234,8 @@ namespace RunningRacesApi.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .UseCollation("NOCASE");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");
@@ -406,10 +410,8 @@ namespace RunningRacesApi.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<Guid?>("RaceId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid?>("RaceId1")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .UseCollation("NOCASE");
 
                     b.Property<int?>("StartWayPointId")
                         .HasColumnType("INTEGER");
@@ -419,8 +421,6 @@ namespace RunningRacesApi.Migrations
                     b.HasIndex("EndWayPointId");
 
                     b.HasIndex("RaceId");
-
-                    b.HasIndex("RaceId1");
 
                     b.HasIndex("StartWayPointId");
 
@@ -598,13 +598,9 @@ namespace RunningRacesApi.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("RunningRacesApi.Models.Race", "Race")
-                        .WithMany()
+                        .WithMany("Sections")
                         .HasForeignKey("RaceId")
                         .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("RunningRacesApi.Models.Race", null)
-                        .WithMany("Sections")
-                        .HasForeignKey("RaceId1");
 
                     b.HasOne("RunningRacesApi.Models.WayPoint", "StartWayPoint")
                         .WithMany()

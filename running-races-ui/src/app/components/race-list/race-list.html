@@ -94,6 +94,13 @@
             @if (!!race.isActive) {
             <button mat-raised-button color="warn" (click)="deleteRace(race.id, race.name)">🗑️ Törlés</button>
             }
+
+            @if (race.raceType === 1) {
+            <button mat-raised-button color="primary" [routerLink]="['/relay-planner', race.id, 'sections']">
+              <mat-icon>route</mat-icon> Tervező
+            </button>
+            }
+
           </div>
         </td>
         }

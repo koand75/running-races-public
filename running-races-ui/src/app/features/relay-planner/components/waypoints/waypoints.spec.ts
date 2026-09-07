@@ -6,11 +6,14 @@ import { of } from 'rxjs';
 import { Waypoints } from './waypoints';
 import { WayPoint as WayPointService } from '../../services/waypoint';
 import { WayPoint as WayPointModel } from '../../models/relay-planner.models';
+import { ActivatedRoute } from '@angular/router';
+
 
 describe('Waypoints', () => {
   let component: Waypoints;
   let fixture: ComponentFixture<Waypoints>;
   let mockWaypointService: jasmine.SpyObj<WayPointService>;
+  const mockRaceId = '00000000-0000-0000-0000-000000000001';
 
   const mockWaypoints: WayPointModel[] = [
     { id: 1, name: 'Balatonfüred', lat: 46.95, lng: 17.89 },
@@ -28,7 +31,13 @@ describe('Waypoints', () => {
         provideHttpClient(),
         provideRouter([]),
         { provide: WayPointService, useValue: mockWaypointService },
-        { provide: MatDialog, useValue: { open: () => ({ afterClosed: () => of(true) }) } }
+        { provide: MatDialog, useValue: { open: () => ({ afterClosed: () => of(true) }) } },
+        {
+          provide: ActivatedRoute, useValue: {
+            snapshot: { paramMap: { get: () => mockRaceId } },
+            queryParams: of({})
+          }
+        }
       ]
     }).compileComponents();
 
@@ -48,7 +57,7 @@ describe('Waypoints', () => {
   it('should call delete service on delete confirmed', () => {
     mockWaypointService.delete.and.returnValue(of(undefined));
     component.delete(1);
-    expect(mockWaypointService.delete).toHaveBeenCalledWith(1);
+    expect(mockWaypointService.delete).toHaveBeenCalledWith(mockRaceId, 1);
   });
 
   it('should not call delete service if not confirmed', () => {

@@ -9,8 +9,9 @@ describe('SectionService', () => {
     let service: SectionService;
     let httpMock: HttpTestingController;
 
-    const apiUrl = `${environment.apiUrl}/section`;
     const mockSection: Section = { id: 1, name: 'S1', distance: 5, order: 1, startWayPointId: 1, endWayPointId: 2 };
+    const mockRaceId = '00000000-0000-0000-0000-000000000001';
+    const apiUrl = `${environment.apiUrl}/race/${mockRaceId}/section`;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -27,38 +28,38 @@ describe('SectionService', () => {
     });
 
     it('should get all sections', () => {
-        service.getAll().subscribe(data => expect(data).toEqual([mockSection]));
+        service.getAll(mockRaceId).subscribe(data => expect(data).toEqual([mockSection]));
         httpMock.expectOne(apiUrl).flush([mockSection]);
     });
 
     it('should get section by id', () => {
-        service.getById(1).subscribe(data => expect(data).toEqual(mockSection));
+        service.getById(mockRaceId, 1).subscribe(data => expect(data).toEqual(mockSection));
         httpMock.expectOne(`${apiUrl}/1`).flush(mockSection);
     });
 
     it('should create section', () => {
-        service.create(mockSection).subscribe(data => expect(data).toEqual(mockSection));
+        service.create(mockRaceId, mockSection).subscribe(data => expect(data).toEqual(mockSection));
         const req = httpMock.expectOne(apiUrl);
         expect(req.request.method).toBe('POST');
         req.flush(mockSection);
     });
 
     it('should update section', () => {
-        service.update(mockSection).subscribe();
+        service.update(mockRaceId, mockSection).subscribe();
         const req = httpMock.expectOne(`${apiUrl}/1`);
         expect(req.request.method).toBe('PUT');
         req.flush(null);
     });
 
     it('should delete section', () => {
-        service.delete(1).subscribe();
+        service.delete(mockRaceId, 1).subscribe();
         const req = httpMock.expectOne(`${apiUrl}/1`);
         expect(req.request.method).toBe('DELETE');
         req.flush(null);
     });
 
     it('should insert after order', () => {
-        service.insertAfter(1, mockSection).subscribe(data => expect(data).toEqual(mockSection));
+        service.insertAfter(mockRaceId, 1, mockSection).subscribe(data => expect(data).toEqual(mockSection));
         const req = httpMock.expectOne(`${apiUrl}/insert-after/1`);
         expect(req.request.method).toBe('POST');
         req.flush(mockSection);
@@ -66,16 +67,16 @@ describe('SectionService', () => {
 
     it('should export sections as csv', () => {
         const mockBlob = new Blob(['test'], { type: 'text/csv' });
-        service.exportCsv().subscribe(data => expect(data).toBeInstanceOf(Blob));
-        const req = httpMock.expectOne(`${environment.apiUrl}/section-export?includeId=false`);
+        service.exportCsv(mockRaceId).subscribe(data => expect(data).toBeInstanceOf(Blob));
+        const req = httpMock.expectOne(`${apiUrl}/section-export?includeId=false`);
         expect(req.request.method).toBe('GET');
         req.flush(mockBlob);
     });
 
     it('should export sections with id', () => {
         const mockBlob = new Blob(['test'], { type: 'text/csv' });
-        service.exportCsv(true).subscribe(data => expect(data).toBeInstanceOf(Blob));
-        const req = httpMock.expectOne(`${environment.apiUrl}/section-export?includeId=true`);
+        service.exportCsv(mockRaceId, true).subscribe(data => expect(data).toBeInstanceOf(Blob));
+        const req = httpMock.expectOne(`${apiUrl}/section-export?includeId=true`);
         expect(req.request.method).toBe('GET');
         req.flush(mockBlob);
     });

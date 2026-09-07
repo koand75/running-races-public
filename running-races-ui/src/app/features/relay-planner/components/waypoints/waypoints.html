@@ -7,7 +7,7 @@
                 <mat-icon>add</mat-icon> Új váltópont
             </button>
             }
-            <button mat-stroked-button routerLink="/relay-planner/sections">
+            <button mat-stroked-button [routerLink]="['/relay-planner', raceId, 'sections']">
                 <mat-icon>arrow_back</mat-icon> Vissza
             </button>
         </div>
@@ -64,7 +64,7 @@
                 <div class="action-buttons">
                     <button mat-mini-fab class="btn-edit" (click)="edit(wp)"><mat-icon>edit</mat-icon></button>
                     <button mat-mini-fab class="btn-delete" (click)="delete(wp.id)"><mat-icon>delete</mat-icon></button>
-                </div>   
+                </div>
                 }
             </td>
         </ng-container>

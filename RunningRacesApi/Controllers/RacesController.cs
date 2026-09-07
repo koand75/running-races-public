@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿using Mapster;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,10 +11,10 @@ namespace RunningRacesApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class RacesController(IRaceService service, IMapper mapper) : ControllerBase
+public class RacesController(IRaceService service) : ControllerBase
 {
     private readonly IRaceService _service = service;
-    private readonly IMapper _mapper = mapper;
+
 
     /// <summary>
     /// Get active races
@@ -24,7 +24,7 @@ public class RacesController(IRaceService service, IMapper mapper) : ControllerB
     {
         var result = await _service.GetPublicRacesAsync(searchModel);
 
-        return Ok(_mapper.Map<PagedResult<RaceDto>>(result));
+        return Ok(result.Adapt<PagedResult<RaceDto>>());
     }
 
     /// <summary>
@@ -35,7 +35,7 @@ public class RacesController(IRaceService service, IMapper mapper) : ControllerB
     public async Task<ActionResult<PagedResult<RaceDto>>> GetAdminRaces([FromQuery] RaceSearchModel searchModel)
     {
         var result = await _service.GetAdminRacesAsync(searchModel);
-        return Ok(_mapper.Map<PagedResult<RaceDto>>(result));
+        return Ok(result.Adapt<PagedResult<RaceDto>>());
     }
 
     /// <summary>
@@ -53,7 +53,7 @@ public class RacesController(IRaceService service, IMapper mapper) : ControllerB
                 return NotFound(new { message = "Race not found." });
             }
 
-            return Ok(_mapper.Map<RaceDto>(race));
+            return Ok(race.Adapt<RaceDto>());
         }
         catch (ArgumentException ex)
         {
@@ -70,8 +70,8 @@ public class RacesController(IRaceService service, IMapper mapper) : ControllerB
     {
         try
         {
-            var createdRace = await _service.CreateRaceAsync(_mapper.Map<Race>(race));
-            return CreatedAtAction(nameof(GetRaceById), new { id = createdRace.Id }, _mapper.Map<RaceDto>(createdRace));
+            var createdRace = await _service.CreateRaceAsync(race.Adapt<Race>());
+            return CreatedAtAction(nameof(GetRaceById), new { id = createdRace.Id }, createdRace.Adapt<RaceDto>());
         }
         catch (ArgumentException ex)
         {
@@ -92,7 +92,7 @@ public class RacesController(IRaceService service, IMapper mapper) : ControllerB
     {
         try
         {
-            var updatedRace = await _service.UpdateRaceAsync(id, _mapper.Map<Race>(race));
+            var updatedRace = await _service.UpdateRaceAsync(id, race.Adapt<Race>());
             return Ok(updatedRace);
         }
         catch (ArgumentException ex)

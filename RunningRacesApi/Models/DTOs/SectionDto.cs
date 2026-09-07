@@ -10,4 +10,5 @@ public class SectionDto
     public int? EndWayPointId { get; set; }
     public WayPointDto? StartWayPoint { get; set; }
     public WayPointDto? EndWayPoint { get; set; }
+    public Guid RaceId { get; set; }
 }

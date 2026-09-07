@@ -14,14 +14,14 @@ public class WayPointRepository : IWayPointRepository
         _context = context;
     }
 
-    public async Task<PagedResult<WayPoint>> GetAllAsync(BaseSearchModel? searchModel)
+    public async Task<PagedResult<WayPoint>> GetAllByRaceAsync(Guid raceId, BaseSearchModel? searchModel)
     {
         if (searchModel is null)
         {
             searchModel = new BaseSearchModel();
         }
 
-        IQueryable<WayPoint> query = _context.WayPoints;
+        IQueryable<WayPoint> query = _context.WayPoints.Where(x => x.RaceId == raceId);
 
         var totalCount = await query.CountAsync();
 

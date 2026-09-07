@@ -1,4 +1,4 @@
-using AutoMapper;
+using Mapster;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -7,7 +7,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 using RunningRacesApi.Data;
-using RunningRacesApi.Mapping;
+
+using RunningRacesApi.Mappings;
 using RunningRacesApi.Middleware;
 using RunningRacesApi.Models;
 using RunningRacesApi.Repositories;
@@ -18,13 +19,13 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddTransient<DatabaseSeeder>();
-builder.Services.AddAutoMapper(cfg =>
-{
-    cfg.AddProfile<MappingProfile>();
-});
+MappingConfig.Configure();
+builder.Services.AddMapster();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"))
+    .LogTo(Console.WriteLine, LogLevel.Information)
+           .EnableSensitiveDataLogging());
 
 builder.Services.AddScoped<IRaceRepository, RaceRepository>();
 builder.Services.AddScoped<IWayPointRepository, WayPointRepository>();

@@ -7,12 +7,14 @@ import { SectionListComponent } from './section-list';
 import { SectionService } from '../../services/section.service';
 import { AuthService } from '../../../../services/auth';
 import { Section } from '../../models/relay-planner.models';
+import { ActivatedRoute } from '@angular/router';
 
 describe('SectionList', () => {
     let component: SectionListComponent;
     let fixture: ComponentFixture<SectionListComponent>;
     let mockSectionService: jasmine.SpyObj<SectionService>;
     let mockAuthService: jasmine.SpyObj<AuthService>;
+    const mockRaceId = '00000000-0000-0000-0000-000000000001';
 
     const mockSections: Section[] = [
         { id: 1, name: 'S1', distance: 5, order: 1, startWayPointId: 1, endWayPointId: 2 },
@@ -23,6 +25,8 @@ describe('SectionList', () => {
         mockSectionService = jasmine.createSpyObj('SectionService', ['getAll', 'delete', 'update', 'insertAfter', 'importCsv']);
         mockAuthService = jasmine.createSpyObj('AuthService', ['isAdmin']);
         mockSectionService.getAll.and.returnValue(of(mockSections));
+        const mockRaceId = '00000000-0000-0000-0000-000000000001';
+
 
         await TestBed.configureTestingModule({
             imports: [SectionListComponent],
@@ -31,7 +35,12 @@ describe('SectionList', () => {
                 provideHttpClient(),
                 { provide: SectionService, useValue: mockSectionService },
                 { provide: AuthService, useValue: mockAuthService },
-                { provide: MatDialog, useValue: { open: () => ({ afterClosed: () => of(true) }) } }
+                { provide: MatDialog, useValue: { open: () => ({ afterClosed: () => of(true) }) } },
+                {
+                    provide: ActivatedRoute, useValue: {
+                        snapshot: { paramMap: { get: () => mockRaceId } }
+                    }
+                }
             ]
         }).compileComponents();
 
@@ -57,7 +66,7 @@ describe('SectionList', () => {
     it('should delete section when confirmed', () => {
         mockSectionService.delete.and.returnValue(of(void 0));
         component.deleteSection(1);
-        expect(mockSectionService.delete).toHaveBeenCalledWith(1);
+        expect(mockSectionService.delete).toHaveBeenCalledWith(mockRaceId, 1);
     });
 
     it('should not delete section when cancelled', () => {
@@ -89,5 +98,5 @@ describe('SectionList', () => {
         expect(component.pageSize).toBe(1);
         expect(component.pagedSections.length).toBe(1);
     });
-    
+
 });

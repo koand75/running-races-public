@@ -40,5 +40,6 @@ namespace RunningRacesApi.Models
         public DateTime? ModifiedAt { get; set; }
         public RaceType RaceType { get; set; }
         public ICollection<Team> Teams { get; set; } = new List<Team>();
+                public ICollection<Section> Sections { get; set; } = new List<Section>();
     }
 }

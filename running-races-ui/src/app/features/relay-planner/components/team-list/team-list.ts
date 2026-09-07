@@ -12,12 +12,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { AuthService } from '../../../../services/auth';
 import { ConfirmationDialogComponent } from '../../../../components/confirmation-dialog/confirmation-dialog';
 import { MatDialog } from '@angular/material/dialog';
+import { RaceService } from '../../../../services/race';
+import { Race } from '../../../../models/race.model';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
     selector: 'app-team-list',
     standalone: true,
     imports: [CommonModule, RouterLink, MatTableModule, MatButtonModule, MatIconModule
-        , FormsModule, MatInputModule, MatFormFieldModule
+        , FormsModule, MatInputModule, MatFormFieldModule, MatSelectModule
     ],
     templateUrl: './team-list.html',
     styleUrl: './team-list.css'
@@ -26,6 +29,10 @@ export class TeamListComponent implements OnInit {
     private authService = inject(AuthService);
     isAdmin(): boolean { return this.authService.isAdmin(); }
     private dialog = inject(MatDialog);
+
+    private raceService = inject(RaceService);
+    races: Race[] = [];
+    selectedRaceId: string = '';
 
     newTeam: Partial<Team> = { name: '', year: new Date().getFullYear() };
 
@@ -45,6 +52,13 @@ export class TeamListComponent implements OnInit {
 
     ngOnInit(): void {
         this.loadTeams();
+        this.loadRaces();
+    }
+
+    loadRaces(): void{
+        this.raceService.getRaces( 'public', { page: 1, pageSize: 50}).subscribe( resulét =>{
+            this.races = resulét.items.filter( x => x.raceType === 1)
+        } )
     }
 
     loadTeams(): void {

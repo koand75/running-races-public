@@ -10,8 +10,11 @@
     <button mat-raised-button color="primary" (click)="exportCsv()">
       <mat-icon>download</mat-icon> Exportálás
     </button>
-    <button mat-stroked-button routerLink="/relay-planner/waypoints">
+    <button mat-stroked-button [routerLink]="['/relay-planner', raceId, 'waypoints']">
       <mat-icon>place</mat-icon> Váltópontok
+    </button>
+    <button mat-stroked-button [routerLink]="['/relay-planner', raceId, 'map']">
+      <mat-icon>map</mat-icon> Térkép
     </button>
   </div>
 
@@ -59,6 +62,7 @@
           <button mat-mini-fab class="btn-delete" (click)="deleteSection(section.id)">
             <mat-icon>delete</mat-icon>
           </button>
+
           }
         </div>
       </td>

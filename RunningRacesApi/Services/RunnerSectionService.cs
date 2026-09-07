@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+
 using RunningRacesApi.Data;
 using RunningRacesApi.Models;
 
@@ -13,25 +14,25 @@ public class RunnerSectionService : IRunnerSectionService
         _context = context;
     }
 
-    public async Task<IEnumerable<RunnerSection>> GetByTeamAsync(int teamId)
+    public async Task<IEnumerable<RunnerSection>> GetByTeamAsync(Guid raceId, int teamId)
     {
         return await _context.RunnerSections
             .Include(rs => rs.Section)
             .Include(rs => rs.Runner)
-            .Where(rs => rs.Runner.TeamId == teamId)
+            .Where(rs => rs.Runner.TeamId == teamId && rs.RaceId == raceId)
             .OrderBy(rs => rs.Section.Order)
             .ToListAsync();
     }
 
-    public async Task SaveAllAsync(int teamId, List<RunnerSection> assignments)
+    public async Task SaveAllAsync(Guid raceId, int teamId, List<RunnerSection> assignments)
     {
         var oldAssignments = await _context.RunnerSections
-            .Where(rs => rs.Runner.TeamId == teamId)
+            .Where(rs => rs.Runner.TeamId == teamId && rs.RaceId == raceId)
             .ToListAsync();
-        
+
         _context.RunnerSections.RemoveRange(oldAssignments);
         _context.RunnerSections.AddRange(assignments);
-        
+
         await _context.SaveChangesAsync();
     }
 }

@@ -13,7 +13,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-section-import',
@@ -28,9 +28,11 @@ export class SectionImport {
   private sectionService = inject(SectionService);
   sections: Section[] = [];
   selectedFile: File | null = null;
+  private route = inject(ActivatedRoute);
+  raceId: string = '';
 
   loadSections(): void {
-    this.sectionService.getAll().subscribe(sections => {
+    this.sectionService.getAll(this.raceId).subscribe(sections => {
       this.sections = sections;
     });
   }
@@ -55,7 +57,7 @@ export class SectionImport {
     const input = event.target as HTMLInputElement;
     if (input.files?.length) {
       const file = input.files[0];
-      this.sectionService.previewCsv(file).subscribe(result => {
+      this.sectionService.previewCsv(this.raceId, file).subscribe(result => {
         this.previewResult = result.sections;
         this.wayPointIssues = result.wayPointIssues;
       });
@@ -65,7 +67,8 @@ export class SectionImport {
   displayedColumns = ['order', 'name', 'distance'];
 
   ngOnInit(): void {
-    this.waypointService.getAll().subscribe(wp => this.wayPoints = wp);
+    this.raceId = this.route.snapshot.paramMap.get('raceId') ?? '';
+    this.waypointService.getAll(this.raceId).subscribe(wp => this.wayPoints = wp);
   }
 
   executeImport(): void {
@@ -77,7 +80,7 @@ export class SectionImport {
       startWayPointId: s.matchedStartWayPointIds[0],
       endWayPointId: s.matchedEndWayPointIds[0]
     }));
-    this.sectionService.importSections(importData).subscribe(() => {
+    this.sectionService.importSections(this.raceId, importData).subscribe(() => {
       alert('Importálás sikeres!');
     });
   }
@@ -93,7 +96,7 @@ export class SectionImport {
       });
       dialogRef.afterClosed().subscribe(confirmed => {
         if (confirmed) {
-          this.waypointService.create({
+          this.waypointService.create(this.raceId, {
             id: 0,
             name: issue.name ?? '',
             lat: issue.lat,
@@ -129,7 +132,7 @@ export class SectionImport {
 
   overwriteWayPoint(issue: WayPointIssueDto, selectedId: number): void {
     // WayPoint frissítése az importált adatokkal
-    this.waypointService.update(selectedId, {
+    this.waypointService.update(this.raceId, selectedId, {
       id: selectedId,
       name: issue.name ?? '',
       lat: issue.lat,

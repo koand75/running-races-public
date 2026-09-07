@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿using Mapster;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,29 +9,20 @@ using RunningRacesApi.Services;
 namespace RunningRacesApi.Controllers;
 
 [ApiController]
-[Route("api/section-export")]
-public class SectionExportController : ControllerBase
+[Route("api/race/{raceId}/section-export")]
+public class SectionExportController(ISectionService sectionService,
+    ICsvExportService csvExportService) : ControllerBase
 {
-    private readonly ISectionService _sectionService;
-    private readonly ICsvExportService _csvExportService;
-    private readonly IMapper _mapper;
-
-    public SectionExportController(ISectionService sectionService,
-        ICsvExportService csvExportService,
-        IMapper mapper)
-    {
-        _sectionService = sectionService;
-        _csvExportService = csvExportService;
-        _mapper = mapper;
-    }
+    private readonly ISectionService _sectionService = sectionService;
+    private readonly ICsvExportService _csvExportService = csvExportService;
 
     [HttpGet]
     [Authorize]
-    public async Task<IActionResult> Export([FromQuery] bool includeId = false)
+    public async Task<IActionResult> Export(Guid raceId, [FromQuery] bool includeId = false)
     {
-        var sections = await _sectionService.GetAllAsync();
+        var sections = await _sectionService.GetAllByRaceAsync(raceId);
 
-        var sectiosnToExport = _mapper.Map<IEnumerable<SectionExportDto>>(sections);
+        var sectiosnToExport = sections.Adapt<IEnumerable<SectionExportDto>>();
 
         var columns = new List<string> {
             "Order",

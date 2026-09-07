@@ -9,6 +9,7 @@ import { RunnerSectionService } from '../../services/runner-section.service';
 import { RunnerService } from '../../services/runner.service';
 import { Section, Runner, RunnerSection } from '../../models/relay-planner.models';
 import { Router } from '@angular/router';
+import 'leaflet-polylinedecorator';
 
 @Component({
   selector: 'app-team-map',
@@ -30,6 +31,7 @@ export class TeamMapComponent implements OnInit, OnDestroy {
   sections: Section[] = [];
   runners: Runner[] = [];
   assignments: Map<number, RunnerSection> = new Map();
+  raceId: string = '';
 
   readonly colors = [
     '#078080', '#f45d48', '#6c5ce7', '#00b894',
@@ -38,6 +40,7 @@ export class TeamMapComponent implements OnInit, OnDestroy {
   ];
 
   ngOnInit(): void {
+    this.raceId = this.route.snapshot.paramMap.get('raceId') ?? '';
     this.teamId = Number(this.route.snapshot.paramMap.get('id'));
     this.map = this.mapService.initMap('team-map', [46.87, 17.73], 10);
     this.loadData();
@@ -48,11 +51,11 @@ export class TeamMapComponent implements OnInit, OnDestroy {
   }
 
   private loadData(): void {
-    this.sectionService.getAll().subscribe(sections => {
+    this.sectionService.getAll(this.raceId).subscribe(sections => {
       this.sections = sections;
       this.runnerService.getByTeam(this.teamId).subscribe(runners => {
         this.runners = runners;
-        this.runnerSectionService.getByTeam(this.teamId).subscribe(assignments => {
+        this.runnerSectionService.getByTeam(this.raceId, this.teamId).subscribe(assignments => {
           assignments.forEach(a => this.assignments.set(a.sectionId, a));
           this.drawMap();
         });
@@ -73,16 +76,30 @@ export class TeamMapComponent implements OnInit, OnDestroy {
       const color = runnerIndex >= 0 ? this.colors[runnerIndex % this.colors.length] : '#ccc';
       const runnerName = runnerIndex >= 0 ? this.runners[runnerIndex].name : 'Nincs futó';
 
-      L.polyline(
+      const line = L.polyline(
         [[start.lat, start.lng], [end.lat, end.lng]],
-        { color, weight: 8 }
-      )
+        { color, weight: 4 }
+      ) as L.Polyline;
+
+      line
         .bindPopup(`${section.name}<br><b>${runnerName}</b>`)
-        .addTo(this.map);;
+        .addTo(this.map);
+
+      (L as any).polylineDecorator(line, {
+        patterns: [{
+          offset: '50%',
+          repeat: 0,
+          symbol: (L as any).Symbol.arrowHead({
+            pixelSize: 10,
+            polygon: true,
+            pathOptions: { color, weight: 2, fillOpacity: 1 }
+          })
+        }]
+      }).addTo(this.map);
 
       this.mapService.createMarker(
         start.lat, start.lng, start.name,
-        `<b>${start.name}</b><br>${section.name} (${section.distance} km)`,
+        `<b>${start.name}</b><br>${section.name} (${section.distance} km)<br>${runnerName}`,
         section.order === 1
       )
         .on('dblclick', () => this.router.navigate(['/relay-planner/waypoints'], { queryParams: { search: start.name } }))

@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 using RunningRacesApi.Data;
-using RunningRacesApi.Models;
+
+using Section = RunningRacesApi.Models.Section;
 
 namespace RunningRacesApi.Services;
 
@@ -14,23 +15,24 @@ public class SectionService : ISectionService
         _context = context;
     }
 
-    public async Task<IEnumerable<Section>> GetAllAsync()
+    public async Task<IEnumerable<Section>> GetAllByRaceAsync(Guid raceId)
     {
         return await _context.Sections
             .Include(x => x.EndWayPoint)
             .Include(x => x.StartWayPoint)
+            .Include(x => x.Race)
+            .Where(x => x.RaceId == raceId)
             .OrderBy(s => s.Order)
             .ToListAsync();
     }
 
-    public async Task<Section?> GetByIdAsync(int id)
+    public async Task<Section?> GetSectionByRaceAsync(Guid raceId, int sectionId)
     {
         return await _context.Sections
                     .Include(x => x.StartWayPoint)
                     .Include(x => x.EndWayPoint)
-                    .FirstOrDefaultAsync(s => s.Id == id);
+                    .FirstOrDefaultAsync(x => x.Id == sectionId && x.RaceId == raceId);
     }
-
 
     public async Task<Section> CreateAsync(Section section)
     {

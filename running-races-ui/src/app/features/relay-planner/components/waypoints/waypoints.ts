@@ -25,7 +25,7 @@ import { ActivatedRoute } from '@angular/router';
     MatTableModule, MatButtonModule,
     MatIconModule, MatInputModule,
     MatFormFieldModule, RouterLink,
-    MatPaginatorModule, MatCheckboxModule    
+    MatPaginatorModule, MatCheckboxModule
   ],
   templateUrl: './waypoints.html',
   styleUrl: './waypoints.css'
@@ -47,6 +47,7 @@ export class Waypoints implements OnInit {
 
   searchTerm = '';
   showMissingOnly = false;
+  raceId: string = '';
 
   filteredWaypoints(): WayPointModel[] {
     return this.waypoints.filter(wp => {
@@ -59,6 +60,8 @@ export class Waypoints implements OnInit {
   private route = inject(ActivatedRoute);
 
   ngOnInit(): void {
+    this.raceId = this.route.snapshot.paramMap.get('raceId') ?? '';
+    console.log(this.raceId) ;
     this.route.queryParams.subscribe(params => {
       if (params['search']) {
         this.searchTerm = params['search'];
@@ -68,7 +71,7 @@ export class Waypoints implements OnInit {
   }
 
   load(): void {
-    this.waypointService.getAll().subscribe(wp => {
+    this.waypointService.getAll(this.raceId).subscribe(wp => {
       this.waypoints = wp;
       this.totalCount = wp.length;
       this.updatePage();
@@ -99,7 +102,7 @@ export class Waypoints implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.waypointService.delete(id).subscribe({
+        this.waypointService.delete(this.raceId, id).subscribe({
           next: () => this.load(),
           error: (err) => alert(err.error)
         });
@@ -115,7 +118,7 @@ export class Waypoints implements OnInit {
       width: '400px'
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result) this.waypointService.create(result as WayPointModel).subscribe(() => this.load());
+      if (result) this.waypointService.create(this.raceId, result as WayPointModel).subscribe(() => this.load());
     });
   }
 
@@ -125,7 +128,7 @@ export class Waypoints implements OnInit {
       width: '400px'
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result) this.waypointService.update(wp.id, result).subscribe(() => this.load());
+      if (result) this.waypointService.update(this.raceId, wp.id, result).subscribe(() => this.load());
     });
   }
 }

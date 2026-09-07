@@ -6,6 +6,7 @@ import { SectionInsertDialog } from './section-insert-dialog';
 import { of } from 'rxjs';
 import { WayPoint as WayPointService } from '../../services/waypoint';
 import { WayPoint as WayPointModel } from '../../models/relay-planner.models';
+import { provideRouter } from '@angular/router';
 
 describe('SectionInsertDialog', () => {
   let component: SectionInsertDialog;
@@ -19,10 +20,11 @@ describe('SectionInsertDialog', () => {
     await TestBed.configureTestingModule({
       imports: [SectionInsertDialog],
       providers: [
+        provideRouter([]),
         provideHttpClient(),
         { provide: MatDialogRef, useValue: { close: () => { } } },
         { provide: MAT_DIALOG_DATA, useValue: {} },
-        { provide: WayPointService, useValue: { getAll: () => of(mockWaypoints) } }
+        { provide: WayPointService, useValue: { getAll: (raceId: string) => of(mockWaypoints) } }
       ]
     })
       .compileComponents();

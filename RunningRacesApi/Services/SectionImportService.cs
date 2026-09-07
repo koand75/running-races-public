@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿using Mapster;
 
 using RunningRacesApi.Enums;
 using RunningRacesApi.Models;
@@ -8,26 +8,19 @@ using System.Text;
 
 namespace RunningRacesApi.Services;
 
-public class SectionImportService : ISectionImportService
+public class SectionImportService(ISectionService sectionService, IWayPointService wayPointService) : ISectionImportService
 {
-    private readonly ISectionService _sectionService;
-    private readonly IWayPointService _wayPointService;
-    private readonly IMapper _mapper;
+    private readonly ISectionService _sectionService = sectionService;
+    private readonly IWayPointService _wayPointService = wayPointService;
 
-    public SectionImportService(ISectionService sectionService, IWayPointService wayPointService, IMapper mapper)
-    {
-        _sectionService = sectionService;
-        _wayPointService = wayPointService;
-        _mapper = mapper;
-    }
-
-    public async Task<int> ImportAsync(List<SectionImportDto> sectionsImport)
+    public async Task<int> ImportAsync(Guid raceId, List<SectionImportDto> sectionsImport)
     {
         var sections = new List<Section>();
 
         foreach (var item in sectionsImport)
         {
-            var section = _mapper.Map<Section>(item);
+            var section = item.Adapt<Section>();
+            section.RaceId = raceId;
             var startWp = await _wayPointService.GetByIdAsync(section.StartWayPointId);
             var endWp = await _wayPointService.GetByIdAsync(section.EndWayPointId);
 
@@ -42,7 +35,7 @@ public class SectionImportService : ISectionImportService
         return sections.Count;
     }
 
-    public async Task<SectionImportPreviewResultDto> PreviewAsync(IFormFile file)
+    public async Task<SectionImportPreviewResultDto> PreviewAsync(Guid raceId, IFormFile file)
     {
         var sections = new List<SectionImportPreviewDto>();
 
@@ -78,7 +71,7 @@ public class SectionImportService : ISectionImportService
             PageSize = int.MaxValue
         };
 
-        var wayPoints = await _wayPointService.GetAllAsync(searchModel);
+        var wayPoints = await _wayPointService.GetAllByRaceAsync(raceId, searchModel);
         var matched = Match(sections, wayPoints.Items);
 
 

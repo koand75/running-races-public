@@ -20,6 +20,17 @@
         }
     </div>
 
+    <div class="header-actions">
+        <mat-form-field appearance="outline">
+            <mat-label>Verseny kiválasztása</mat-label>
+            <mat-select [(ngModel)]="selectedRaceId">
+                @for (race of races; track race.id) {
+                <mat-option [value]="race.id">{{ race.name }}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+    </div>
+
     <table mat-table [dataSource]="teams">
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef>Név</th>
@@ -45,9 +56,12 @@
                     <button mat-raised-button color="primary" [routerLink]="[team.id]">
                         <mat-icon>group</mat-icon> Futók
                     </button>
-                    <button mat-raised-button color="primary" [routerLink]="[team.id, 'plan']">
+                    @if (selectedRaceId) {
+                    <button mat-raised-button color="primary"
+                        [routerLink]="['/relay-planner', selectedRaceId, 'teams', team.id, 'plan']">
                         <mat-icon>map</mat-icon> Tervezés
                     </button>
+                    }
                     @if (isAdmin()) {
                     <button mat-raised-button color="primary" [routerLink]="[team.id, 'edit']">
                         <mat-icon>edit</mat-icon>

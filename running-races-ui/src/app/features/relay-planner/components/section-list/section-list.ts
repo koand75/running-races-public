@@ -14,6 +14,7 @@ import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../../services/auth';
 import { ConfirmationDialogComponent } from '../../../../components/confirmation-dialog/confirmation-dialog';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-section-list',
@@ -49,12 +50,16 @@ export class SectionListComponent implements OnInit {
   insertingAfterOrder: number | null = null;
   newSection: Partial<Section> = {};
 
+  private route = inject(ActivatedRoute);
+  raceId: string = '';
+
   ngOnInit(): void {
+    this.raceId = this.route.snapshot.paramMap.get('raceId') ?? '';
     this.loadSections();
   }
 
   loadSections(): void {
-    this.sectionService.getAll().subscribe(sections => {
+    this.sectionService.getAll(this.raceId).subscribe(sections => {
       this.sections = sections;
       this.updatePage();
     });
@@ -87,7 +92,7 @@ export class SectionListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.sectionService.update({ ...section, ...result }).subscribe(() => {
+        this.sectionService.update(this.raceId, { ...section, ...result }).subscribe(() => {
           this.loadSections();
         });
       }
@@ -105,7 +110,7 @@ export class SectionListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.sectionService.delete(id).subscribe(() => {
+        this.sectionService.delete(this.raceId, id).subscribe(() => {
           this.loadSections();
         });
       }
@@ -120,7 +125,7 @@ export class SectionListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.sectionService.insertAfter(order, result as Section).subscribe(() => {
+        this.sectionService.insertAfter(this.raceId, order, result as Section).subscribe(() => {
           this.loadSections();
         });
       }
@@ -134,7 +139,7 @@ export class SectionListComponent implements OnInit {
   }
 
   exportCsv(includeId: boolean = false): void {
-    this.sectionService.exportCsv(includeId).subscribe(blob => {
+    this.sectionService.exportCsv(this.raceId, includeId).subscribe(blob => {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;

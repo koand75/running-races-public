@@ -6,6 +6,7 @@ import { TeamService } from '../../services/team.service';
 import { AuthService } from '../../../../services/auth';
 import { Team } from '../../models/relay-planner.models';
 import { MatDialog } from '@angular/material/dialog';
+import { provideHttpClient } from '@angular/common/http';
 
 describe('TeamList', () => {
     let component: TeamListComponent;
@@ -26,6 +27,7 @@ describe('TeamList', () => {
         await TestBed.configureTestingModule({
             imports: [TeamListComponent],
             providers: [
+                provideHttpClient(),
                 provideRouter([]),
                 { provide: TeamService, useValue: mockTeamService },
                 { provide: AuthService, useValue: mockAuthService },

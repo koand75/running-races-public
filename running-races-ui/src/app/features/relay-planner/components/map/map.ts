@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { MapService } from '../../services/map';
 import 'leaflet-polylinedecorator';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-map',
@@ -20,10 +21,13 @@ export class MapComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   private sectionService = inject(SectionService);
   private map!: L.Map;
+  private route = inject(ActivatedRoute);
+  raceId: string = '';
 
   sections: Section[] = [];
 
   ngOnInit(): void {
+    this.raceId = this.route.snapshot.paramMap.get('raceId') ?? '';
     this.initMap();
     this.loadSections();
   }
@@ -41,7 +45,7 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   private loadSections(): void {
-    this.sectionService.getAll().subscribe(sections => {
+    this.sectionService.getAll(this.raceId).subscribe(sections => {
       this.sections = sections;
       this.drawSections();
     });

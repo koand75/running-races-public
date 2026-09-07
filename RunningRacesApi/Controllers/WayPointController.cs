@@ -1,49 +1,47 @@
-﻿using AutoMapper;
+﻿using Mapster;
 
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 using RunningRacesApi.Models;
 using RunningRacesApi.Models.DTOs;
 using RunningRacesApi.Services;
 
-using System.Text;
-
 [ApiController]
-[Route("api/[controller]")]
-public class WayPointController(IWayPointService service, IMapper mapper) : ControllerBase
+[Route("api/race/{raceId}/waypoint")]
+public class WayPointController(IWayPointService service) : ControllerBase
 {
     private readonly IWayPointService _service = service;
-    private readonly IMapper _mapper = mapper;   
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<WayPointDto>>> GetAll(int? pageSize)
+    public async Task<ActionResult<IEnumerable<WayPointDto>>> GetAll(Guid raceId, int? pageSize)
     {
         var searchModel = new BaseSearchModel
         {
             PageSize = pageSize.HasValue ? pageSize.Value : 10
         };
 
-        var result = await _service.GetAllAsync(searchModel);
-        return Ok(_mapper.Map<PagedResult<WayPointDto>>(result));
+        var result = await _service.GetAllByRaceAsync(raceId, searchModel);
+        return Ok(result.Adapt<PagedResult<WayPointDto>>());
     }
 
     [HttpPost]
     [Authorize(Roles = "Admin")]
-    public async Task<ActionResult<WayPointDto>> Create(WayPointDto wayPoint)
+    public async Task<ActionResult<WayPointDto>> Create(Guid raceId, WayPointDto wayPoint)
     {
-        var created = await _service.CreateAsync(_mapper.Map<WayPoint>(wayPoint));
-        return CreatedAtAction(nameof(GetAll), new { id = created.Id }, _mapper.Map<WayPointDto>(created));
+        wayPoint.RaceId = raceId;
+        var created = await _service.CreateAsync(wayPoint.Adapt<WayPoint>());
+        return CreatedAtAction(nameof(GetAll), new { id = created.Id }, created.Adapt<WayPointDto>());
     }
 
     [HttpPut("{id}")]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> Update(int id, WayPointDto wayPoint)
+    public async Task<IActionResult> Update(Guid raceId, int id, WayPointDto wayPoint)
     {
-        var updated = await _service.UpdateAsync(id, _mapper.Map<WayPoint>(wayPoint));
+        wayPoint.RaceId = raceId;
+        var updated = await _service.UpdateAsync(id, wayPoint.Adapt<WayPoint>());
         if (updated == null) return NotFound();
-        return Ok(_mapper.Map<WayPointDto>(updated));
+        return Ok(updated.Adapt<WayPointDto>());
     }
 
     [HttpDelete("{id}")]

@@ -11,41 +11,44 @@ export class SectionService {
   private http = inject(HttpClient);
   private apiUrl = `${environment.apiUrl}/section`;
 
-  getAll(): Observable<Section[]> {
-    return this.http.get<Section[]>(this.apiUrl);
+  private getApiUrl(raceId: string): string {
+    return `${environment.apiUrl}/race/${raceId}/section`;
   }
 
-  getById(id: number): Observable<Section> {
-    return this.http.get<Section>(`${this.apiUrl}/${id}`);
+  getAll(raceId: string): Observable<Section[]> {
+    return this.http.get<Section[]>(this.getApiUrl(raceId));
   }
 
-  create(section: Section): Observable<Section> {
-    return this.http.post<Section>(this.apiUrl, section);
+  getById(raceId: string, id: number): Observable<Section> {
+    return this.http.get<Section>(`${this.getApiUrl(raceId)}/${id}`);
   }
 
-  update(section: Section): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/${section.id}`, section);
+  create(raceId: string, section: Section): Observable<Section> {
+    return this.http.post<Section>(this.getApiUrl(raceId), section);
   }
 
-  delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  update(raceId: string, section: Section): Observable<void> {
+    return this.http.put<void>(`${this.getApiUrl(raceId)}/${section.id}`, section);
   }
 
-  previewCsv(file: File): Observable<SectionImportPreviewResultDto> {
+  delete(raceId: string, id: number): Observable<void> {
+    return this.http.delete<void>(`${this.getApiUrl(raceId)}/${id}`);
+  }
+
+  previewCsv(raceId: string, file: File): Observable<SectionImportPreviewResultDto> {
     const formData = new FormData();
     formData.append('file', file);
-    return this.http.post<SectionImportPreviewResultDto>(`${environment.apiUrl}/section-import/preview`, formData);
+    return this.http.post<SectionImportPreviewResultDto>(`${this.getApiUrl(raceId)}/section-import/preview`, formData);
   }
 
-  insertAfter(afterOrder: number, section: Section): Observable<Section> {
-    return this.http.post<Section>(`${this.apiUrl}/insert-after/${afterOrder}`, section);
+  insertAfter(raceId: string, afterOrder: number, section: Section): Observable<Section> {
+    return this.http.post<Section>(`${this.getApiUrl(raceId)}/insert-after/${afterOrder}`, section);
   }
 
-  exportCsv(includeId: boolean = false): Observable<Blob> {
-    return this.http.get(`${environment.apiUrl}/section-export?includeId=${includeId}`, { responseType: 'blob' });
+  exportCsv(raceId: string, includeId: boolean = false): Observable<Blob> {
+    return this.http.get(`${this.getApiUrl(raceId)}/section-export?includeId=${includeId}`, { responseType: 'blob' });
   }
-  importSections(sections: any[]): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/section-import`, sections);
+  importSections(raceId: string, sections: any[]): Observable<any> {
+    return this.http.post(`${this.getApiUrl(raceId)}/section-import`, sections);
   }
-
 }
