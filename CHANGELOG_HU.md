@@ -36,6 +36,23 @@ ez a projekt követi a [Semantic Versioning](https://semver.org/spec/v2.0.0.html
 - Telepítési pipeline
 
 ---
+## [0.11.0] - 2026-09-07
+
+### Hozzáadva
+- RaceType enum hozzáadva a Race modellhez (váltóverseny támogatás)
+- RaceId FK hozzáadva a Section, WayPoint, RunnerSection táblákhoz
+- RaceTeam many-to-many kapcsolat (Team ↔ Race)
+- Váltástervező elérhető a verseny listából "Tervező" gombbal
+- Versenyválasztó dropdown a csapatok oldalán
+- Iránynyilak a csapat térképen
+- Szakász térkép elérhető a szakaszok listájáról
+
+### Változott
+- UB modul átnevezve relay-planner-re
+- Minden szakasz/váltópont/beosztás endpoint versenyhez kötve (api/race/:raceId/...)
+- Oldalsó menü átszervezve - relay planner linkek eltávolítva (verseny listából érhető el)
+- Mapster váltotta fel az AutoMapper-t a DTO mappinghez
+
 ## [0.10.1] - 2026-09-02
 
 ### Hozzáadva

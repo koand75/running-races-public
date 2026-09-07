@@ -1,21 +1,22 @@
 # ?? Running Races - Management Application
 
-Full-stack running race management application with modern technologies. ASP.NET Core backend with JWT authentication + Angular 20 standalone frontend.
+Full-stack running race management application with modern technologies. ASP.NET Core 9 backend with JWT authentication + Angular 20 standalone frontend.
 
 ---
 
 ## ?? Tech Stack
 
 ### Backend
-- **ASP.NET Core 8.0** - Web API
-- **Entity Framework Core 8.0** - ORM
+- **ASP.NET Core 9.0** - Web API
+- **Entity Framework Core 9.0** - ORM
 - **ASP.NET Identity** - User management & password hashing
 - **SQLite** - Database (Development)
 - **JWT Bearer Authentication** - Security
 - **Swagger/OpenAPI** - API documentation
-- **xUnit 2.6.5** - Testing framework
+- **Mapster** - DTO mapping
+- **xUnit 2.9.3** - Testing framework
 - **Moq 4.20.70** - Mocking library
-- **FluentAssertions 6.12.0** - Readable assertions
+- **FluentAssertions 8.10.0** - Readable assertions
 
 ### Frontend
 - **Angular 20** - SPA Framework (Standalone Components)
@@ -23,7 +24,7 @@ Full-stack running race management application with modern technologies. ASP.NET
 - **RxJS 7.8** - Reactive programming
 - **Angular Material 20** - UI Components
 - **Angular CDK** - Drag & drop
-- **Leaflet** - Interactive maps
+- **Leaflet** - Interactive maps with directional arrows
 - **Angular Router** - Routing + Guards
 - **jwt-decode** - Token parsing
 - **Atma Font** - Custom typography
@@ -40,19 +41,18 @@ RunningRaces/
 ©¦   ©¦   ©À©¤©¤ AuthController.cs
 ©¦   ©¦   ©À©¤©¤ TeamController.cs
 ©¦   ©¦   ©À©¤©¤ RunnerController.cs
-©¦   ©¦   ©À©¤©¤ SectionController.cs
+©¦   ©¦   ©À©¤©¤ RaceSectionController.cs
 ©¦   ©¦   ©À©¤©¤ SectionImportController.cs
 ©¦   ©¦   ©À©¤©¤ SectionExportController.cs
 ©¦   ©¦   ©À©¤©¤ RunnerSectionController.cs
 ©¦   ©¦   ©¸©¤©¤ WayPointController.cs
-©¦   ©¦
 ©¦   ©À©¤©¤ Services/                     # Business logic layer
 ©¦   ©À©¤©¤ Repositories/                 # Data access layer
 ©¦   ©À©¤©¤ Models/                       # Domain models + DTOs
 ©¦   ©À©¤©¤ Data/                         # DbContext + Seeder
 ©¦   ©À©¤©¤ Middleware/                   # JWT blacklist
-©¦   ©À©¤©¤ Helpers/                      # CSV export
-©¦   ©¸©¤©¤ Enums/                        # WayPointMatchStatus
+©¦   ©À©¤©¤ Mappings/                     # Mapster config
+©¦   ©¸©¤©¤ Enums/                        # RaceType, WayPointMatchStatus
 ©¦
 ©À©¤©¤ RunningRacesApi.Tests/            # ?? Unit Tests
 ©¦
@@ -60,20 +60,20 @@ RunningRaces/
 ©¦   ©À©¤©¤ src/app/
 ©¦   ©¦   ©À©¤©¤ components/               # Shared components
 ©¦   ©¦   ©À©¤©¤ features/
-©¦   ©¦   ©¦   ©¸©¤©¤ ub/                   # UltraBalaton module
-©¦   ©¦   ©¦       ©À©¤©¤ components/
-©¦   ©¦   ©¦       ©¦   ©À©¤©¤ section-list/
-©¦   ©¦   ©¦       ©¦   ©À©¤©¤ section-import/
-©¦   ©¦   ©¦       ©¦   ©À©¤©¤ section-import-dialog/
-©¦   ©¦   ©¦       ©¦   ©À©¤©¤ team-list/
-©¦   ©¦   ©¦       ©¦   ©À©¤©¤ team-detail/
-©¦   ©¦   ©¦       ©¦   ©À©¤©¤ team-edit/
-©¦   ©¦   ©¦       ©¦   ©À©¤©¤ planner/
-©¦   ©¦   ©¦       ©¦   ©À©¤©¤ waypoints/
-©¦   ©¦   ©¦       ©¦   ©À©¤©¤ map/
-©¦   ©¦   ©¦       ©¦   ©¸©¤©¤ team-map/
-©¦   ©¦   ©¦       ©À©¤©¤ services/
-©¦   ©¦   ©¦       ©¸©¤©¤ models/
+©¦   ©¦   ©¦   ©À©¤©¤ relay-planner/        # Relay race planner module
+©¦   ©¦   ©¦   ©¦   ©À©¤©¤ components/
+©¦   ©¦   ©¦   ©¦   ©¦   ©À©¤©¤ section-list/
+©¦   ©¦   ©¦   ©¦   ©¦   ©À©¤©¤ section-import/
+©¦   ©¦   ©¦   ©¦   ©¦   ©À©¤©¤ team-list/
+©¦   ©¦   ©¦   ©¦   ©¦   ©À©¤©¤ team-detail/
+©¦   ©¦   ©¦   ©¦   ©¦   ©À©¤©¤ team-edit/
+©¦   ©¦   ©¦   ©¦   ©¦   ©À©¤©¤ planner/
+©¦   ©¦   ©¦   ©¦   ©¦   ©À©¤©¤ waypoints/
+©¦   ©¦   ©¦   ©¦   ©¦   ©À©¤©¤ map/
+©¦   ©¦   ©¦   ©¦   ©¦   ©¸©¤©¤ team-map/
+©¦   ©¦   ©¦   ©¦   ©À©¤©¤ services/
+©¦   ©¦   ©¦   ©¦   ©¸©¤©¤ models/
+©¦   ©¦   ©¦   ©¸©¤©¤ pace-calculator/      # Standalone pace calculator
 ©¦   ©¦   ©À©¤©¤ guards/
 ©¦   ©¦   ©À©¤©¤ interceptors/
 ©¦   ©¦   ©¸©¤©¤ services/
@@ -133,21 +133,21 @@ RunningRaces/
 | `DELETE` | `/races/{id}` | Admin | Soft delete |
 | `PATCH` | `/races/{id}/restore` | Admin | Restore deleted race |
 
-### UltraBalaton Endpoints
+### Relay Planner Endpoints (race-scoped)
 
 | Method | Endpoint | Role | Description |
 |--------|----------|------|-------------|
-| `GET` | `/section` | Public | All sections with waypoints |
-| `POST` | `/section-import/preview` | Admin | CSV preview with waypoint matching |
-| `POST` | `/section-import` | Admin | Import sections from DTO list |
-| `GET` | `/section-export` | Auth | Export sections as CSV |
-| `GET` | `/waypoint` | Public | All waypoints |
-| `POST` | `/waypoint` | Admin | Create waypoint |
-| `PUT` | `/waypoint/{id}` | Admin | Update waypoint |
-| `DELETE` | `/waypoint/{id}` | Admin | Delete waypoint (if not in use) |
-| `GET` | `/team` | Auth | All teams |
-| `GET` | `/runner` | Auth | Runners by team |
-| `PUT` | `/team/{id}/assignments` | Auth | Save planner assignments |
+| `GET` | `/race/{raceId}/section` | Public | Sections by race |
+| `POST` | `/race/{raceId}/section-import/preview` | Admin | CSV preview with waypoint matching |
+| `POST` | `/race/{raceId}/section-import` | Admin | Import sections |
+| `GET` | `/race/{raceId}/section-export` | Auth | Export sections as CSV |
+| `GET` | `/race/{raceId}/waypoint` | Public | Waypoints by race |
+| `POST` | `/race/{raceId}/waypoint` | Admin | Create waypoint |
+| `PUT` | `/race/{raceId}/waypoint/{id}` | Admin | Update waypoint |
+| `DELETE` | `/race/{raceId}/waypoint/{id}` | Admin | Delete waypoint |
+| `GET` | `/team` | Auth | All teams (global) |
+| `GET` | `/race/{raceId}/team/{teamId}/assignments` | Auth | Runner assignments |
+| `PUT` | `/race/{raceId}/team/{teamId}/assignments` | Auth | Save assignments |
 
 ---
 
@@ -172,18 +172,19 @@ RunningRaces/
 
 ---
 
-## ??? UltraBalaton Module
+## ??? Relay Planner Module
 
-The UB module manages team-based ultra marathon planning:
+The relay-planner module manages team-based relay race planning, accessible from the race list when a race has `RaceType = Relay`:
 
-- **Sections** ¨C 58 race sections with waypoints and distances
-- **Waypoints** ¨C GPS coordinates for each transition point
-- **Teams** ¨C Teams with start time
+- **Sections** ¨C Race sections with waypoints and distances (race-scoped)
+- **Waypoints** ¨C GPS coordinates for each transition point (race-scoped)
+- **Teams** ¨C Global teams with start time
 - **Runners** ¨C Team members with base pace
 - **Planner** ¨C Drag & drop runner-section assignment
-- **Map** ¨C Interactive Leaflet map with section routes
-- **Team Map** ¨C Runner assignments visualized per team
-- **Import/Export** ¨C CSV import with waypoint matching preview
+- **Map** ¨C Interactive Leaflet map with directional arrows
+- **Team Map** ¨C Runner assignments visualized per team with colors
+- **Import/Export** ¨C CSV import with two-step waypoint matching preview
+- **Pace Calculator** ¨C Standalone tool: calculate time, distance or pace from any two values
 
 ---
 
@@ -191,7 +192,7 @@ The UB module manages team-based ultra marathon planning:
 
 ### Prerequisites
 
-- **.NET 8 SDK** - [Download](https://dotnet.microsoft.com/download)
+- **.NET 9 SDK** - [Download](https://dotnet.microsoft.com/download)
 - **Node.js 20+** - [Download](https://nodejs.org/)
 - **Angular CLI 20+** - `npm install -g @angular/cli`
 - **Docker** (optional) - [Download](https://www.docker.com/)
@@ -206,6 +207,8 @@ dotnet run
 # API: https://localhost:7156
 # Swagger: https://localhost:7156/swagger
 ```
+
+> ?? If you have existing WayPoint and Section data, you must manually set the `RaceId` field in the database after migration.
 
 ### Frontend Setup
 
@@ -241,7 +244,6 @@ dotnet test
 |-------|-------|--------|
 | Repository | 18 | ? |
 | Service | 16 | ? |
-| Controller | 17 | ? |
 | Auth | 3 | ? |
 
 ### Frontend Tests
@@ -267,20 +269,25 @@ ng test --watch=false
 - JWT authentication with token blacklist
 - Role-based authorization (Admin/User)
 - CRUD for races, sections, teams, runners, waypoints
+- Race-scoped sections, waypoints and assignments (RaceId FK)
+- RaceType enum (Relay support)
 - CSV import with waypoint matching (Exact/Partial/NotFound)
 - CSV export for sections
 - Generic `CsvExportService`
 - `BaseSearchModel` for shared pagination
 - Soft delete + restore for races
+- Mapster DTO mapping
 - Docker support
 
 ### Frontend
 - Angular 20 Standalone Components
-- UltraBalaton module (sections, teams, planner, map)
-- Interactive Leaflet maps (global + team-specific)
+- Relay planner module (sections, teams, planner, map)
+- Race selector for relay planner access
+- Interactive Leaflet maps with directional arrows
 - Drag & drop planner with block swapping
 - Section import with two-step preview flow
 - CSV export with optional ID
+- Pace calculator
 - Environment-based API URL configuration
 - MatSidenav hamburger menu
 - Role-based UI
@@ -326,11 +333,11 @@ without written permission from the author.
 
 | Metric | Value |
 |--------|-------|
-| Backend code | ~12,000 lines (C#) |
-| Frontend code | ~6,000 lines (TypeScript/HTML/CSS) |
-| Backend tests | 54 unit tests |
+| Backend code | ~13,000 lines (C#) |
+| Frontend code | ~7,000 lines (TypeScript/HTML/CSS) |
+| Backend tests | 37 unit tests |
 | Frontend tests | 90+ unit tests |
-| Angular components | 20+ standalone components |
-| API endpoints | 20+ endpoints |
-| **Version** | **0.9.0** |
-| **Last updated** | **2026-08-27** |
+| Angular components | 22+ standalone components |
+| API endpoints | 25+ endpoints |
+| **Version** | **0.11.0** |
+| **Last updated** | **2026-09-07** |

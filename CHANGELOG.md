@@ -35,6 +35,23 @@ this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Deployment pipeline
 
 ---
+## [0.11.0] - 2026-09-07
+
+### Added
+- RaceType enum added to Race model (relay support)
+- RaceId FK added to Section, WayPoint, RunnerSection tables
+- RaceTeam many-to-many relationship (Team ↔ Race)
+- Relay planner accessible from race list via "Tervező" button
+- Race selector dropdown on teams page
+- Directional arrows on team map
+- Section map accessible from section list page
+
+### Changed
+- UB module renamed to relay-planner
+- All section/waypoint/assignment endpoints now race-scoped (api/race/:raceId/...)
+- Sidebar navigation reorganized - relay planner links removed (access via race list)
+- Mapster replaces AutoMapper for DTO mapping
+
 ## [0.10.1] - 2026-09-02
 
 ### Added
