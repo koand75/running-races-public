@@ -53,5 +53,7 @@ namespace RunningRacesApi.Models
         public RaceType RaceType { get; set; }
         public ICollection<Team> Teams { get; set; } = new List<Team>();
         public ICollection<Section> Sections { get; set; } = new List<Section>();
+
+        public ICollection<RaceCategory> Categories { get; set; } = new List<RaceCategory>();
     }
 }

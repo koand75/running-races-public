@@ -58,6 +58,18 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
                 .OnDelete(DeleteBehavior.Restrict);
         });
 
+        modelBuilder.Entity<RaceCategory>()
+            .Property(rc => rc.RaceType)
+            .HasConversion<string>();
+
+        modelBuilder.Entity<RaceCategory>()
+            .Property(rc => rc.Measurement)
+            .HasConversion<string>();
+
+        modelBuilder.Entity<Race>()
+            .Property(r => r.RaceType)
+            .HasConversion<string>();
+
         modelBuilder.Entity<Race>().HasData(
             new Race
             {
