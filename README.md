@@ -1,10 +1,10 @@
-# ?? Running Races - Management Application
+# ğŸƒ Running Races - Management Application
 
 Full-stack running race management application with modern technologies. ASP.NET Core 9 backend with JWT authentication + Angular 20 standalone frontend.
 
 ---
 
-## ?? Tech Stack
+## ğŸš€ Tech Stack
 
 ### Backend
 - **ASP.NET Core 9.0** - Web API
@@ -31,92 +31,92 @@ Full-stack running race management application with modern technologies. ASP.NET
 
 ---
 
-## ?? Project Structure
+## ğŸ“‚ Project Structure
 
 ```
 RunningRaces/
-©À©¤©¤ RunningRacesApi/                  # ?? Backend API
-©¦   ©À©¤©¤ Controllers/
-©¦   ©¦   ©À©¤©¤ RacesController.cs
-©¦   ©¦   ©À©¤©¤ AuthController.cs
-©¦   ©¦   ©À©¤©¤ TeamController.cs
-©¦   ©¦   ©À©¤©¤ RunnerController.cs
-©¦   ©¦   ©À©¤©¤ RaceSectionController.cs
-©¦   ©¦   ©À©¤©¤ SectionImportController.cs
-©¦   ©¦   ©À©¤©¤ SectionExportController.cs
-©¦   ©¦   ©À©¤©¤ RunnerSectionController.cs
-©¦   ©¦   ©¸©¤©¤ WayPointController.cs
-©¦   ©À©¤©¤ Services/                     # Business logic layer
-©¦   ©À©¤©¤ Repositories/                 # Data access layer
-©¦   ©À©¤©¤ Models/                       # Domain models + DTOs
-©¦   ©À©¤©¤ Data/                         # DbContext + Seeder
-©¦   ©À©¤©¤ Middleware/                   # JWT blacklist
-©¦   ©À©¤©¤ Mappings/                     # Mapster config
-©¦   ©¸©¤©¤ Enums/                        # RaceType, WayPointMatchStatus
-©¦
-©À©¤©¤ RunningRacesApi.Tests/            # ?? Unit Tests
-©¦
-©À©¤©¤ running-races-ui/                 # ?? Angular Frontend
-©¦   ©À©¤©¤ src/app/
-©¦   ©¦   ©À©¤©¤ components/               # Shared components
-©¦   ©¦   ©À©¤©¤ features/
-©¦   ©¦   ©¦   ©À©¤©¤ relay-planner/        # Relay race planner module
-©¦   ©¦   ©¦   ©¦   ©À©¤©¤ components/
-©¦   ©¦   ©¦   ©¦   ©¦   ©À©¤©¤ section-list/
-©¦   ©¦   ©¦   ©¦   ©¦   ©À©¤©¤ section-import/
-©¦   ©¦   ©¦   ©¦   ©¦   ©À©¤©¤ team-list/
-©¦   ©¦   ©¦   ©¦   ©¦   ©À©¤©¤ team-detail/
-©¦   ©¦   ©¦   ©¦   ©¦   ©À©¤©¤ team-edit/
-©¦   ©¦   ©¦   ©¦   ©¦   ©À©¤©¤ planner/
-©¦   ©¦   ©¦   ©¦   ©¦   ©À©¤©¤ waypoints/
-©¦   ©¦   ©¦   ©¦   ©¦   ©À©¤©¤ map/
-©¦   ©¦   ©¦   ©¦   ©¦   ©¸©¤©¤ team-map/
-©¦   ©¦   ©¦   ©¦   ©À©¤©¤ services/
-©¦   ©¦   ©¦   ©¦   ©¸©¤©¤ models/
-©¦   ©¦   ©¦   ©¸©¤©¤ pace-calculator/      # Standalone pace calculator
-©¦   ©¦   ©À©¤©¤ guards/
-©¦   ©¦   ©À©¤©¤ interceptors/
-©¦   ©¦   ©¸©¤©¤ services/
-©¦   ©À©¤©¤ public/
-©¦   ©¦   ©¸©¤©¤ samples/
-©¦   ©¦       ©¸©¤©¤ sampleSections.csv    # Sample import file
-©¦   ©¸©¤©¤ src/environments/             # API URL configuration
-©¦
-©À©¤©¤ Dockerfile                        # Backend Docker
-©À©¤©¤ docker-compose.yml                # Full stack orchestration
-©À©¤©¤ .gitignore
-©À©¤©¤ RunningRaces.sln
-©À©¤©¤ CHANGELOG.md
-©¸©¤©¤ CHANGELOG_HU.md
+â”œâ”€â”€ RunningRacesApi/                  # ğŸ”™ Backend API
+â”‚   â”œâ”€â”€ Controllers/
+â”‚   â”‚   â”œâ”€â”€ RacesController.cs
+â”‚   â”‚   â”œâ”€â”€ AuthController.cs
+â”‚   â”‚   â”œâ”€â”€ TeamController.cs
+â”‚   â”‚   â”œâ”€â”€ RunnerController.cs
+â”‚   â”‚   â”œâ”€â”€ RaceSectionController.cs
+â”‚   â”‚   â”œâ”€â”€ SectionImportController.cs
+â”‚   â”‚   â”œâ”€â”€ SectionExportController.cs
+â”‚   â”‚   â”œâ”€â”€ RunnerSectionController.cs
+â”‚   â”‚   â””â”€â”€ WayPointController.cs
+â”‚   â”œâ”€â”€ Services/                     # Business logic layer
+â”‚   â”œâ”€â”€ Repositories/                 # Data access layer
+â”‚   â”œâ”€â”€ Models/                       # Domain models + DTOs
+â”‚   â”œâ”€â”€ Data/                         # DbContext + Seeder
+â”‚   â”œâ”€â”€ Middleware/                   # JWT blacklist
+â”‚   â”œâ”€â”€ Mappings/                     # Mapster config
+â”‚   â””â”€â”€ Enums/                        # RaceType, WayPointMatchStatus
+â”‚
+â”œâ”€â”€ RunningRacesApi.Tests/            # ğŸ§ª Unit Tests
+â”‚
+â”œâ”€â”€ running-races-ui/                 # ğŸŒ Angular Frontend
+â”‚   â”œâ”€â”€ src/app/
+â”‚   â”‚   â”œâ”€â”€ components/               # Shared components
+â”‚   â”‚   â”œâ”€â”€ features/
+â”‚   â”‚   â”‚   â”œâ”€â”€ relay-planner/        # Relay race planner module
+â”‚   â”‚   â”‚   â”‚   â”œâ”€â”€ components/
+â”‚   â”‚   â”‚   â”‚   â”‚   â”œâ”€â”€ section-list/
+â”‚   â”‚   â”‚   â”‚   â”‚   â”œâ”€â”€ section-import/
+â”‚   â”‚   â”‚   â”‚   â”‚   â”œâ”€â”€ team-list/
+â”‚   â”‚   â”‚   â”‚   â”‚   â”œâ”€â”€ team-detail/
+â”‚   â”‚   â”‚   â”‚   â”‚   â”œâ”€â”€ team-edit/
+â”‚   â”‚   â”‚   â”‚   â”‚   â”œâ”€â”€ planner/
+â”‚   â”‚   â”‚   â”‚   â”‚   â”œâ”€â”€ waypoints/
+â”‚   â”‚   â”‚   â”‚   â”‚   â”œâ”€â”€ map/
+â”‚   â”‚   â”‚   â”‚   â”‚   â””â”€â”€ team-map/
+â”‚   â”‚   â”‚   â”‚   â”œâ”€â”€ services/
+â”‚   â”‚   â”‚   â”‚   â””â”€â”€ models/
+â”‚   â”‚   â”‚   â””â”€â”€ pace-calculator/      # Standalone pace calculator
+â”‚   â”‚   â”œâ”€â”€ guards/
+â”‚   â”‚   â”œâ”€â”€ interceptors/
+â”‚   â”‚   â””â”€â”€ services/
+â”‚   â”œâ”€â”€ public/
+â”‚   â”‚   â””â”€â”€ samples/
+â”‚   â”‚       â””â”€â”€ sampleSections.csv    # Sample import file
+â”‚   â””â”€â”€ src/environments/             # API URL configuration
+â”‚
+â”œâ”€â”€ Dockerfile                        # Backend Docker
+â”œâ”€â”€ docker-compose.yml                # Full stack orchestration
+â”œâ”€â”€ .gitignore
+â”œâ”€â”€ RunningRaces.sln
+â”œâ”€â”€ CHANGELOG.md
+â””â”€â”€ CHANGELOG_HU.md
 ```
 
 ---
 
-## ??? Architecture
+## ğŸ—ï¸ Architecture
 
 ### Backend - 3-Layer Pattern
 
 ```
-©°©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©´
-©¦   Controller    ©¦  ¡û HTTP Endpoints
-©¸©¤©¤©¤©¤©¤©¤©¤©¤©Ğ©¤©¤©¤©¤©¤©¤©¤©¤©¼
-         ©¦
-©°©¤©¤©¤©¤©¤©¤©¤©¤¨‹©¤©¤©¤©¤©¤©¤©¤©¤©´
-©¦    Service      ©¦  ¡û Business Logic
-©¸©¤©¤©¤©¤©¤©¤©¤©¤©Ğ©¤©¤©¤©¤©¤©¤©¤©¤©¼
-         ©¦
-©°©¤©¤©¤©¤©¤©¤©¤©¤¨‹©¤©¤©¤©¤©¤©¤©¤©¤©´
-©¦   Repository    ©¦  ¡û Data Access (EF Core)
-©¸©¤©¤©¤©¤©¤©¤©¤©¤©Ğ©¤©¤©¤©¤©¤©¤©¤©¤©¼
-         ©¦
-©°©¤©¤©¤©¤©¤©¤©¤©¤¨‹©¤©¤©¤©¤©¤©¤©¤©¤©´
-©¦   DbContext     ©¦  ¡û SQLite Database
-©¸©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¼
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚   Controller    â”‚  â† HTTP Endpoints
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+         â”‚
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â–¼â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚    Service      â”‚  â† Business Logic
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+         â”‚
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â–¼â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚   Repository    â”‚  â† Data Access (EF Core)
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+         â”‚
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â–¼â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚   DbContext     â”‚  â† SQLite Database
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
 
 ---
 
-## ?? API Endpoints
+## ğŸ”‘ API Endpoints
 
 ### Base URL
 - **Development:** `https://localhost:7156/api`
@@ -151,7 +151,7 @@ RunningRaces/
 
 ---
 
-## ?? Authentication & Authorization
+## ğŸ” Authentication & Authorization
 
 ### Test Accounts
 
@@ -162,33 +162,33 @@ RunningRaces/
 
 ### Security Features
 
-- ? ASP.NET Identity integration
-- ? Automatic password hashing
-- ? JWT token authentication
-- ? Token blacklist (secure logout)
-- ? Role-based authorization
-- ? Route guards (frontend protection)
-- ? Auth interceptor (auto Bearer token)
+- âœ… ASP.NET Identity integration
+- âœ… Automatic password hashing
+- âœ… JWT token authentication
+- âœ… Token blacklist (secure logout)
+- âœ… Role-based authorization
+- âœ… Route guards (frontend protection)
+- âœ… Auth interceptor (auto Bearer token)
 
 ---
 
-## ??? Relay Planner Module
+## ğŸ—ºï¸ Relay Planner Module
 
 The relay-planner module manages team-based relay race planning, accessible from the race list when a race has `RaceType = Relay`:
 
-- **Sections** ¨C Race sections with waypoints and distances (race-scoped)
-- **Waypoints** ¨C GPS coordinates for each transition point (race-scoped)
-- **Teams** ¨C Global teams with start time
-- **Runners** ¨C Team members with base pace
-- **Planner** ¨C Drag & drop runner-section assignment
-- **Map** ¨C Interactive Leaflet map with directional arrows
-- **Team Map** ¨C Runner assignments visualized per team with colors
-- **Import/Export** ¨C CSV import with two-step waypoint matching preview
-- **Pace Calculator** ¨C Standalone tool: calculate time, distance or pace from any two values
+- **Sections** â€“ Race sections with waypoints and distances (race-scoped)
+- **Waypoints** â€“ GPS coordinates for each transition point (race-scoped)
+- **Teams** â€“ Global teams with start time
+- **Runners** â€“ Team members with base pace
+- **Planner** â€“ Drag & drop runner-section assignment
+- **Map** â€“ Interactive Leaflet map with directional arrows
+- **Team Map** â€“ Runner assignments visualized per team with colors
+- **Import/Export** â€“ CSV import with two-step waypoint matching preview
+- **Pace Calculator** â€“ Standalone tool: calculate time, distance or pace from any two values
 
 ---
 
-## ??? Development Setup
+## ğŸ› ï¸ Development Setup
 
 ### Prerequisites
 
@@ -208,7 +208,7 @@ dotnet run
 # Swagger: https://localhost:7156/swagger
 ```
 
-> ?? If you have existing WayPoint and Section data, you must manually set the `RaceId` field in the database after migration.
+> âš ï¸ If you have existing WayPoint and Section data, you must manually set the `RaceId` field in the database after migration.
 
 ### Frontend Setup
 
@@ -231,7 +231,7 @@ docker-compose up --build
 
 ---
 
-## ?? Tests
+## ğŸ§ª Tests
 
 ### Backend Tests
 
@@ -242,9 +242,9 @@ dotnet test
 
 | Layer | Tests | Status |
 |-------|-------|--------|
-| Repository | 18 | ? |
-| Service | 16 | ? |
-| Auth | 3 | ? |
+| Repository | 18 | âœ… |
+| Service | 16 | âœ… |
+| Auth | 3 | âœ… |
 
 ### Frontend Tests
 
@@ -255,16 +255,16 @@ ng test --watch=false
 
 | Layer | Tests | Status |
 |-------|-------|--------|
-| Services | 30+ | ? |
-| Components | 60+ | ? |
-| Guards | 4 | ? |
+| Services | 30+ | âœ… |
+| Components | 60+ | âœ… |
+| Guards | 4 | âœ… |
 
 ---
 
-## ? Implemented Features
+## âœ… Implemented Features
 
 ### Backend
-- 3-layer architecture (Controller ¡ú Service ¡ú Repository)
+- 3-layer architecture (Controller â†’ Service â†’ Repository)
 - ASP.NET Identity user management
 - JWT authentication with token blacklist
 - Role-based authorization (Admin/User)
@@ -295,9 +295,9 @@ ng test --watch=false
 
 ---
 
-## ?? Known Limitations
+## âš ï¸ Known Limitations
 
-- JWT secret is a placeholder ¡ª **replace before production deployment**
+- JWT secret is a placeholder â€” **replace before production deployment**
 - CORS open to localhost:4200
 - SQLite (use PostgreSQL/SQL Server for production)
 - JWT stored in localStorage (XSS risk; HttpOnly cookie recommended)
@@ -306,7 +306,7 @@ ng test --watch=false
 
 ---
 
-## ?? Documentation
+## ğŸ“š Documentation
 
 - [CHANGELOG.md](CHANGELOG.md) - Version history (English)
 - [CHANGELOG_HU.md](CHANGELOG_HU.md) - Version history (Hungarian)
@@ -314,20 +314,20 @@ ng test --watch=false
 
 ---
 
-## ?? Author
+## ğŸ‘¤ Author
 
-**Kov¨¢cs Andrea**
+**KovÃ¡cs Andrea**
 - GitHub: [@koand75](https://github.com/koand75)
 
 ---
 
-## ?? License
+## ğŸ“„ License
 
 This project is not under an open source license.
 The code is viewable but may not be used, modified, or distributed
 without written permission from the author.
 
-? 2026 Kov¨¢cs Andrea ¡ª All Rights Reserved
+Â© 2026 KovÃ¡cs Andrea â€” All Rights Reserved
 
 ---
 
