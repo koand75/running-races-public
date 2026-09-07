@@ -11,7 +11,7 @@ describe('RaceService', () => {
   let httpMock: HttpTestingController;
 
   const apiUrl = `${environment.apiUrl}/races`;
-  const mockRace: Race = { id: '1', name: 'Test Race', location: 'Budapest', distance: 42, date: '2025-04-05' };
+  const mockRace: Race = { id: '1', name: 'Test Race', location: 'Budapest', distance: 42, startDate: '2025-04-05' };
   const mockPaged: PagedResult<Race> = { items: [mockRace], totalCount: 1, page: 1, pageSize: 50 };
 
   beforeEach(() => {

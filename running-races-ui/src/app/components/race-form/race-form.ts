@@ -33,7 +33,8 @@ export class RaceFormComponent implements OnInit {
   constructor() {
     this.raceForm = this.fb.group({
       name: ['', Validators.required],
-      date: ['', Validators.required],
+      startDate: ['', Validators.required],
+      endDate: [''],
       location: ['', Validators.required],
       distance: [0, [Validators.required, Validators.min(0.1)]],
       raceType: [0]
@@ -54,11 +55,15 @@ export class RaceFormComponent implements OnInit {
     this.raceService.getRaceById(id).subscribe({
       next: (race) => {
         // Date formázás yyyy-MM-dd formátumra (input type="date" miatt)
-        const dateStr = new Date(race.date).toISOString().split('T')[0];
+        const startDateStr = new Date(race.startDate).toISOString().split('T')[0];
+        const endDateStr = race.endDate && race.endDate !== '0001-01-01T00:00:00'
+          ? new Date(race.endDate).toISOString().split('T')[0]
+          : '';
 
         this.raceForm.patchValue({
           name: race.name,
-          date: dateStr,
+          startDate: startDateStr,
+          endDate: endDateStr,
           location: race.location,
           distance: race.distance,
           raceType: race.raceType ?? 0

@@ -17,7 +17,7 @@ describe('RaceForm', () => {
 
   const mockRace: Race = {
     id: '123', name: 'Test Race', location: 'Budapest',
-    distance: 42.2, date: '2025-04-05'
+    distance: 42.2, startDate: '2025-04-05'
   };
 
   beforeEach(async () => {
@@ -54,7 +54,7 @@ describe('RaceForm', () => {
   });
 
   it('should have valid form when filled', () => {
-    component.raceForm.patchValue({ name: 'Race', date: '2025-04-05', location: 'Budapest', distance: 10 });
+    component.raceForm.patchValue({ name: 'Race', startDate: '2025-04-05', location: 'Budapest', distance: 10 });
     expect(component.raceForm.valid).toBeTrue();
   });
 
@@ -66,7 +66,7 @@ describe('RaceForm', () => {
   it('should call createRace on submit in create mode', () => {
     mockRaceService.createRace.and.returnValue(of(mockRace));
     mockAuthService.isAuthenticated.and.returnValue(true);
-    component.raceForm.patchValue({ name: 'Race', date: '2025-04-05', location: 'Budapest', distance: 10 });
+    component.raceForm.patchValue({ name: 'Race', startDate: '2025-04-05', location: 'Budapest', distance: 10 });
     component.onSubmit();
     expect(mockRaceService.createRace).toHaveBeenCalled();
   });
@@ -76,7 +76,7 @@ describe('RaceForm', () => {
     spyOn(router, 'navigate');
     mockRaceService.createRace.and.returnValue(of(mockRace));
     mockAuthService.isAuthenticated.and.returnValue(true);
-    component.raceForm.patchValue({ name: 'Race', date: '2025-04-05', location: 'Budapest', distance: 10 });
+    component.raceForm.patchValue({ name: 'Race', startDate: '2025-04-05', location: 'Budapest', distance: 10 });
     component.onSubmit();
     expect(router.navigate).toHaveBeenCalledWith(['/admin/races']);
   });

@@ -78,7 +78,12 @@
       @for (race of races; track race.id) {
       <tr>
         <td>{{ race.name }}</td>
-        <td>{{ race.date | date:'yyyy.MM.dd.' }}</td>
+        <td>
+          {{ race.startDate | date:'yyyy.MM.dd.' }}
+          @if (race.endDate && race.endDate !== race.startDate) {
+          - {{ race.endDate | date:'yyyy.MM.dd.' }}
+          }
+        </td>
         <td>{{ race.location }}</td>
         <td>{{ race.distance }}</td>
         @if (isAdminMode && isAdmin()) {

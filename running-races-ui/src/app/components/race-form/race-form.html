@@ -15,11 +15,16 @@
     </div>
 
     <div class="form-group">
-      <label for="date">Dátum *</label>
-      <input type="date" id="date" formControlName="date" />
-      @if (raceForm.get('date')?.invalid && raceForm.get('date')?.touched) {
-      <span class="error-text">Dátum kötelező</span>
+      <label for="startDate">Kezdő dátum *</label>
+      <input type="date" id="startDate" formControlName="startDate" />
+      @if (raceForm.get('startDate')?.invalid && raceForm.get('startDate')?.touched) {
+      <span class="error-text">Kezdő dátum kötelező</span>
       }
+    </div>
+
+    <div class="form-group">
+      <label for="endDate">Befejező dátum</label>
+      <input type="date" id="endDate" formControlName="endDate" />
     </div>
 
     <div class="form-group">
