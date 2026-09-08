@@ -12,4 +12,5 @@ public class RaceDto
     public double Distance { get; set; }
     public bool IsActive { get; set; }
     public RaceType RaceType { get; set; }
+    public string CategorySummary { get; set; } = string.Empty;
 }

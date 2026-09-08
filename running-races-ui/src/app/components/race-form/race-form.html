@@ -1,38 +1,44 @@
 <div class="container">
-  <h1>{{ isEditMode ? 'Futóverseny szerkesztése' : 'Új futóverseny' }}</h1>
-
+  <div class="page-header">
+    <h1>{{ isEditMode ? 'Futóverseny szerkesztése' : 'Új futóverseny' }}</h1>
+    <button mat-stroked-button routerLink="/admin/races">
+      <mat-icon>arrow_back</mat-icon> Vissza
+    </button>
+  </div>
   @if (error) {
   <div class="error">{{ error }}</div>
   }
 
   <form [formGroup]="raceForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="name">Név *</label>
-      <input type="text" id="name" formControlName="name" />
-      @if (raceForm.get('name')?.invalid && raceForm.get('name')?.touched) {
-      <span class="error-text">Név kötelező</span>
-      }
+    <div class="date-row">
+      <div class="form-group">
+        <label for="name">Név *</label>
+        <input type="text" id="name" formControlName="name" />
+        @if (raceForm.get('name')?.invalid && raceForm.get('name')?.touched) {
+        <span class="error-text">Név kötelező</span>
+        }
+      </div>
+      <div class="form-group">
+        <label for="location">Helyszín *</label>
+        <input type="text" id="location" formControlName="location" />
+        @if (raceForm.get('location')?.invalid && raceForm.get('location')?.touched) {
+        <span class="error-text">Helyszín kötelező</span>
+        }
+      </div>
     </div>
 
-    <div class="form-group">
-      <label for="startDate">Kezdő dátum *</label>
-      <input type="date" id="startDate" formControlName="startDate" />
-      @if (raceForm.get('startDate')?.invalid && raceForm.get('startDate')?.touched) {
-      <span class="error-text">Kezdő dátum kötelező</span>
-      }
-    </div>
-
-    <div class="form-group">
-      <label for="endDate">Befejező dátum</label>
-      <input type="date" id="endDate" formControlName="endDate" />
-    </div>
-
-    <div class="form-group">
-      <label for="location">Helyszín *</label>
-      <input type="text" id="location" formControlName="location" />
-      @if (raceForm.get('location')?.invalid && raceForm.get('location')?.touched) {
-      <span class="error-text">Helyszín kötelező</span>
-      }
+    <div class="date-row">
+      <div class="form-group">
+        <label for="startDate">Kezdő dátum *</label>
+        <input type="date" id="startDate" formControlName="startDate" />
+        @if (raceForm.get('startDate')?.invalid && raceForm.get('startDate')?.touched) {
+        <span class="error-text">Kezdő dátum kötelező</span>
+        }
+      </div>
+      <div class="form-group">
+        <label for="endDate">Befejező dátum</label>
+        <input type="date" id="endDate" formControlName="endDate" />
+      </div>
     </div>
 
     <div class="form-group">
@@ -48,6 +54,7 @@
       <mat-select formControlName="raceType">
         <mat-option [value]="0">Nincs megadva</mat-option>
         <mat-option [value]="1">Váltóverseny</mat-option>
+        <mat-option [value]="2">Egyéni</mat-option>
       </mat-select>
     </mat-form-field>
 
@@ -58,4 +65,45 @@
       <button mat-raised-button color="warn" (click)="onCancel()">Mégse</button>
     </div>
   </form>
+  @if (isEditMode) {
+  <div class="categories-section">
+    <h2>Versenyszámok</h2>
+    <button mat-stroked-button [routerLink]="['/admin/races', raceId, 'categories', 'new']">
+      <mat-icon>add</mat-icon> Új versenyszám
+    </button>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Név</th>
+          <th>Típus</th>
+          <th>Táv/Idő</th>
+          <th>Rajt</th>
+          <th>Műveletek</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (cat of categories; track cat.id) {
+        <tr>
+          <td>{{ cat.name }}</td>
+          <td>{{ getRaceTypeName(cat.raceType) }}</td>
+          <td>{{ cat.distance ? cat.distance + ' km' : cat.duration + ' perc' }}</td>
+          <td>{{ cat.startDateTime | date:'yyyy.MM.dd. HH:mm' }}</td>
+          <td>
+            <div class="action-buttons">
+              <button mat-mini-fab class="btn-edit"
+                [routerLink]="['/admin/races', raceId, 'categories', cat.id, 'edit']">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-mini-fab class="btn-delete" (click)="deleteCategory(cat.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  }
 </div>

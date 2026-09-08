@@ -1,0 +1,69 @@
+<div class="container">
+    <div class="page-header">
+        <h1>{{ isEditMode ? 'Versenyszám szerkesztése' : 'Új versenyszám' }}</h1>
+        <button mat-stroked-button (click)="onCancel()">
+            <mat-icon>arrow_back</mat-icon> Vissza
+        </button>
+    </div>
+
+    @if (raceName) {
+    <div class="race-info">
+        <strong>{{ raceName }}</strong> | {{ raceStartDate | date:'yyyy.MM.dd.' }}
+        @if (raceEndDate) { – {{ raceEndDate | date:'yyyy.MM.dd.' }} }
+    </div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+            <div class="form-group">
+                <label>Név *</label>
+                <input type="text" formControlName="name" />
+            </div>
+
+            <div class="form-group">
+                <label>Rajt időpontja</label>
+                <input type="datetime-local" formControlName="startDateTime" />
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Típus</label>
+                <select formControlName="raceType">
+                    <option [value]="RaceType.None">Nincs megadva</option>
+                    <option [value]="RaceType.Individual">Egyéni</option>
+                    <option [value]="RaceType.Relay">Váltó</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Mérés</label>
+                <select formControlName="measurement">
+                    <option [value]="MeasurementType.None">Nincs megadva</option>
+                    <option [value]="MeasurementType.DistanceBased">Távalapú</option>
+                    <option [value]="MeasurementType.TimeBased">Időalapú</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Táv (km)</label>
+                <input type="number" formControlName="distance" step="0.1" />
+            </div>
+            <div class="form-group">
+                <label>Időtartam (perc)</label>
+                <input type="number" formControlName="duration" />
+            </div>
+        </div>
+
+
+        @if (error) {
+        <p class="error-text">{{ error }}</p>
+        }
+
+        <div class="form-actions">
+            <button type="submit" [disabled]="form.invalid || submitting">
+                {{ submitting ? 'Mentés...' : 'Mentés' }}
+            </button>
+
+        </div>
+    </form>
+</div>

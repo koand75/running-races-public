@@ -6,6 +6,7 @@ import { adminGuard } from './guards/admin.guard';
 import { PublicLayoutComponent } from './components/public-layout/public-layout';
 import { AdminLayoutComponent } from './components/admin-layout/admin-layout';
 import { PaceCalculator } from './features/pace-calculator/pace-calculator';
+import { RaceCategoryForm } from './components/race-category-form/race-category-form';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/races', pathMatch: 'full' },
@@ -37,7 +38,9 @@ export const routes: Routes = [
     children: [
       { path: 'races', component: RaceListComponent },
       { path: 'races/new', component: RaceFormComponent },
-      { path: 'races/:id/edit', component: RaceFormComponent }
+      { path: 'races/:id/edit', component: RaceFormComponent },
+      { path: 'races/:raceId/categories/new', component: RaceCategoryForm },
+      { path: 'races/:raceId/categories/:id/edit', component: RaceCategoryForm }
 
     ]
   }

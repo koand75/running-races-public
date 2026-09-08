@@ -15,6 +15,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { RaceService } from '../../../../services/race';
 import { Race } from '../../../../models/race.model';
 import { MatSelectModule } from '@angular/material/select';
+import { RaceType } from '../../models/relay-planner.models';
 
 @Component({
     selector: 'app-team-list',
@@ -57,7 +58,7 @@ export class TeamListComponent implements OnInit {
 
     loadRaces(): void{
         this.raceService.getRaces( 'public', { page: 1, pageSize: 50}).subscribe( resulét =>{
-            this.races = resulét.items.filter( x => x.raceType === 1)
+            this.races = resulét.items.filter( x => x.raceType === RaceType.Relay)
         } )
     }
 

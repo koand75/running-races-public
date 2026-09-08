@@ -16,5 +16,7 @@ public static class MappingConfig
             .Map(dest => dest.EndWayPointName, src => src.EndWayPoint != null ? src.EndWayPoint.Name : null)
             .Map(dest => dest.EndLat, src => src.EndWayPoint != null ? src.EndWayPoint.Lat : null)
             .Map(dest => dest.EndLng, src => src.EndWayPoint != null ? src.EndWayPoint.Lng : null);
+        TypeAdapterConfig<RaceCategory, RaceCategoryDto>.NewConfig();
+        TypeAdapterConfig<RaceCategoryDto, RaceCategory>.NewConfig();
     }
 }

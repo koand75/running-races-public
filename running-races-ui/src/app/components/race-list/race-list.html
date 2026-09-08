@@ -44,6 +44,9 @@
   <table>
     <thead>
       <tr>
+        <th>
+
+        </th>
         <th (click)="sortBy('name')">
           Név
           @if (sortColumn === 'name') {
@@ -77,6 +80,12 @@
     <tbody>
       @for (race of races; track race.id) {
       <tr>
+        <td>
+          <mat-icon class="expand-arrow"
+            (click)="loadCategories(race.id); expandedRace = expandedRace?.id === race.id ? null : race">
+            {{ expandedRace?.id === race.id ? 'expand_less' : 'expand_more' }}
+          </mat-icon>
+        </td>
         <td>{{ race.name }}</td>
         <td>
           {{ race.startDate | date:'yyyy.MM.dd.' }}
@@ -100,7 +109,7 @@
             <button mat-raised-button color="warn" (click)="deleteRace(race.id, race.name)">🗑️ Törlés</button>
             }
 
-            @if (race.raceType === 1) {
+            @if (race.raceType === RaceType.Relay) {
             <button mat-raised-button color="primary" [routerLink]="['/relay-planner', race.id, 'sections']">
               <mat-icon>route</mat-icon> Tervező
             </button>
@@ -110,7 +119,34 @@
         </td>
         }
       </tr>
+      @if (expandedRace?.id === race.id) {
+      <tr>
+        <td colspan="5">
+          <table class="category-table">
+            <thead>
+              <tr>
+                <th>Kategória</th>
+                <th>Típus</th>
+                <th>Táv/Idő</th>
+                <th>Rajt</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (cat of categories.get(race.id) ?? []; track cat.id) {
+              <tr>
+                <td>{{ cat.name }}</td>
+                <td>{{ getRaceTypeName(cat.raceType) }}</td>
+                <td>{{ cat.distance ? cat.distance + ' km' : cat.duration + ' perc' }}</td>
+                <td>{{ cat.startDateTime | date:'yyyy.MM.dd. HH:mm' }}</td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </td>
+      </tr>
       }
+      }
+
     </tbody>
   </table>
   <mat-paginator [length]="totalCount" [pageIndex]="page - 1" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 20, 50]"

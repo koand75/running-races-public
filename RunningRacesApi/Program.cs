@@ -16,6 +16,7 @@ using RunningRacesApi.Services;
 
 using System.Reflection;
 using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddTransient<DatabaseSeeder>();
@@ -38,7 +39,7 @@ builder.Services.AddScoped<IRunnerSectionService, RunnerSectionService>();
 builder.Services.AddScoped<IWayPointService, WayPointService>();
 builder.Services.AddScoped<ICsvExportService, CsvExportService>();
 builder.Services.AddSingleton<ITokenBlacklistService, TokenBlacklistService>();
-
+builder.Services.AddScoped<IRaceCategoryService, RaceCategoryService>();
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
@@ -75,7 +76,11 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddMemoryCache();
 builder.Services.AddAuthorization();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>

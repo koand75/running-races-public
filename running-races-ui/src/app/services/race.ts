@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Race } from '../models/race.model';
 import { PagedResult } from '../models/paged-result.model';
 import { environment } from '../../../src/environments/environment';
+import { RaceCategory } from '../models/race-category.model';
 
 @Injectable({
   providedIn: 'root'
@@ -60,5 +61,9 @@ export class RaceService {
 
   restoreRace(id: string): Observable<void> {
     return this.http.patch<void>(`${this.apiUrl}/${id}/restore`, {});
+  }
+
+  getCategories(raceId: string): Observable<RaceCategory[]> {
+    return this.http.get<RaceCategory[]>(`${environment.apiUrl}/race/${raceId}/category`);
   }
 }

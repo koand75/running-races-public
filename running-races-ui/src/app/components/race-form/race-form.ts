@@ -8,12 +8,18 @@ import { AuthService } from '../../services/auth';
 import { MatOptionModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
+import { RouterLink } from '@angular/router';
+import { RaceCategory } from '../../models/race-category.model';
+import { RaceCategoryService } from '../../services/race-category.service';
+import { DatePipe } from '@angular/common';
 import { RaceType } from '../../features/relay-planner/models/relay-planner.models';
 
 @Component({
   selector: 'app-race-form',
   standalone: true,
-  imports: [ReactiveFormsModule, MatOptionModule, MatFormFieldModule, MatSelectModule],
+  imports: [ReactiveFormsModule, MatOptionModule,
+    MatFormFieldModule, MatSelectModule, MatIconModule, RouterLink, DatePipe],
   templateUrl: './race-form.html',
   styleUrl: './race-form.css'
 })
@@ -23,6 +29,8 @@ export class RaceFormComponent implements OnInit {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private authService = inject(AuthService);
+  private raceCategoryService = inject(RaceCategoryService);
+  categories: RaceCategory[] = [];
 
   raceForm: FormGroup;
   submitting = false;
@@ -47,6 +55,7 @@ export class RaceFormComponent implements OnInit {
     if (this.raceId) {
       this.isEditMode = true;
       this.loadRace(this.raceId);
+      this.loadCategories();
     }
 
   }
@@ -55,7 +64,7 @@ export class RaceFormComponent implements OnInit {
     this.raceService.getRaceById(id).subscribe({
       next: (race) => {
         // Date formázás yyyy-MM-dd formátumra (input type="date" miatt)
-        const startDateStr = new Date(race.startDate).toISOString().split('T')[0];
+        const startDateStr = new Date(race.startDate).toLocaleDateString('en-CA');
         const endDateStr = race.endDate && race.endDate !== '0001-01-01T00:00:00'
           ? new Date(race.endDate).toISOString().split('T')[0]
           : '';
@@ -120,5 +129,32 @@ export class RaceFormComponent implements OnInit {
     } else {
       this.router.navigate(['/races']);
     }
+  }
+
+  loadCategories(): void {
+    if (this.raceId) {
+      this.raceCategoryService.getAll(this.raceId).subscribe(cats => {
+        this.categories = cats;
+      });
+    }
+  }
+
+  addCategory(): void { /* dialog */ }
+  editCategory(cat: RaceCategory): void { /* dialog */ }
+
+  deleteCategory(id?: number): void {
+    if (!id) return;
+    this.raceCategoryService.delete(this.raceId!, id).subscribe(() => {
+      this.loadCategories();
+    });
+  }
+
+  getRaceTypeName(type: RaceType): string {
+    switch (type) {
+      case RaceType.Relay: return 'Váltó';
+      case RaceType.Individual: return 'Egyéni';
+      default: return 'Nincs megadva';      
+    }
+    
   }
 }

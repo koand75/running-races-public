@@ -10,7 +10,8 @@ table {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-th, td {
+th,
+td {
   padding: 8px;
   text-align: left;
   border-bottom: 1px solid #ddd;
@@ -84,20 +85,25 @@ tr:hover {
 
 .select-wrapper {
   min-width: 200px;
-  width: 100%;  /* Teljes szélesség */
-  max-width: 100%;  /* Mobilon se akadjon meg */
+  width: 100%;
+  /* Teljes szélesség */
+  max-width: 100%;
+  /* Mobilon se akadjon meg */
   position: relative;
   display: inline-block;
-  width: 200px;  /* tetszőleges */
+  width: 200px;
+  /* tetszőleges */
 }
 
 .search-select {
-  -webkit-appearance: none;  /* natív nyíl eltüntetése */
+  -webkit-appearance: none;
+  /* natív nyíl eltüntetése */
   -moz-appearance: none;
   appearance: none;
 
   width: 100%;
-  padding: 10px 30px 10px 10px;  /* jobbra hely a nyílhoz */
+  padding: 10px 30px 10px 10px;
+  /* jobbra hely a nyílhoz */
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 16px;
@@ -110,8 +116,10 @@ tr:hover {
   right: 10px;
   top: 50%;
   transform: translateY(-50%);
-  pointer-events: none;  /* kattintás ne zavarja a select-et */
-  font-size: 20px;  /* méret igény szerint */
+  pointer-events: none;
+  /* kattintás ne zavarja a select-et */
+  font-size: 20px;
+  /* méret igény szerint */
   color: gray;
 }
 
@@ -182,8 +190,10 @@ tr:hover {
 @media (max-width: 768px) {
 
   .search-container {
-    flex-direction: column;    /* Törés oszlopba */
-    align-items: stretch;    /* Teljes szélesség */
+    flex-direction: column;
+    /* Törés oszlopba */
+    align-items: stretch;
+    /* Teljes szélesség */
     gap: 8px;
   }
 
@@ -192,24 +202,34 @@ tr:hover {
   .btn-search,
   .btn-clear {
     font-size: large;
-    width: 100%;    /* Teljes szélesség */
-    box-sizing: border-box;    /* Padding beleértve */
+    width: 100%;
+    /* Teljes szélesség */
+    box-sizing: border-box;
+    /* Padding beleértve */
   }
 
   .select-wrapper {
-    width: 100%;  /* Teljes szélesség */
-    max-width: 100%;  /* Mobilon se akadjon meg */
+    width: 100%;
+    /* Teljes szélesség */
+    max-width: 100%;
+    /* Mobilon se akadjon meg */
     position: relative;
     display: block;
   }
 
-  table, thead, tbody, th, td, tr {
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
     display: block;
     font-size: large;
   }
 
   thead tr {
-    display: none;    /* fejlécet elrejtjük */
+    display: none;
+    /* fejlécet elrejtjük */
   }
 
   tr {
@@ -227,7 +247,8 @@ tr:hover {
   }
 
   td::before {
-    content: attr(data-label);    /* cella label a bal oldalon */
+    content: attr(data-label);
+    /* cella label a bal oldalon */
     font-weight: bold;
   }
 }
@@ -249,4 +270,15 @@ tr:hover {
 
 ::ng-deep .mat-mdc-paginator-icon {
   fill: #078080;
+}
+
+.expand-arrow {
+  cursor: pointer;
+  color: #078080;
+}
+
+.category-table th {
+  background-color: #e8f5f5;
+  padding: 8px;
+  color: #232323;
 }

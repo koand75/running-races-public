@@ -83,6 +83,7 @@ export interface SectionImportPreviewResultDto {
 }
 
 export enum RaceType {
-  None = 0,
-  Relay = 1
+  None = 'None',
+  Relay = 'Relay',
+  Individual = 'Individual'
 }

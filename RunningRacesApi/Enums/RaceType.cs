@@ -4,4 +4,5 @@ public enum RaceType
 {
     None = 0,
     Relay = 1,
+    Individual = 2
 }

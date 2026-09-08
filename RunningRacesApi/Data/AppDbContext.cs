@@ -17,6 +17,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Runner> Runners { get; set; }
     public DbSet<RunnerSection> RunnerSections { get; set; }
     public DbSet<WayPoint> WayPoints { get; set; }
+    public DbSet<RaceCategory> RaceCategory { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -11,6 +11,9 @@ import { Race } from '../../models/race.model';
 import { RaceSearchModel } from '../../models/race-search.model';
 import { RaceService } from '../../services/race';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog';
+import { RaceCategory } from '../../models/race-category.model';
+import { RaceType } from '../../features/relay-planner/models/relay-planner.models';
+import { MeasurementType } from '../../models/race-category.model';
 
 @Component({
   selector: 'app-race-list',
@@ -32,6 +35,7 @@ export class RaceListComponent implements OnInit {
   private raceService = inject(RaceService);  // ← Angular 20: inject()!
   private dialog = inject(MatDialog);
   private router = inject(Router);
+  RaceType = RaceType;
 
   races: Race[] = [];
   loading = true;
@@ -49,6 +53,9 @@ export class RaceListComponent implements OnInit {
   isAdminMode = false;  // Admin vagy Public route?
 
   isActiveFilter: string = 'active';  // 'active', 'inactive', 'all'
+
+  categories: Map<string, RaceCategory[]> = new Map();
+  expandedRace: Race | null = null;
 
   ngOnInit(): void {
     // Ellenőrizzük, hogy admin route-on vagyunk-e
@@ -159,5 +166,29 @@ export class RaceListComponent implements OnInit {
     this.raceService.restoreRace(race.id).subscribe(() => {
       this.loadRaces();
     });
+  }
+
+  loadCategories(raceId: string): void {
+    if (!this.categories.has(raceId)) {
+      this.raceService.getCategories(raceId).subscribe(cats => {
+        this.categories.set(raceId, cats);
+      });
+    }
+  }
+
+  getRaceTypeName(type: RaceType): string {
+    switch (type) {
+      case RaceType.Relay: return 'Váltó';
+      case RaceType.Individual: return 'Egyéni';
+      default: return 'Nincs megadva';
+    }
+  }
+
+  getMeasurementName(m: MeasurementType): string {
+    switch (m) {
+      case MeasurementType.DistanceBased: return 'Távalapú';
+      case MeasurementType.TimeBased: return 'Időalapú';
+      default: return 'Nincs megadva';
+    }
   }
 }
