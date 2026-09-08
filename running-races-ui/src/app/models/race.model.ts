@@ -6,7 +6,5 @@ export interface Race {
   startDate: string;
   endDate?: string;
   location: string;
-  distance: number;
   isActive?: boolean;
-  raceType?: RaceType;
 }

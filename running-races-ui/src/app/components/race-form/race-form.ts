@@ -71,9 +71,7 @@ export class RaceFormComponent implements OnInit {
           name: race.name,
           startDate: startDateStr,
           endDate: endDateStr,
-          location: race.location,
-          distance: race.distance,
-          raceType: race.raceType ?? 0
+          location: race.location
         });
       },
       error: (err) => {

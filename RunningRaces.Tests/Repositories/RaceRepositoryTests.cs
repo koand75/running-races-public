@@ -115,9 +115,7 @@ public class RaceRepositoryTests : IDisposable
         {
             Id = Guid.NewGuid(),
             Name = "Debrecen Maraton",
-            Date = new DateTime(2025, 11, 15),
             Location = "Debrecen",
-            Distance = 42.195,
             IsActive = true,
             CreatedAt = DateTime.UtcNow
         };
@@ -137,14 +135,13 @@ public class RaceRepositoryTests : IDisposable
     }
 
     [Theory]
-    [InlineData("Budapest Maraton", "Budapest", 42.195)]
-    [InlineData("Balaton Félmaraton", "Balatonfüred", 21.1)]
-    [InlineData("Szeged 10K", "Szeged", 10)]
-    [InlineData("Ultra Trail", "Visegrád", 100)]
+    [InlineData("Budapest Maraton", "Budapest")]
+    [InlineData("Balaton Félmaraton", "Balatonfüred")]
+    [InlineData("Szeged 10K", "Szeged")]
+    [InlineData("Ultra Trail", "Visegrád")]
     public async Task CreateAsync_WithVariousValidData_CreatesRaceSuccessfully(
          string name,
-         string location,
-         double distance)
+         string location)
     {
         // Arrange
         var newRace = new Race
@@ -152,8 +149,6 @@ public class RaceRepositoryTests : IDisposable
             Id = Guid.NewGuid(),
             Name = name,
             Location = location,
-            Distance = distance,
-            Date = DateTime.Today.AddMonths(1),
             IsActive = true,
             CreatedAt = DateTime.UtcNow
         };
@@ -165,7 +160,6 @@ public class RaceRepositoryTests : IDisposable
         result.Should().NotBeNull();
         result.Name.Should().Be(name);
         result.Location.Should().Be(location);
-        result.Distance.Should().Be(distance);
 
         // DB ellenőrzés
         var fromDb = await _context.Races.FindAsync(result.Id);
@@ -184,9 +178,7 @@ public class RaceRepositoryTests : IDisposable
         {
             Id = Guid.NewGuid(),
             Name = invalidName!,
-            Date = DateTime.Today,
             Location = "Test",
-            Distance = 10,
             IsActive = true,
             CreatedAt = DateTime.UtcNow
         };
@@ -196,61 +188,6 @@ public class RaceRepositoryTests : IDisposable
 
         await act.Should().ThrowAsync<ArgumentException>()
             .WithMessage("*name*");
-    }
-
-    [Theory]
-    [InlineData(0.1)]       // Minimum távolság
-    [InlineData(5)]         // Rövid futás
-    [InlineData(42.195)]    // Maraton
-    [InlineData(100)]       // Ultra
-    [InlineData(250)]       // Spartathlon
-    public async Task CreateAsync_WithVariousDistances_CreatesRace(double distance)
-    {
-        // Arrange
-        var race = new Race
-        {
-            Id = Guid.NewGuid(),
-            Name = $"Test Race {distance}km",
-            Date = DateTime.Today.AddMonths(1),
-            Location = "Test",
-            Distance = distance,
-            IsActive = true,
-            CreatedAt = DateTime.UtcNow
-        };
-
-        // Act
-        var result = await _repository.CreateAsync(race);
-
-        // Assert
-        result.Distance.Should().Be(distance);
-
-        var fromDb = await _context.Races.FindAsync(result.Id);
-        fromDb!.Distance.Should().Be(distance);
-    }
-
-    [Theory]
-    [InlineData(-1)]        // Negatív
-    [InlineData(-100)]      // Nagy negatív
-    [InlineData(0)]         // Nulla (lehet érvényes?)
-    public async Task CreateAsync_WithNegativeDistance_ThrowsException(double invalidDistance)
-    {
-        // Arrange
-        var race = new Race
-        {
-            Id = Guid.NewGuid(),
-            Name = "Test",
-            Date = DateTime.Today,
-            Location = "Test",
-            Distance = invalidDistance,
-            IsActive = true,
-            CreatedAt = DateTime.UtcNow
-        };
-
-        // Act & Assert
-        var act = async () => await _repository.CreateAsync(race);
-
-        await act.Should().ThrowAsync<ArgumentException>()
-            .WithMessage("*distance*");
     }
 
     [Fact]
@@ -263,9 +200,7 @@ public class RaceRepositoryTests : IDisposable
         {
             Id = Guid.NewGuid(),
             Name = "Test Race",
-            Date = DateTime.Today.AddMonths(1),
             Location = "Test City",
-            Distance = 10,
             IsActive = true,
             CreatedAt = DateTime.UtcNow
         };
@@ -290,9 +225,7 @@ public class RaceRepositoryTests : IDisposable
         {
             Id = existingRace.Id,
             Name = "Updated Race Name",
-            Date = existingRace.Date,
             Location = "Updated Location",
-            Distance = 50,
             IsActive = existingRace.IsActive,
             CreatedAt = existingRace.CreatedAt
         };
@@ -304,7 +237,6 @@ public class RaceRepositoryTests : IDisposable
         result.Should().NotBeNull();
         result.Name.Should().Be("Updated Race Name");
         result.Location.Should().Be("Updated Location");
-        result.Distance.Should().Be(50);
 
         // DB ellenőrzés
         var fromDb = await _context.Races.FindAsync(existingRace.Id);
@@ -321,9 +253,7 @@ public class RaceRepositoryTests : IDisposable
         {
             Id = nonExistentId,
             Name = "Test",
-            Date = DateTime.Today,
             Location = "Test",
-            Distance = 10,
             IsActive = true,
             CreatedAt = DateTime.UtcNow
         };
@@ -337,13 +267,12 @@ public class RaceRepositoryTests : IDisposable
     }
 
     [Theory]
-    [InlineData("Modified Name 1", "Modified Location 1", 25.5)]
-    [InlineData("Modified Name 2", "Modified Location 2", 15)]
-    [InlineData("Modified Name 3", "Modified Location 3", 100)]
+    [InlineData("Modified Name 1", "Modified Location 1")]
+    [InlineData("Modified Name 2", "Modified Location 2")]
+    [InlineData("Modified Name 3", "Modified Location 3")]
     public async Task UpdateAsync_WithDifferentValidData_UpdatesSuccessfully(
         string newName,
-        string newLocation,
-        double newDistance)
+        string newLocation)
     {
         // Arrange
         var races = _context.Races.ToList();
@@ -353,9 +282,7 @@ public class RaceRepositoryTests : IDisposable
         {
             Id = existingRace.Id,
             Name = newName,
-            Date = existingRace.Date,
             Location = newLocation,
-            Distance = newDistance,
             IsActive = existingRace.IsActive,
             CreatedAt = existingRace.CreatedAt
         };
@@ -367,7 +294,6 @@ public class RaceRepositoryTests : IDisposable
         result.Should().NotBeNull();
         result.Name.Should().Be(newName);
         result.Location.Should().Be(newLocation);
-        result.Distance.Should().Be(newDistance);
 
         // DB ellenőrzés
         var fromDb = await _context.Races.FindAsync(existingRace.Id);
@@ -435,7 +361,7 @@ public class RaceRepositoryTests : IDisposable
         await _repository.DeleteAsync(raceToDelete.Id);
 
         // GetRacesAsync alapértelmezetten csak aktívakat ad vissza
-        var activeRaces = await _repository.GetRacesAsync(new RaceSearchModel() { IsActive = true});
+        var activeRaces = await _repository.GetRacesAsync(new RaceSearchModel() { IsActive = true });
 
         // Assert
         activeRaces.Items.Should().NotContain(r => r.Id == raceToDelete.Id);
@@ -451,9 +377,7 @@ public class RaceRepositoryTests : IDisposable
             {
                 Id = Guid.NewGuid(),
                 Name = "Budapest Maraton",
-                Date = new DateTime(2025, 10, 1),
                 Location = "Budapest",
-                Distance = 42.195,
                 IsActive = true,
                 CreatedAt = DateTime.UtcNow
             },
@@ -461,9 +385,7 @@ public class RaceRepositoryTests : IDisposable
             {
                 Id = Guid.NewGuid(),
                 Name = "Balaton Félmaraton",
-                Date = new DateTime(2025, 6, 15),
                 Location = "Balatonfüred",
-                Distance = 21.1,
                 IsActive = true,
                 CreatedAt = DateTime.UtcNow
             },
@@ -471,9 +393,7 @@ public class RaceRepositoryTests : IDisposable
             {
                 Id = Guid.NewGuid(),
                 Name = "Szeged 10K",
-                Date = new DateTime(2025, 4, 20),
                 Location = "Szeged",
-                Distance = 10,
                 IsActive = false, // INAKTÍV!
                 CreatedAt = DateTime.UtcNow
             }

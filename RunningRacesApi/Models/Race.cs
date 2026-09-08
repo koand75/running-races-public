@@ -1,6 +1,4 @@
-﻿using RunningRacesApi.Enums;
-
-namespace RunningRacesApi.Models
+﻿namespace RunningRacesApi.Models
 {
     /// <summary>
     /// Base data
@@ -17,12 +15,6 @@ namespace RunningRacesApi.Models
         /// </summary>
         /// <example>Budapest Marathon</example>
         public string Name { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Race date
-        /// </summary>
-        /// <example>2025-10-05</example>
-        public DateTime Date { get; set; }
 
         /// <summary>
         /// Race start date (or event date if it's a single day)
@@ -43,12 +35,6 @@ namespace RunningRacesApi.Models
         public string Location { get; set; } = string.Empty;
 
         /// <summary>
-        /// Distance in km
-        /// </summary>
-        /// <example>42.2</example>
-        public double Distance { get; set; }
-
-        /// <summary>
         /// Soft delete mark
         /// </summary>
         public bool IsActive { get; set; } = true;
@@ -62,11 +48,6 @@ namespace RunningRacesApi.Models
         /// Last modification date
         /// </summary>
         public DateTime? ModifiedAt { get; set; }
-
-        /// <summary>
-        /// Relay ot individual
-        /// </summary>
-        public RaceType RaceType { get; set; }
 
         /// <summary>
         /// Connected teams

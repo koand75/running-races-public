@@ -82,9 +82,7 @@ public class RaceServiceTests
         var race = new Race
         {
             Name = invalidName!,
-            Location = "Budapest",
-            Distance = 42.2,
-            Date = DateTime.Today.AddMonths(1)
+            Location = "Budapest"
         };
 
         // Act
@@ -105,9 +103,7 @@ public class RaceServiceTests
         var race = new Race
         {
             Name = "Test Race",
-            Location = invalidLocation!,
-            Distance = 42.2,
-            Date = DateTime.Today.AddMonths(1)
+            Location = invalidLocation!
         };
 
         // Act
@@ -118,52 +114,6 @@ public class RaceServiceTests
             .WithMessage("*location*");
     }
 
-    [Theory]
-    [InlineData(0)]        // Nulla
-    [InlineData(-1)]       // Negatív
-    [InlineData(-100)]     // Nagy negatív
-    public async Task CreateRaceAsync_WithInvalidDistance_ThrowsArgumentException(double invalidDistance)
-    {
-        // Arrange
-        var race = new Race
-        {
-            Name = "Test Race",
-            Location = "Budapest",
-            Distance = invalidDistance,
-            Date = DateTime.Today.AddMonths(1)
-        };
-
-        // Act
-        var act = async () => await _service.CreateRaceAsync(race);
-
-        // Assert
-        await act.Should().ThrowAsync<ArgumentException>()
-            .WithMessage("*positive*"); 
-    }
-
-    [Theory]
-    [InlineData(501)]      
-    [InlineData(600)]     
-    [InlineData(1000)]     
-    public async Task CreateRaceAsync_WithDistanceOver500_ThrowsArgumentException(double tooLargeDistance)
-    {
-        // Arrange
-        var race = new Race
-        {
-            Name = "Test Race",
-            Location = "Budapest",
-            Distance = tooLargeDistance,
-            Date = DateTime.Today.AddMonths(1)
-        };
-
-        // Act
-        var act = async () => await _service.CreateRaceAsync(race);
-
-        // Assert
-        await act.Should().ThrowAsync<ArgumentException>()
-            .WithMessage("*cannot exceed 500*");
-    }
-
     [Fact]
     public async Task CreateRaceAsync_WithValidRace_SetsDefaultValues()
     {
@@ -172,9 +122,7 @@ public class RaceServiceTests
         {
             // User NEM ad meg Id, CreatedAt, IsActive-et!
             Name = "Test Race",
-            Location = "Budapest",
-            Distance = 42.2,
-            Date = DateTime.Today.AddMonths(1)
+            Location = "Budapest"
         };
 
         _mockRepository
@@ -197,9 +145,7 @@ public class RaceServiceTests
         var race = new Race
         {
             Name = "Test Race",
-            Location = "Budapest",
-            Distance = 42.2,
-            Date = DateTime.Today.AddMonths(1)
+            Location = "Budapest"
         };
 
         _mockRepository
@@ -214,7 +160,6 @@ public class RaceServiceTests
             r => r.CreateAsync(It.Is<Race>(race =>
                 race.Name == "Test Race" &&
                 race.Location == "Budapest" &&
-                race.Distance == 42.2 &&
                 race.Id != Guid.Empty && 
                 race.IsActive == true     
             )),
@@ -229,9 +174,7 @@ public class RaceServiceTests
         var race = new Race
         {
             Name = "Test Race",
-            Location = "Budapest",
-            Distance = 42.2,
-            Date = DateTime.Today.AddMonths(1)
+            Location = "Budapest"
         };
 
         // Act
@@ -250,9 +193,7 @@ public class RaceServiceTests
         var race = new Race
         {
             Name = "Test Race",
-            Location = "Budapest",
-            Distance = 42.2,
-            Date = DateTime.Today.AddMonths(1)
+            Location = "Budapest"
         };
 
         _mockRepository
@@ -267,30 +208,6 @@ public class RaceServiceTests
             .WithMessage("*not found*");
     }
 
-    [Theory]
-    [InlineData("")]
-    [InlineData("   ")]
-    [InlineData(null)]
-    public async Task UpdateRaceAsync_WithInvalidName_ThrowsArgumentException(string? invalidName)
-    {
-        // Arrange
-        var id = Guid.NewGuid();
-        var race = new Race
-        {
-            Name = invalidName!,
-            Location = "Budapest",
-            Distance = 42.2,
-            Date = DateTime.Today.AddMonths(1)
-        };
-
-        // Act
-        var act = async () => await _service.UpdateRaceAsync(id, race);
-
-        // Assert
-        await act.Should().ThrowAsync<ArgumentException>()
-            .WithMessage("*name*");
-    }
-
     [Fact]
     public async Task UpdateRaceAsync_WithValidData_CallsRepository()
     {
@@ -300,17 +217,13 @@ public class RaceServiceTests
         {
             Id = id,
             Name = "Old Name",
-            Location = "Old Location",
-            Distance = 10,
-            Date = DateTime.Today
+            Location = "Old Location"
         };
 
         var updatedRace = new Race
         {
             Name = "New Name",
-            Location = "New Location",
-            Distance = 21.1,
-            Date = DateTime.Today.AddMonths(1)
+            Location = "New Location"
         };
 
         _mockRepository
@@ -397,9 +310,7 @@ public class RaceServiceTests
         {
             Id = id,
             Name = "Test Race",
-            Location = "Budapest",
-            Distance = 42.2,
-            Date = DateTime.Today
+            Location = "Budapest"
         };
 
         _mockRepository

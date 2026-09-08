@@ -102,12 +102,6 @@
             <button mat-raised-button color="warn" (click)="deleteRace(race.id, race.name)">🗑️ Törlés</button>
             }
 
-            @if (race.raceType === RaceType.Relay) {
-            <button mat-raised-button color="primary" [routerLink]="['/relay-planner', race.id, 'sections']">
-              <mat-icon>route</mat-icon> Tervező
-            </button>
-            }
-
           </div>
         </td>
         }
@@ -122,6 +116,8 @@
                 <th>Típus</th>
                 <th>Táv/Idő</th>
                 <th>Rajt</th>
+                <th>
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -131,6 +127,13 @@
                 <td>{{ getRaceTypeName(cat.raceType) }}</td>
                 <td>{{ cat.distance ? cat.distance + ' km' : cat.duration + ' perc' }}</td>
                 <td>{{ cat.startDateTime | date:'yyyy.MM.dd. HH:mm' }}</td>
+                <td>
+                  @if (cat.raceType === RaceType.Relay) {
+                  <button mat-raised-button color="primary" [routerLink]="['/relay-planner', race.id, 'sections']">
+                    <mat-icon>route</mat-icon> Tervező
+                  </button>
+                  }
+                </td>
               </tr>
               }
             </tbody>

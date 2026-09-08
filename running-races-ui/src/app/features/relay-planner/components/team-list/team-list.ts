@@ -58,7 +58,7 @@ export class TeamListComponent implements OnInit {
 
     loadRaces(): void{
         this.raceService.getRaces( 'public', { page: 1, pageSize: 50}).subscribe( resulét =>{
-            this.races = resulét.items.filter( x => x.raceType === RaceType.Relay)
+            this.races = resulét.items
         } )
     }
 

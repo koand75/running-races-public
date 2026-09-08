@@ -60,9 +60,6 @@ public class RaceRepository : IRaceRepository
                 "location" => sortDirection == "asc"
                     ? query.OrderBy(r => r.Location)
                     : query.OrderByDescending(r => r.Location),
-                "distance" => sortDirection == "asc"
-                    ? query.OrderBy(r => r.Distance)
-                    : query.OrderByDescending(r => r.Distance),
                 _ => query
             };
         }
@@ -94,11 +91,6 @@ public class RaceRepository : IRaceRepository
             throw new ArgumentException("Race name cannot be empty.", nameof(race.Name));
         }
 
-        if (race.Distance <= 0)
-        {
-            throw new ArgumentException("Distance must be positive.", nameof(race.Distance));
-        }
-
         _context.Races.Add(race);
         await _context.SaveChangesAsync();
         return race;
@@ -116,9 +108,7 @@ public class RaceRepository : IRaceRepository
         existingRace.StartDate = race.StartDate;
         existingRace.EndDate = race.EndDate;
         existingRace.Location = race.Location;
-        existingRace.Distance = race.Distance;
         existingRace.ModifiedAt = DateTime.UtcNow;
-        existingRace.RaceType = race.RaceType;
 
         await _context.SaveChangesAsync();
         return existingRace;

@@ -92,16 +92,6 @@ public class RaceService : IRaceService
         {
             throw new ArgumentException("Race location is required.", nameof(race.Location));
         }
-
-        if (race.Distance <= 0)
-        {
-            throw new ArgumentException("Distance must be positive.", nameof(race.Distance));
-        }
-
-        if (race.Distance > 500)
-        {
-            throw new ArgumentException("Distance cannot exceed 500 km.", nameof(race.Distance));
-        }
     }
 
     public async Task RestoreRaceAsync(Guid id)

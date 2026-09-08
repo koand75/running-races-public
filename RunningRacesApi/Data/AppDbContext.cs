@@ -67,49 +67,37 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
             .Property(rc => rc.Measurement)
             .HasConversion<string>();
 
-        modelBuilder.Entity<Race>()
-            .Property(r => r.RaceType)
-            .HasConversion<string>();
-
         modelBuilder.Entity<Race>().HasData(
             new Race
             {
                 Id = Guid.Parse("11111111-1111-1111-1111-111111111111"),
                 Name = "Budapest Marathon",
-                Date = new DateTime(2025, 10, 5),
                 StartDate = new DateTime(2025, 10, 5),
                 Location = "Budapest",
-                Distance = 42.2,
                 CreatedAt = new DateTime(2025, 1, 1, 10, 0, 0, DateTimeKind.Utc)
             },
             new Race
             {
                 Id = Guid.Parse("11111111-1111-1111-1111-111111111112"),
                 Name = "Balaton Supermarathon",
-                Date = new DateTime(2025, 10, 5),
                 StartDate = new DateTime(2025, 7, 12),
                 Location = "Balatonfüred",
-                Distance = 195,
                 CreatedAt = new DateTime(2025, 1, 1, 10, 0, 0, DateTimeKind.Utc)
             },
             new Race
             {
                 Id = Guid.Parse("11111111-1111-1111-1111-111111111113"),
                 Name = "SPAR Budapest Half Marathon",
-                Date = new DateTime(2025, 10, 5),
                 StartDate = new DateTime(2025, 9, 14),
                 Location = "Budapest",
-                Distance = 21.1,
                 CreatedAt = new DateTime(2025, 1, 1, 10, 0, 0, DateTimeKind.Utc)
             },
             new Race
             {
                 Id = Guid.Parse("11111111-1111-1111-1111-111111111114"),
                 Name = "Telekom Vivicittá",
-                Date = new DateTime(2025, 10, 5),
                 StartDate = new DateTime(2025, 4, 6),
                 Location = "Budapest",
-                Distance = 10,
                 CreatedAt = new DateTime(2025, 1, 1, 10, 0, 0, DateTimeKind.Utc)
             }
         );
