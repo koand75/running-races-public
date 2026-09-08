@@ -43,9 +43,7 @@ export class RaceFormComponent implements OnInit {
       name: ['', Validators.required],
       startDate: ['', Validators.required],
       endDate: [''],
-      location: ['', Validators.required],
-      distance: [0, [Validators.required, Validators.min(0.1)]],
-      raceType: [0]
+      location: ['', Validators.required]
     });
   }
 
@@ -153,8 +151,8 @@ export class RaceFormComponent implements OnInit {
     switch (type) {
       case RaceType.Relay: return 'Váltó';
       case RaceType.Individual: return 'Egyéni';
-      default: return 'Nincs megadva';      
+      default: return 'Nincs megadva';
     }
-    
+
   }
 }

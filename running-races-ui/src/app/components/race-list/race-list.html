@@ -65,12 +65,6 @@
           <span>{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
           }
         </th>
-        <th (click)="sortBy('distance')">
-          Távolság (km)
-          @if (sortColumn === 'distance') {
-          <span>{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
-          }
-        </th>
 
         @if (isAdminMode && isAdmin()) {
         <th>Műveletek</th>
@@ -94,7 +88,6 @@
           }
         </td>
         <td>{{ race.location }}</td>
-        <td>{{ race.distance }}</td>
         @if (isAdminMode && isAdmin()) {
         <td>
           <div class="action-buttons">
