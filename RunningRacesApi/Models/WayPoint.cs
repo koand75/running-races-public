@@ -7,4 +7,6 @@ public class WayPoint
     public double? Lng { get; set; }
     public Guid? RaceId { get; set; }
     public Race? Race { get; set; }
+    public int? CategoryId { get; set; }
+    public RaceCategory? Category { get; set; }
 }
