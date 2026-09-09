@@ -15,23 +15,12 @@ public class SectionService : ISectionService
         _context = context;
     }
 
-    public async Task<IEnumerable<Section>> GetAllByRaceAsync(Guid raceId)
-    {
-        return await _context.Sections
-            .Include(x => x.EndWayPoint)
-            .Include(x => x.StartWayPoint)
-            .Include(x => x.Race)
-            .Where(x => x.RaceId == raceId)
-            .OrderBy(s => s.Order)
-            .ToListAsync();
-    }
-
     public async Task<IEnumerable<Section>> GetAllByCategoryAsync(int categoryId)
     {
         return await _context.Sections
             .Include(x => x.EndWayPoint)
             .Include(x => x.StartWayPoint)
-            .Include(x => x.Race)
+            .Include(x => x.Category)
             .Where(x => x.CategoryId == categoryId)
             .OrderBy(s => s.Order)
             .ToListAsync();

@@ -4,7 +4,6 @@ namespace RunningRacesApi.Services;
 
 public interface ISectionService
 {
-    Task<IEnumerable<Section>> GetAllByRaceAsync(Guid raceId);
     Task<IEnumerable<Section>> GetAllByCategoryAsync(int categoryId);
     Task<Section?> GetSectionByCategoryAsync(int categoryId, int sectionId);
     Task<Section> CreateAsync(Section section);

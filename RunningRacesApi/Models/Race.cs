@@ -50,11 +50,6 @@
         public DateTime? ModifiedAt { get; set; }
 
         /// <summary>
-        /// Connected section
-        /// </summary>
-        public ICollection<Section> Sections { get; set; } = new List<Section>();
-
-        /// <summary>
         /// Categories in race for example 5/7/10km
         /// </summary>
         public ICollection<RaceCategory> Categories { get; set; } = new List<RaceCategory>();

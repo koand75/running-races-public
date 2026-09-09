@@ -9,7 +9,7 @@ using RunningRacesApi.Services;
 namespace RunningRacesApi.Controllers;
 
 [ApiController]
-[Route("api/race/{raceId}/section-export")]
+[Route("api/race/{raceId}/category/{categoryId}/section-export")]
 public class SectionExportController(ISectionService sectionService,
     ICsvExportService csvExportService) : ControllerBase
 {
@@ -18,9 +18,9 @@ public class SectionExportController(ISectionService sectionService,
 
     [HttpGet]
     [Authorize]
-    public async Task<IActionResult> Export(Guid raceId, [FromQuery] bool includeId = false)
+    public async Task<IActionResult> Export(int categoryId, [FromQuery] bool includeId = false)
     {
-        var sections = await _sectionService.GetAllByRaceAsync(raceId);
+        var sections = await _sectionService.GetAllByCategoryAsync(categoryId);
 
         var sectiosnToExport = sections.Adapt<IEnumerable<SectionExportDto>>();
 
