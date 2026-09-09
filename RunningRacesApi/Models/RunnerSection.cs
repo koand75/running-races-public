@@ -8,8 +8,6 @@ public class RunnerSection
     public int RunnerId { get; set; }
     public Runner? Runner { get; set; } = null!;
     public int CustomPace { get; set; }
-    public Guid? RaceId { get; set; }
-    public Race? Race { get; set; }
     public int? CategoryId { get; set; }
     public RaceCategory? Category { get; set; }
 }
