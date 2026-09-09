@@ -38,14 +38,6 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
                 .OnDelete(DeleteBehavior.Restrict);
         });
 
-        modelBuilder.Entity<WayPoint>(entity =>
-        {
-            entity.HasOne(s => s.Race)
-                .WithMany()
-                .HasForeignKey(s => s.RaceId)
-                .OnDelete(DeleteBehavior.Restrict);
-        });
-
         modelBuilder.Entity<RunnerSection>(entity =>
         {
             entity.HasOne(s => s.Race)

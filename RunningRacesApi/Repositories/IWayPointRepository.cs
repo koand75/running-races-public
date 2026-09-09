@@ -7,11 +7,6 @@ namespace RunningRacesApi.Repositories;
 /// </summary>
 public interface IWayPointRepository
 {
-    /// <summary>
-    /// Összes váltópont lekérdezése keresési paraméterekkel
-    /// </summary>
-    Task<PagedResult<WayPoint>> GetAllByRaceAsync(Guid raceId, BaseSearchModel? searchModel = null);
-
     Task<PagedResult<WayPoint>> GetAllByCategoryAsync(int categoryId, BaseSearchModel? searchModel);
     Task<WayPoint> CreateAsync(WayPoint wayPoint);
     Task<WayPoint?> GetByIdAsync(int? id);
