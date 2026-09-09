@@ -49,12 +49,15 @@ export class SectionListComponent implements OnInit {
   editingSection: Section | null = null;
   insertingAfterOrder: number | null = null;
   newSection: Partial<Section> = {};
+  categoryId: number = 0;
 
   private route = inject(ActivatedRoute);
   raceId: string = '';
 
   ngOnInit(): void {
     this.raceId = this.route.snapshot.paramMap.get('raceId') ?? '';
+    this.categoryId = Number(this.route.snapshot.paramMap.get('categoryId'));
+
     this.loadSections();
   }
 

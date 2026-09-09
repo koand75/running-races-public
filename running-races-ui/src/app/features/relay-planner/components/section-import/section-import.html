@@ -79,16 +79,16 @@
             <td mat-cell *matCellDef="let section">
                 <button mat-icon-button>
                     <mat-icon
-                        [class]="section.startWayPointStatus === 0 ? 'status-exact' : section.startWayPointStatus === 1 ? 'status-partial' : 'status-not-found'">{{
-                        section.startWayPointStatus === 0 ? 'check_circle' : section.startWayPointStatus === 1 ?
+                        [class]="section.startWayPointStatus === 'Exact' ? 'status-exact' : section.startWayPointStatus === 'Partial' ? 'status-partial' : 'status-not-found'">{{
+                        section.startWayPointStatus === 'Exact' ? 'check_circle' : section.startWayPointStatus === 'Partial' ?
                         'warning' : 'error' }}</mat-icon>
                 </button>
                 {{ section.startWayPointName }}
                 -
                 <button mat-icon-button>
                     <mat-icon
-                        [class]="section.endWayPointStatus === 0 ? 'status-exact' : section.endWayPointStatus === 1 ? 'status-partial' : 'status-not-found'">{{
-                        section.endWayPointStatus === 0 ? 'check_circle' : section.endWayPointStatus === 1 ? 'warning' :
+                        [class]="section.endWayPointStatus === 'Exact' ? 'status-exact' : section.endWayPointStatus === 'Partial' ? 'status-partial' : 'status-not-found'">{{
+                        section.endWayPointStatus === 'Exact' ? 'check_circle' : section.endWayPointStatus === 'Partial' ? 'warning' :
                         'error' }}</mat-icon>
                 </button>
                 {{ section.endWayPointName }}

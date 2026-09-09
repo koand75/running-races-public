@@ -39,6 +39,31 @@ public class WayPointRepository : IWayPointRepository
         };
     }
 
+    public async Task<PagedResult<WayPoint>> GetAllByCategoryAsync(int categoryId, BaseSearchModel? searchModel)
+    {
+        if (searchModel is null)
+        {
+            searchModel = new BaseSearchModel();
+        }
+
+        IQueryable<WayPoint> query = _context.WayPoints.Where(x => x.CategoryId == categoryId);
+
+        var totalCount = await query.CountAsync();
+
+        var items = await query
+            .Skip((searchModel.Page - 1) * searchModel.PageSize)
+            .Take(searchModel.PageSize)
+            .ToListAsync();
+
+        return new PagedResult<WayPoint>
+        {
+            Items = items,
+            TotalCount = totalCount,
+            Page = searchModel.Page,
+            PageSize = searchModel.PageSize
+        };
+    }
+
     public async Task<WayPoint> CreateAsync(WayPoint wayPoint)
     {
         _context.WayPoints.Add(wayPoint);

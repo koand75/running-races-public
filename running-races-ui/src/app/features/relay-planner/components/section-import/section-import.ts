@@ -57,7 +57,7 @@ export class SectionImport {
     const input = event.target as HTMLInputElement;
     if (input.files?.length) {
       const file = input.files[0];
-      this.sectionService.previewCsv(this.raceId, file).subscribe(result => {
+      this.sectionService.previewCsv(this.raceId, this.categoryId, file).subscribe(result => {
         this.previewResult = result.sections;
         this.wayPointIssues = result.wayPointIssues;
       });
@@ -65,9 +65,12 @@ export class SectionImport {
   }
 
   displayedColumns = ['order', 'name', 'distance'];
+  categoryId: number = 0;
 
   ngOnInit(): void {
     this.raceId = this.route.snapshot.paramMap.get('raceId') ?? '';
+    this.categoryId = Number(this.route.snapshot.paramMap.get('categoryId'));
+
     this.waypointService.getAll(this.raceId).subscribe(wp => this.wayPoints = wp);
   }
 
@@ -80,7 +83,7 @@ export class SectionImport {
       startWayPointId: s.matchedStartWayPointIds[0],
       endWayPointId: s.matchedEndWayPointIds[0]
     }));
-    this.sectionService.importSections(this.raceId, importData).subscribe(() => {
+    this.sectionService.importSections(this.raceId, this.categoryId, importData).subscribe(() => {
       alert('Importálás sikeres!');
     });
   }

@@ -9,7 +9,6 @@ import { environment } from '../../../../environments/environment';
 })
 export class SectionService {
   private http = inject(HttpClient);
-  private apiUrl = `${environment.apiUrl}/section`;
 
   private getApiUrl(raceId: string): string {
     return `${environment.apiUrl}/race/${raceId}/section`;
@@ -35,10 +34,10 @@ export class SectionService {
     return this.http.delete<void>(`${this.getApiUrl(raceId)}/${id}`);
   }
 
-  previewCsv(raceId: string, file: File): Observable<SectionImportPreviewResultDto> {
+  previewCsv(raceId: string, categoryId: number, file: File): Observable<SectionImportPreviewResultDto> {
     const formData = new FormData();
     formData.append('file', file);
-    return this.http.post<SectionImportPreviewResultDto>(`${environment.apiUrl}/race/${raceId}/section-import/preview`, formData);
+    return this.http.post<SectionImportPreviewResultDto>(`${environment.apiUrl}/race/${raceId}/category/${categoryId}/section-import/preview`, formData);
   }
 
   insertAfter(raceId: string, afterOrder: number, section: Section): Observable<Section> {
@@ -48,7 +47,7 @@ export class SectionService {
   exportCsv(raceId: string, includeId: boolean = false): Observable<Blob> {
     return this.http.get(`${this.getApiUrl(raceId)}/section-export?includeId=${includeId}`, { responseType: 'blob' });
   }
-  importSections(raceId: string, sections: any[]): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/race/${raceId}/section-import`, sections);
+  importSections(raceId: string, categoryId: number, sections: any[]): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/race/${raceId}/category/${categoryId}/section-import`, sections);
   }
 }

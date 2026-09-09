@@ -8,14 +8,14 @@ namespace RunningRacesApi.Controllers;
 
 [ApiController]
 [Authorize]
-[Route("api/race/{raceId}/section-import")]
+[Route("api/race/{raceId}/category/{categoryId}/section-import")]
 public class SectionImportController(ISectionImportService importService) : ControllerBase
 {
     private readonly ISectionImportService _importService = importService;
 
     [HttpPost("preview")]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> Preview(Guid raceId, IFormFile file)
+    public async Task<IActionResult> Preview(int categoryId, IFormFile file)
     {
         if (file == null || file.Length == 0)
             return BadRequest("Nincs fájl feltöltve");
@@ -23,7 +23,7 @@ public class SectionImportController(ISectionImportService importService) : Cont
         if (!file.FileName.EndsWith(".csv"))
             return BadRequest("Csak CSV fájl engedélyezett");
 
-        var result = await _importService.PreviewAsync(raceId, file);
+        var result = await _importService.PreviewAsync(categoryId, file);
         return Ok(result);
     }
 

@@ -64,9 +64,9 @@ export interface SectionImportPreviewDto extends SectionExportDto {
 }
 
 export enum WayPointMatchStatus {
-  NotFound = 2,
-  Partial = 1,
-  Exact = 0
+  Exact = 'Exact',
+  Partial = 'Partial',
+  NotFound = 'NotFound'
 }
 
 export interface WayPointIssueDto {

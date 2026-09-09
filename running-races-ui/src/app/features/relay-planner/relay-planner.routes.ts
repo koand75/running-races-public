@@ -5,7 +5,7 @@ import { PublicLayoutComponent } from '../../components/public-layout/public-lay
 
 export const UB_ROUTES: Routes = [
   {
-    path: 'sections',
+    path: 'categories/:categoryId/sections',
     loadComponent: () =>
       import('./components/section-list/section-list')
         .then(m => m.SectionListComponent)
@@ -51,7 +51,7 @@ export const UB_ROUTES: Routes = [
     loadComponent: () => import('./components/waypoints/waypoints').then(m => m.Waypoints)
   },
   {
-    path: 'sections/import',
+    path: 'categories/:categoryId/sections/import',
     canActivate: [adminGuard],
     loadComponent: () => import('./components/section-import/section-import').then(m => m.SectionImport)
   },

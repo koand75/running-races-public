@@ -5,6 +5,8 @@ namespace RunningRacesApi.Services;
 public interface IWayPointService
 {
     Task<PagedResult<WayPoint>> GetAllByRaceAsync(Guid raceId, BaseSearchModel? searchModel = null);
+
+    Task<PagedResult<WayPoint>> GetAllByCategoryAsync(int raceId, BaseSearchModel? searchModel = null);
     Task<WayPoint> GetByIdAsync(int? id);
     Task<WayPoint> CreateAsync(WayPoint wayPoint);
     Task<WayPoint?> UpdateAsync(int id, WayPoint wayPoint);

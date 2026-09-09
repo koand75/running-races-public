@@ -17,6 +17,11 @@ public class WayPointService : IWayPointService
         return await _repository.GetAllByRaceAsync(raceId, searchModel);
     }
 
+    public async Task<PagedResult<WayPoint>> GetAllByCategoryAsync(int raceId, BaseSearchModel? searchModel = null)
+    {
+        return await _repository.GetAllByCategoryAsync(raceId, searchModel);
+    }
+
     public async Task<WayPoint> GetByIdAsync(int? id)
     {
         return await _repository.GetByIdAsync(id);

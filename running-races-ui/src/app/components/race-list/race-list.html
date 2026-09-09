@@ -129,7 +129,8 @@
                 <td>{{ cat.startDateTime | date:'yyyy.MM.dd. HH:mm' }}</td>
                 <td>
                   @if (cat.raceType === RaceType.Relay) {
-                  <button mat-raised-button color="primary" [routerLink]="['/relay-planner', race.id, 'sections']">
+                  <button mat-raised-button color="primary"
+                    [routerLink]="['/relay-planner', race.id, 'categories', cat.id, 'sections']">
                     <mat-icon>route</mat-icon> Tervező
                   </button>
                   }

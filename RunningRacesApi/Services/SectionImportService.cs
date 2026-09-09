@@ -35,7 +35,7 @@ public class SectionImportService(ISectionService sectionService, IWayPointServi
         return sections.Count;
     }
 
-    public async Task<SectionImportPreviewResultDto> PreviewAsync(Guid raceId, IFormFile file)
+    public async Task<SectionImportPreviewResultDto> PreviewAsync(int categoryId, IFormFile file)
     {
         var sections = new List<SectionImportPreviewDto>();
 
@@ -71,7 +71,7 @@ public class SectionImportService(ISectionService sectionService, IWayPointServi
             PageSize = int.MaxValue
         };
 
-        var wayPoints = await _wayPointService.GetAllByRaceAsync(raceId, searchModel);
+        var wayPoints = await _wayPointService.GetAllByCategoryAsync(categoryId, searchModel);
         var matched = Match(sections, wayPoints.Items);
 
 

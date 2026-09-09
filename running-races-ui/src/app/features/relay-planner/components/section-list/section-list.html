@@ -4,7 +4,8 @@
   </div>
 
   <div class="header-actions">
-    <button mat-stroked-button [routerLink]="['/relay-planner', raceId, 'sections', 'import']">
+    <button mat-stroked-button
+      [routerLink]="['/relay-planner', raceId, 'categories', categoryId, 'sections', 'import']">
       <mat-icon>upload</mat-icon> CSV Import
     </button>
     <button mat-raised-button color="primary" (click)="exportCsv()">
