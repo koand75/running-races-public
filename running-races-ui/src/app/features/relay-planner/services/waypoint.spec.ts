@@ -10,7 +10,8 @@ describe('WayPoint', () => {
   let httpMock: HttpTestingController;
 
   const mockRaceId = '00000000-0000-0000-0000-000000000001';
-  const apiUrl = `${environment.apiUrl}/race/${mockRaceId}/waypoint`;
+  const mockCategoryId = 0;
+  const apiUrl = `${environment.apiUrl}/race/${mockRaceId}/category/${mockCategoryId}/waypoint`;
 
 
   beforeEach(() => {
@@ -32,24 +33,24 @@ describe('WayPoint', () => {
       { id: 1, name: 'Tihany', lat: 46.91, lng: 17.88 }
     ];
     const pagedResult = { items: mockData, totalCount: 1, page: 1, pageSize: 10 };
-    service.getAll(mockRaceId).subscribe(data => expect(data).toEqual(mockData));
+    service.getAll(mockRaceId, mockCategoryId).subscribe(data => expect(data).toEqual(mockData));
     httpMock.expectOne(`${apiUrl}?pageSize=1000`).flush(pagedResult);
   });
 
   it('should create a waypoint', () => {
     const newWp: WayPointModel = { id: 0, name: 'Keszthely', lat: 46.76, lng: 17.24 };
-    service.create(mockRaceId, newWp).subscribe(data => expect(data.name).toBe('Keszthely'));
+    service.create(mockRaceId, mockCategoryId, newWp).subscribe(data => expect(data.name).toBe('Keszthely'));
     httpMock.expectOne({ method: 'POST', url: apiUrl }).flush(newWp);
   });
 
   it('should update a waypoint', () => {
     const wp: WayPointModel = { id: 1, name: 'Updated', lat: 46.0, lng: 17.0 };
-    service.update(mockRaceId, 1, wp).subscribe(data => expect(data.name).toBe('Updated'));
+    service.update(mockRaceId, mockCategoryId, 1, wp).subscribe(data => expect(data.name).toBe('Updated'));
     httpMock.expectOne({ method: 'PUT', url: `${apiUrl}/1` }).flush(wp);
   });
 
   it('should delete a waypoint', () => {
-    service.delete(mockRaceId, 1).subscribe();
+    service.delete(mockRaceId, mockCategoryId, 1).subscribe();
     httpMock.expectOne({ method: 'DELETE', url: `${apiUrl}/1` }).flush(null);
   });
 });

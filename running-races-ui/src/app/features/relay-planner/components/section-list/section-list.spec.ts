@@ -15,6 +15,7 @@ describe('SectionList', () => {
     let mockSectionService: jasmine.SpyObj<SectionService>;
     let mockAuthService: jasmine.SpyObj<AuthService>;
     const mockRaceId = '00000000-0000-0000-0000-000000000001';
+    const mockCategoryId = 0;
 
     const mockSections: Section[] = [
         { id: 1, name: 'S1', distance: 5, order: 1, startWayPointId: 1, endWayPointId: 2 },
@@ -38,7 +39,7 @@ describe('SectionList', () => {
                 { provide: MatDialog, useValue: { open: () => ({ afterClosed: () => of(true) }) } },
                 {
                     provide: ActivatedRoute, useValue: {
-                        snapshot: { paramMap: { get: () => mockRaceId } }
+                        snapshot: { paramMap: { get: (key: string) => key === 'raceId' ? mockRaceId : '0' } }
                     }
                 }
             ]
@@ -62,11 +63,10 @@ describe('SectionList', () => {
         expect(component.computeFullDistance(2)).toBe(15);
     });
 
-
     it('should delete section when confirmed', () => {
         mockSectionService.delete.and.returnValue(of(void 0));
         component.deleteSection(1);
-        expect(mockSectionService.delete).toHaveBeenCalledWith(mockRaceId, 1);
+        expect(mockSectionService.delete).toHaveBeenCalledWith(mockRaceId, mockCategoryId, 1);
     });
 
     it('should not delete section when cancelled', () => {
