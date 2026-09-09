@@ -3,6 +3,10 @@
 Full-stack running race management application with modern technologies. ASP.NET Core 9 backend with JWT authentication + Angular 20 standalone frontend.
 
 ---
+## 💡 Motivation
+
+Born out of frustration with Excel spreadsheets while planning runner assignments for the UltraBalaton relay race. 
+There had to be a better way.
 
 ## 🚀 Tech Stack
 

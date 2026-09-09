@@ -36,6 +36,25 @@ ez a projekt követi a [Semantic Versioning](https://semver.org/spec/v2.0.0.html
 - Telepítési pipeline
 
 ---
+## [0.12.0] - 2026-09-09
+
+### Hozzáadva
+- CategoryId FK hozzáadva a Section, WayPoint és RunnerSection táblákhoz
+- RaceCategory alapú routing a relay-planner modulban
+- CategoryTeam many-to-many kapcsolat (RaceCategory ↔ Team)
+- Relay kategória legördülő endpoint (`GET /api/race-categories/relay`)
+- Kategória választó legördülő a csapatok oldalán
+
+### Változott
+- Minden relay-planner route tartalmazza a categoryId-t (`/relay-planner/:raceId/categories/:categoryId/...`)
+- Szakasz, váltópont és beosztás endpointok categoryId alapján szűrnek
+- RaceId eltávolítva a Section, WayPoint és RunnerSection táblákból
+- RaceTeam kapcsolat felváltva CategoryTeam kapcsolattal
+
+### Javítva
+- WayPointMatchStatus enum értékek string alapúra cserélve
+- Import preview mostantól categoryId alapján szűri a váltópontokat
+
 ## [0.11.0] - 2026-09-07
 
 ### Hozzáadva

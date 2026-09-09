@@ -35,6 +35,25 @@ this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Deployment pipeline
 
 ---
+## [0.12.0] - 2026-09-09
+
+### Added
+- CategoryId FK added to Section, WayPoint and RunnerSection tables
+- RaceCategory-based routing throughout relay-planner module
+- CategoryTeam many-to-many relationship (RaceCategory ↔ Team)
+- Relay category dropdown endpoint (`GET /api/race-categories/relay`)
+- Category selector dropdown on teams page
+
+### Changed
+- All relay-planner routes now include categoryId (`/relay-planner/:raceId/categories/:categoryId/...`)
+- Section, WayPoint and assignment endpoints scoped to categoryId
+- RaceId removed from Section, WayPoint and RunnerSection tables
+- RaceTeam relation replaced by CategoryTeam
+
+### Fixed
+- WayPointMatchStatus enum values changed to string-based
+- Import preview now filters waypoints by categoryId
+
 ## [0.11.0] - 2026-09-07
 
 ### Added
