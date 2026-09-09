@@ -40,6 +40,7 @@ export class SectionInsertDialog implements OnInit {
   filteredEndWayPoints$!: Observable<WayPointModel[]>;
   private route = inject(ActivatedRoute);
   raceId: string = '';
+  categoryId = 0;
 
   constructor(
     public dialogRef: MatDialogRef<SectionInsertDialog>,
@@ -64,7 +65,9 @@ export class SectionInsertDialog implements OnInit {
 
   ngOnInit(): void {
     this.raceId = this.route.snapshot.paramMap.get('raceId') ?? '';
-    this.waypointService.getAll(this.raceId).subscribe(wp => {
+    this.categoryId = Number(this.route.snapshot.paramMap.get('categoryId'));
+
+    this.waypointService.getAll(this.raceId, this.categoryId).subscribe(wp => {
       this.wayPoints = wp;
       this.filteredStartWayPoints$ = this.startWayPointControl.valueChanges.pipe(
         startWith(this.data.section?.startWayPoint ?? ''),

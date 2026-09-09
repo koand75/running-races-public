@@ -11,7 +11,7 @@
     <button mat-raised-button color="primary" (click)="exportCsv()">
       <mat-icon>download</mat-icon> Exportálás
     </button>
-    <button mat-stroked-button [routerLink]="['/relay-planner', raceId, 'waypoints']">
+    <button mat-stroked-button [routerLink]="['/relay-planner', raceId, 'categories', categoryId, 'waypoints']">
       <mat-icon>place</mat-icon> Váltópontok
     </button>
     <button mat-stroked-button [routerLink]="['/relay-planner', raceId, 'map']">

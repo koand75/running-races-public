@@ -11,26 +11,25 @@ import { environment } from '../../../../environments/environment';
 })
 export class WayPoint {
   private http = inject(HttpClient);
-  private apiUrl = `${environment.apiUrl}/waypoint`;
-  private getApiUrl(raceId: string): string {
-    return `${environment.apiUrl}/race/${raceId}/waypoint`;
+  private getApiUrl(raceId: string, categoryId: number): string {
+    return `${environment.apiUrl}/race/${raceId}/category/${categoryId}/waypoint`;
   }
 
-  getAll(raceId: string): Observable<WayPointModel[]> {
-    return this.http.get<PagedResult<WayPointModel>>(`${this.getApiUrl(raceId)}?pageSize=1000`).pipe(
+  getAll(raceId: string, categoryId: number): Observable<WayPointModel[]> {
+    return this.http.get<PagedResult<WayPointModel>>(`${this.getApiUrl(raceId, categoryId)}?pageSize=1000`).pipe(
       map(result => result.items)
     );
   }
 
-  create(raceId: string, wayPoint: WayPointModel): Observable<WayPointModel> {
-    return this.http.post<WayPointModel>(this.getApiUrl(raceId), wayPoint);
+  create(raceId: string, categoryId: number, wayPoint: WayPointModel): Observable<WayPointModel> {
+    return this.http.post<WayPointModel>(this.getApiUrl(raceId, categoryId), wayPoint);
   }
 
-  update(raceId: string, id: number, wayPoint: WayPointModel): Observable<WayPointModel> {
-    return this.http.put<WayPointModel>(`${this.getApiUrl(raceId)}/${id}`, wayPoint);
+  update(raceId: string, categoryId: number, id: number, wayPoint: WayPointModel): Observable<WayPointModel> {
+    return this.http.put<WayPointModel>(`${this.getApiUrl(raceId, categoryId)}/${id}`, wayPoint);
   }
 
-  delete(raceId: string, id: number): Observable<void> {
-    return this.http.delete<void>(`${this.getApiUrl(raceId)}/${id}`);
+  delete(raceId: string, categoryId: number, id: number): Observable<void> {
+    return this.http.delete<void>(`${this.getApiUrl(raceId, categoryId)}/${id}`);
   }
 }

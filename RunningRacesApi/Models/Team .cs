@@ -19,8 +19,6 @@ public class Team : BaseEntity
     /// </summary>
     public DateTime? StartTime { get; set; }
 
-    /// <summary>
-    /// Connected races
-    /// </summary>
-    public ICollection<Race> Races { get; set; } = new List<Race>();
+    // Connected categories
+    public ICollection<RaceCategory> Categories { get; set; } = new List<RaceCategory>();
 }

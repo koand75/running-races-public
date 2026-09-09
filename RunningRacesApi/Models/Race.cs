@@ -50,11 +50,6 @@
         public DateTime? ModifiedAt { get; set; }
 
         /// <summary>
-        /// Connected teams
-        /// </summary>
-        public ICollection<Team> Teams { get; set; } = new List<Team>();
-
-        /// <summary>
         /// Connected section
         /// </summary>
         public ICollection<Section> Sections { get; set; } = new List<Section>();

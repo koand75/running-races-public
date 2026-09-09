@@ -71,7 +71,7 @@ export class SectionImport {
     this.raceId = this.route.snapshot.paramMap.get('raceId') ?? '';
     this.categoryId = Number(this.route.snapshot.paramMap.get('categoryId'));
 
-    this.waypointService.getAll(this.raceId).subscribe(wp => this.wayPoints = wp);
+    this.waypointService.getAll(this.raceId, this.categoryId).subscribe(wp => this.wayPoints = wp);
   }
 
   executeImport(): void {
@@ -99,7 +99,7 @@ export class SectionImport {
       });
       dialogRef.afterClosed().subscribe(confirmed => {
         if (confirmed) {
-          this.waypointService.create(this.raceId, {
+          this.waypointService.create(this.raceId, this.categoryId, {
             id: 0,
             name: issue.name ?? '',
             lat: issue.lat,
@@ -135,7 +135,7 @@ export class SectionImport {
 
   overwriteWayPoint(issue: WayPointIssueDto, selectedId: number): void {
     // WayPoint frissítése az importált adatokkal
-    this.waypointService.update(this.raceId, selectedId, {
+    this.waypointService.update(this.raceId, this.categoryId, selectedId, {
       id: selectedId,
       name: issue.name ?? '',
       lat: issue.lat,

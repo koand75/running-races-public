@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RunningRacesApi.Data;
 
@@ -10,9 +11,11 @@ using RunningRacesApi.Data;
 namespace RunningRacesApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260909170037_AddCategoryTeamRelation")]
+    partial class AddCategoryTeamRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.19");
@@ -158,6 +161,21 @@ namespace RunningRacesApi.Migrations
                     b.HasIndex("TeamsId");
 
                     b.ToTable("RaceCategoryTeam");
+                });
+
+            modelBuilder.Entity("RaceTeam", b =>
+                {
+                    b.Property<Guid>("RacesId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("TeamsId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("RacesId", "TeamsId");
+
+                    b.HasIndex("TeamsId");
+
+                    b.ToTable("RaceTeam");
                 });
 
             modelBuilder.Entity("RunningRacesApi.Models.ApplicationUser", b =>
@@ -581,6 +599,21 @@ namespace RunningRacesApi.Migrations
                     b.HasOne("RunningRacesApi.Models.RaceCategory", null)
                         .WithMany()
                         .HasForeignKey("CategoriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RunningRacesApi.Models.Team", null)
+                        .WithMany()
+                        .HasForeignKey("TeamsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("RaceTeam", b =>
+                {
+                    b.HasOne("RunningRacesApi.Models.Race", null)
+                        .WithMany()
+                        .HasForeignKey("RacesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

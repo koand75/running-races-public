@@ -13,4 +13,6 @@ public class RaceCategory
     public double? Distance { get; set; }
     public int? Duration { get; set; }
     public DateTime? StartDateTime { get; set; }
+
+    public ICollection<Team> Teams { get; set; } = new List<Team>();
 }

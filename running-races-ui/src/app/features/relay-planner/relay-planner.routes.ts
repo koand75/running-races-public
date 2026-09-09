@@ -46,7 +46,7 @@ export const UB_ROUTES: Routes = [
   },
   //admin
   {
-    path: 'waypoints',
+    path: 'categories/:categoryId/waypoints',
     canActivate: [adminGuard],
     loadComponent: () => import('./components/waypoints/waypoints').then(m => m.Waypoints)
   },
