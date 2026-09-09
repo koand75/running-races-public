@@ -23,11 +23,13 @@ export class MapComponent implements OnInit, OnDestroy {
   private map!: L.Map;
   private route = inject(ActivatedRoute);
   raceId: string = '';
+  categoryId = 0;
 
   sections: Section[] = [];
 
   ngOnInit(): void {
     this.raceId = this.route.snapshot.paramMap.get('raceId') ?? '';
+    this.categoryId = Number(this.route.snapshot.paramMap.get('categoryId'));
     this.initMap();
     this.loadSections();
   }
@@ -45,7 +47,7 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   private loadSections(): void {
-    this.sectionService.getAll(this.raceId).subscribe(sections => {
+    this.sectionService.getAll(this.raceId, this.categoryId).subscribe(sections => {
       this.sections = sections;
       this.drawSections();
     });

@@ -32,6 +32,7 @@ export class TeamMapComponent implements OnInit, OnDestroy {
   runners: Runner[] = [];
   assignments: Map<number, RunnerSection> = new Map();
   raceId: string = '';
+  categoryId = 0;
 
   readonly colors = [
     '#078080', '#f45d48', '#6c5ce7', '#00b894',
@@ -41,6 +42,7 @@ export class TeamMapComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.raceId = this.route.snapshot.paramMap.get('raceId') ?? '';
+    this.categoryId = Number(this.route.snapshot.paramMap.get('categoryId'));
     this.teamId = Number(this.route.snapshot.paramMap.get('id'));
     this.map = this.mapService.initMap('team-map', [46.87, 17.73], 10);
     this.loadData();
@@ -51,11 +53,11 @@ export class TeamMapComponent implements OnInit, OnDestroy {
   }
 
   private loadData(): void {
-    this.sectionService.getAll(this.raceId).subscribe(sections => {
+    this.sectionService.getAll(this.raceId, this.categoryId).subscribe(sections => {
       this.sections = sections;
       this.runnerService.getByTeam(this.teamId).subscribe(runners => {
         this.runners = runners;
-        this.runnerSectionService.getByTeam(this.raceId, this.teamId).subscribe(assignments => {
+        this.runnerSectionService.getByTeam(this.raceId, this.categoryId, this.teamId).subscribe(assignments => {
           assignments.forEach(a => this.assignments.set(a.sectionId, a));
           this.drawMap();
         });

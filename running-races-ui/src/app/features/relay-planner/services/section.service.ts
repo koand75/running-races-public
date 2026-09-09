@@ -10,28 +10,28 @@ import { environment } from '../../../../environments/environment';
 export class SectionService {
   private http = inject(HttpClient);
 
-  private getApiUrl(raceId: string): string {
-    return `${environment.apiUrl}/race/${raceId}/section`;
+  private getApiUrl(raceId: string, categoryId: number): string {
+    return `${environment.apiUrl}/race/${raceId}/category/${categoryId}/section`;
   }
 
-  getAll(raceId: string): Observable<Section[]> {
-    return this.http.get<Section[]>(this.getApiUrl(raceId));
+  getAll(raceId: string, categoryId: number): Observable<Section[]> {
+    return this.http.get<Section[]>(this.getApiUrl(raceId, categoryId));
   }
 
-  getById(raceId: string, id: number): Observable<Section> {
-    return this.http.get<Section>(`${this.getApiUrl(raceId)}/${id}`);
+  getById(raceId: string, categoryId: number, id: number): Observable<Section> {
+    return this.http.get<Section>(`${this.getApiUrl(raceId, categoryId)}/${id}`);
   }
 
-  create(raceId: string, section: Section): Observable<Section> {
-    return this.http.post<Section>(this.getApiUrl(raceId), section);
+  create(raceId: string, categoryId: number, section: Section): Observable<Section> {
+    return this.http.post<Section>(this.getApiUrl(raceId, categoryId), section);
   }
 
-  update(raceId: string, section: Section): Observable<void> {
-    return this.http.put<void>(`${this.getApiUrl(raceId)}/${section.id}`, section);
+  update(raceId: string, categoryId: number, section: Section): Observable<void> {
+    return this.http.put<void>(`${this.getApiUrl(raceId,categoryId)}/${section.id}`, section);
   }
 
-  delete(raceId: string, id: number): Observable<void> {
-    return this.http.delete<void>(`${this.getApiUrl(raceId)}/${id}`);
+  delete(raceId: string, categoryId: number, id: number): Observable<void> {
+    return this.http.delete<void>(`${this.getApiUrl(raceId, categoryId)}/${id}`);
   }
 
   previewCsv(raceId: string, categoryId: number, file: File): Observable<SectionImportPreviewResultDto> {
@@ -40,12 +40,12 @@ export class SectionService {
     return this.http.post<SectionImportPreviewResultDto>(`${environment.apiUrl}/race/${raceId}/category/${categoryId}/section-import/preview`, formData);
   }
 
-  insertAfter(raceId: string, afterOrder: number, section: Section): Observable<Section> {
-    return this.http.post<Section>(`${this.getApiUrl(raceId)}/insert-after/${afterOrder}`, section);
+  insertAfter(raceId: string, categoryId: number, afterOrder: number, section: Section): Observable<Section> {
+    return this.http.post<Section>(`${this.getApiUrl(raceId, categoryId)}/insert-after/${afterOrder}`, section);
   }
 
-  exportCsv(raceId: string, includeId: boolean = false): Observable<Blob> {
-    return this.http.get(`${this.getApiUrl(raceId)}/section-export?includeId=${includeId}`, { responseType: 'blob' });
+  exportCsv(raceId: string, categoryId: number, includeId: boolean = false): Observable<Blob> {
+    return this.http.get(`${this.getApiUrl(raceId, categoryId)}/section-export?includeId=${includeId}`, { responseType: 'blob' });
   }
   importSections(raceId: string, categoryId: number, sections: any[]): Observable<any> {
     return this.http.post(`${environment.apiUrl}/race/${raceId}/category/${categoryId}/section-import`, sections);

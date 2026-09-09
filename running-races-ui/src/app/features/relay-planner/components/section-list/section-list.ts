@@ -62,7 +62,7 @@ export class SectionListComponent implements OnInit {
   }
 
   loadSections(): void {
-    this.sectionService.getAll(this.raceId).subscribe(sections => {
+    this.sectionService.getAll(this.raceId, this.categoryId).subscribe(sections => {
       this.sections = sections;
       this.updatePage();
     });
@@ -95,7 +95,7 @@ export class SectionListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.sectionService.update(this.raceId, { ...section, ...result }).subscribe(() => {
+        this.sectionService.update(this.raceId, this.categoryId, { ...section, ...result }).subscribe(() => {
           this.loadSections();
         });
       }
@@ -113,7 +113,7 @@ export class SectionListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.sectionService.delete(this.raceId, id).subscribe(() => {
+        this.sectionService.delete(this.raceId, this.categoryId, id).subscribe(() => {
           this.loadSections();
         });
       }
@@ -128,7 +128,7 @@ export class SectionListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.sectionService.insertAfter(this.raceId, order, result as Section).subscribe(() => {
+        this.sectionService.insertAfter(this.raceId, this.categoryId, order, result as Section).subscribe(() => {
           this.loadSections();
         });
       }
@@ -142,7 +142,7 @@ export class SectionListComponent implements OnInit {
   }
 
   exportCsv(includeId: boolean = false): void {
-    this.sectionService.exportCsv(this.raceId, includeId).subscribe(blob => {
+    this.sectionService.exportCsv(this.raceId, this.categoryId, includeId).subscribe(blob => {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;

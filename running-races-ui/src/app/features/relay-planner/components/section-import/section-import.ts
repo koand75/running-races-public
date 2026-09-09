@@ -32,7 +32,7 @@ export class SectionImport {
   raceId: string = '';
 
   loadSections(): void {
-    this.sectionService.getAll(this.raceId).subscribe(sections => {
+    this.sectionService.getAll(this.raceId, this.categoryId).subscribe(sections => {
       this.sections = sections;
     });
   }

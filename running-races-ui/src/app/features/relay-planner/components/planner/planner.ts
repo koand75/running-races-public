@@ -51,6 +51,7 @@ export class PlannerComponent implements OnInit {
 
     raceId: string = '';
     teamId!: number;
+    categoryId = 0;
     sections: Section[] = [];
     runners: Runner[] = [];
     assignments: Map<number, RunnerSection> = new Map();
@@ -65,12 +66,13 @@ export class PlannerComponent implements OnInit {
     ngOnInit(): void {
         this.raceId = this.route.snapshot.paramMap.get('raceId') ?? '';
         this.teamId = Number(this.route.snapshot.paramMap.get('id'));
+        this.categoryId = Number(this.route.snapshot.paramMap.get('categoryId')); 
         this.teamService.getById(this.teamId).subscribe(t => this.team = t);
         this.loadData();
     }
 
     loadData(): void {
-        this.sectionService.getAll(this.raceId).subscribe(sections => {
+        this.sectionService.getAll(this.raceId, this.categoryId).subscribe(sections => {
             this.sections = sections;
         });
 
@@ -79,7 +81,7 @@ export class PlannerComponent implements OnInit {
             this.calculateAllStats();
         });
 
-        this.runnerSectionService.getByTeam(this.raceId, this.teamId).subscribe(assignments => {
+        this.runnerSectionService.getByTeam(this.raceId, this.categoryId, this.teamId).subscribe(assignments => {
             this.assignments.clear();
             assignments.forEach(a => this.assignments.set(a.sectionId, a));
             this.calculateAllStats();
@@ -247,7 +249,7 @@ export class PlannerComponent implements OnInit {
             customPace: a.customPace
         }));
 
-        this.runnerSectionService.saveAll(this.raceId, this.teamId, assignmentList as RunnerSection[])
+        this.runnerSectionService.saveAll(this.raceId, this.categoryId, this.teamId, assignmentList as RunnerSection[])
             .subscribe(() => {
                 this.hasChanges = false;
                 alert('Mentve!');

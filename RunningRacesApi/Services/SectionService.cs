@@ -26,12 +26,23 @@ public class SectionService : ISectionService
             .ToListAsync();
     }
 
-    public async Task<Section?> GetSectionByRaceAsync(Guid raceId, int sectionId)
+    public async Task<IEnumerable<Section>> GetAllByCategoryAsync(int categoryId)
+    {
+        return await _context.Sections
+            .Include(x => x.EndWayPoint)
+            .Include(x => x.StartWayPoint)
+            .Include(x => x.Race)
+            .Where(x => x.CategoryId == categoryId)
+            .OrderBy(s => s.Order)
+            .ToListAsync();
+    }
+
+    public async Task<Section?> GetSectionByCategoryAsync(int categoryId, int sectionId)
     {
         return await _context.Sections
                     .Include(x => x.StartWayPoint)
                     .Include(x => x.EndWayPoint)
-                    .FirstOrDefaultAsync(x => x.Id == sectionId && x.RaceId == raceId);
+                    .FirstOrDefaultAsync(x => x.Id == sectionId && x.CategoryId == categoryId);
     }
 
     public async Task<Section> CreateAsync(Section section)

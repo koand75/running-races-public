@@ -30,17 +30,17 @@ export const UB_ROUTES: Routes = [
       import('./components/team-detail/team-detail').then(m => m.TeamDetailComponent)
   },
   {
-    path: 'teams/:id/plan',
-    canActivate: [authGuard],
-    loadComponent: () => import('./components/planner/planner').then(m => m.PlannerComponent)
-  },
-  {
     path: 'teams/:id/edit',
     canActivate: [authGuard],
     loadComponent: () => import('./components/team-edit/team-edit').then(m => m.TeamEdit)
   },
   {
-    path: 'teams/:id/map',
+    path: 'categories/:categoryId/teams/:id/plan',
+    canActivate: [authGuard],
+    loadComponent: () => import('./components/planner/planner').then(m => m.PlannerComponent)
+  },
+  {
+    path: 'categories/:categoryId/teams/:id/map',
     canActivate: [authGuard],
     loadComponent: () => import('./components/team-map/team-map').then(m => m.TeamMapComponent)
   },
