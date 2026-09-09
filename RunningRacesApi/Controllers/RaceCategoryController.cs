@@ -22,7 +22,6 @@ public class RaceCategoryController(IRaceCategoryService categoryService) : Cont
         return Ok(categories.Adapt<IEnumerable<RaceCategoryDto>>());
     }
 
-
     [HttpPost]
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<RaceCategoryDto>> Create(Guid raceId, RaceCategoryDto dto)

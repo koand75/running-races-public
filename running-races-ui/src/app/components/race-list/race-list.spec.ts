@@ -17,8 +17,8 @@ describe('RaceList', () => {
 
   const mockRaces: PagedResult<Race> = {
     items: [
-      { id: '1', name: 'Race 1', location: 'Budapest', distance: 10, startDate: '2025-04-05' },
-      { id: '2', name: 'Race 2', location: 'Debrecen', distance: 21, startDate: '2025-04-05' }
+      { id: '1', name: 'Race 1', location: 'Budapest', startDate: '2025-04-05' },
+      { id: '2', name: 'Race 2', location: 'Debrecen', startDate: '2025-04-05' }
     ],
     totalCount: 2,
     page: 1,

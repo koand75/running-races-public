@@ -4,14 +4,14 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { RaceService } from './race';
 import { Race } from '../models/race.model';
 import { PagedResult } from '../models/paged-result.model';
-import {environment } from '../../../src/environments/environment';
+import { environment } from '../../../src/environments/environment';
 
 describe('RaceService', () => {
   let service: RaceService;
   let httpMock: HttpTestingController;
 
   const apiUrl = `${environment.apiUrl}/races`;
-  const mockRace: Race = { id: '1', name: 'Test Race', location: 'Budapest', distance: 42, startDate: '2025-04-05' };
+  const mockRace: Race = { id: '1', name: 'Test Race', location: 'Budapest', startDate: '2025-04-05' };
   const mockPaged: PagedResult<Race> = { items: [mockRace], totalCount: 1, page: 1, pageSize: 50 };
 
   beforeEach(() => {

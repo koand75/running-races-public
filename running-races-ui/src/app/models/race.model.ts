@@ -8,3 +8,10 @@ export interface Race {
   location: string;
   isActive?: boolean;
 }
+
+export interface RaceCategoryDropdownDto {
+  raceId: string;
+  raceName: string;
+  categoryId: number;
+  categoryName: string;
+}

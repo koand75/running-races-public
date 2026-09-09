@@ -23,9 +23,9 @@
     <div class="header-actions">
         <mat-form-field appearance="outline">
             <mat-label>Verseny kiválasztása</mat-label>
-            <mat-select [(ngModel)]="selectedRaceId">
-                @for (race of races; track race.id) {
-                <mat-option [value]="race.id">{{ race.name }}</mat-option>
+            <mat-select [(ngModel)]="selectedCategoryId" (ngModelChange)="onCategorySelected($event)">
+                @for (cat of categories; track cat.categoryId) {
+                <mat-option [value]="cat.categoryId">{{ cat.raceName }} – {{ cat.categoryName }}</mat-option>
                 }
             </mat-select>
         </mat-form-field>
@@ -56,9 +56,9 @@
                     <button mat-raised-button color="primary" [routerLink]="[team.id]">
                         <mat-icon>group</mat-icon> Futók
                     </button>
-                    @if (selectedRaceId) {
+                    @if (selectedCategoryId) {
                     <button mat-raised-button color="primary"
-                        [routerLink]="['/relay-planner', selectedRaceId, 'teams', team.id, 'plan']">
+                        [routerLink]="['/relay-planner', selectedRaceId, 'categories', selectedCategoryId, 'teams', team.id, 'plan']">
                         <mat-icon>map</mat-icon> Tervezés
                     </button>
                     }

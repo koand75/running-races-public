@@ -16,8 +16,10 @@ describe('RaceForm', () => {
   let mockAuthService: jasmine.SpyObj<AuthService>;
 
   const mockRace: Race = {
-    id: '123', name: 'Test Race', location: 'Budapest',
-    distance: 42.2, startDate: '2025-04-05'
+    id: '123',
+    name: 'Test Race',
+    location: 'Budapest',
+    startDate: '2025-04-05'
   };
 
   beforeEach(async () => {

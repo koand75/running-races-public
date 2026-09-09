@@ -12,10 +12,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { AuthService } from '../../../../services/auth';
 import { ConfirmationDialogComponent } from '../../../../components/confirmation-dialog/confirmation-dialog';
 import { MatDialog } from '@angular/material/dialog';
-import { RaceService } from '../../../../services/race';
-import { Race } from '../../../../models/race.model';
 import { MatSelectModule } from '@angular/material/select';
-import { RaceType } from '../../models/relay-planner.models';
+import { RaceCategoryDropdownDto } from '../../../../models/race.model';
+import { RaceCategoryService } from '../../../../services/race-category.service';
 
 @Component({
     selector: 'app-team-list',
@@ -31,9 +30,10 @@ export class TeamListComponent implements OnInit {
     isAdmin(): boolean { return this.authService.isAdmin(); }
     private dialog = inject(MatDialog);
 
-    private raceService = inject(RaceService);
-    races: Race[] = [];
+    private raceCategoryService = inject(RaceCategoryService);
     selectedRaceId: string = '';
+    categories: RaceCategoryDropdownDto[] = [];
+    selectedCategoryId: number | null = null;
 
     newTeam: Partial<Team> = { name: '', year: new Date().getFullYear() };
 
@@ -53,13 +53,13 @@ export class TeamListComponent implements OnInit {
 
     ngOnInit(): void {
         this.loadTeams();
-        this.loadRaces();
+        this.loadCategories()
     }
 
-    loadRaces(): void{
-        this.raceService.getRaces( 'public', { page: 1, pageSize: 50}).subscribe( resulét =>{
-            this.races = resulét.items
-        } )
+    loadCategories(): void {
+        this.raceCategoryService.getRelayCategories().subscribe(cats => {
+            this.categories = cats;
+        });
     }
 
     loadTeams(): void {
@@ -84,5 +84,10 @@ export class TeamListComponent implements OnInit {
                 });
             }
         });
+    }
+
+    onCategorySelected(categoryId: number): void {
+        const cat = this.categories.find(c => c.categoryId === categoryId);
+        this.selectedRaceId = cat?.raceId ?? '';
     }
 }
