@@ -13,14 +13,14 @@ public class SectionImportService(ISectionService sectionService, IWayPointServi
     private readonly ISectionService _sectionService = sectionService;
     private readonly IWayPointService _wayPointService = wayPointService;
 
-    public async Task<int> ImportAsync(Guid raceId, List<SectionImportDto> sectionsImport)
+    public async Task<int> ImportAsync(int categoryId, List<SectionImportDto> sectionsImport)
     {
         var sections = new List<Section>();
 
         foreach (var item in sectionsImport)
         {
             var section = item.Adapt<Section>();
-            section.RaceId = raceId;
+            section.CategoryId = categoryId;
             var startWp = await _wayPointService.GetByIdAsync(section.StartWayPointId);
             var endWp = await _wayPointService.GetByIdAsync(section.EndWayPointId);
 

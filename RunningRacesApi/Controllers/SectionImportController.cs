@@ -29,11 +29,11 @@ public class SectionImportController(ISectionImportService importService) : Cont
 
     [HttpPost]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> Import(Guid raceId,List<SectionImportDto> sectionImport)
+    public async Task<IActionResult> Import(int categoryId,List<SectionImportDto> sectionImport)
     {
         try
         {
-            var result = await _importService.ImportAsync(raceId, sectionImport);
+            var result = await _importService.ImportAsync(categoryId, sectionImport);
             return Ok(new { imported = result });
         }
         catch (InvalidOperationException ex)

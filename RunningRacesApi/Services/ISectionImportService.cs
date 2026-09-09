@@ -4,7 +4,7 @@ namespace RunningRacesApi.Services;
 
 public interface ISectionImportService
 {
-    Task<SectionImportPreviewResultDto> PreviewAsync(int raceId, IFormFile file);
+    Task<SectionImportPreviewResultDto> PreviewAsync(int categoryId, IFormFile file);
 
-    Task<int> ImportAsync(Guid raceId, List<SectionImportDto> sectionsImport);
+    Task<int> ImportAsync(int categoryId, List<SectionImportDto> sectionsImport);
 }
