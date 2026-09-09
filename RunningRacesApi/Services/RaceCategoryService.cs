@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 using RunningRacesApi.Data;
+using RunningRacesApi.Enums;
 using RunningRacesApi.Models;
 
 namespace RunningRacesApi.Services;
@@ -13,6 +14,16 @@ public class RaceCategoryService(AppDbContext context) : IRaceCategoryService
     {
         return await _context.RaceCategory
             .Where(c => c.RaceId == raceId)
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<RaceCategory>> GetRelayCategoriesAsync(BaseSearchModel searchModel)
+    {
+        return await _context.RaceCategory
+            .Include(rc => rc.Race)
+            .Where(rc => rc.RaceType == RaceType.Relay)
+            .Skip((searchModel.Page - 1) * searchModel.PageSize)
+            .Take(searchModel.PageSize)
             .ToListAsync();
     }
 

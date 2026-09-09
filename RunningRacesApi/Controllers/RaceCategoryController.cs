@@ -22,6 +22,7 @@ public class RaceCategoryController(IRaceCategoryService categoryService) : Cont
         return Ok(categories.Adapt<IEnumerable<RaceCategoryDto>>());
     }
 
+
     [HttpPost]
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<RaceCategoryDto>> Create(Guid raceId, RaceCategoryDto dto)
@@ -46,5 +47,13 @@ public class RaceCategoryController(IRaceCategoryService categoryService) : Cont
     {
         await _categoryService.DeleteAsync(id);
         return NoContent();
+    }
+
+    [HttpGet("/api/race-categories/relay")]
+    [AllowAnonymous]
+    public async Task<ActionResult<IEnumerable<RaceCategoryDropdownDto>>> GetRelayCategories([FromQuery] RaceSearchModel searchModel)
+    {
+        var categories = await _categoryService.GetRelayCategoriesAsync(searchModel);
+        return Ok(categories.Adapt<IEnumerable<RaceCategoryDropdownDto>>());
     }
 }
