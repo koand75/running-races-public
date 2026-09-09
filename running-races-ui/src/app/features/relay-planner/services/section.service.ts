@@ -38,7 +38,7 @@ export class SectionService {
   previewCsv(raceId: string, file: File): Observable<SectionImportPreviewResultDto> {
     const formData = new FormData();
     formData.append('file', file);
-    return this.http.post<SectionImportPreviewResultDto>(`${this.getApiUrl(raceId)}/section-import/preview`, formData);
+    return this.http.post<SectionImportPreviewResultDto>(`${environment.apiUrl}/race/${raceId}/section-import/preview`, formData);
   }
 
   insertAfter(raceId: string, afterOrder: number, section: Section): Observable<Section> {
@@ -49,6 +49,6 @@ export class SectionService {
     return this.http.get(`${this.getApiUrl(raceId)}/section-export?includeId=${includeId}`, { responseType: 'blob' });
   }
   importSections(raceId: string, sections: any[]): Observable<any> {
-    return this.http.post(`${this.getApiUrl(raceId)}/section-import`, sections);
+    return this.http.post(`${environment.apiUrl}/race/${raceId}/section-import`, sections);
   }
 }

@@ -39,11 +39,15 @@ export class TeamDetailComponent implements OnInit {
   team: Team | null = null;
   runners: Runner[] = [];
   displayedColumns = ['name', 'email', 'basePace', 'notes', 'actions'];
-  
+
   newRunner: Partial<Runner> = { name: '', email: '', basePace: 360, notes: '' };
   editingRunner: Runner | null = null;
 
+  categoryId: number = 0;
+  
+
   ngOnInit(): void {
+    this.categoryId = Number(this.route.snapshot.paramMap.get('categoryId'));
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.loadTeam(id);
     this.loadRunners(id);

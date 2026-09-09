@@ -20,6 +20,7 @@ public static class MappingConfig
         TypeAdapterConfig<RaceCategoryDto, RaceCategory>.NewConfig();
 
         TypeAdapterConfig<RaceCategory, RaceCategoryDropdownDto>.NewConfig()
+            .Map(dest => dest.CategoryId, src => src.Id)
             .Map(dest => dest.RaceName, src => src.Race != null ? src.Race.Name : string.Empty)
             .Map(dest => dest.CategoryName, src => src.Name);
 

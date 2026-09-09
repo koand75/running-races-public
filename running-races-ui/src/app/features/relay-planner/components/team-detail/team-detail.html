@@ -2,9 +2,6 @@
     @if (team) {
     <h1>{{ team.name }} ({{ team.year }})</h1>
     <div class="header-actions">
-        <button mat-raised-button color="primary" [routerLink]="['plan']">
-            <mat-icon>map</mat-icon> Tervezés
-        </button>
         <button mat-button routerLink="/relay-planner/teams">
             <mat-icon>arrow_back</mat-icon> Vissza
         </button>

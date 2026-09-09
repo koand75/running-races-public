@@ -54,5 +54,10 @@ export const UB_ROUTES: Routes = [
     path: 'sections/import',
     canActivate: [adminGuard],
     loadComponent: () => import('./components/section-import/section-import').then(m => m.SectionImport)
+  },
+  {
+    path: 'categories/:categoryId/teams/:id/plan',
+    canActivate: [authGuard],
+    loadComponent: () => import('./components/planner/planner').then(m => m.PlannerComponent)
   }
 ];
