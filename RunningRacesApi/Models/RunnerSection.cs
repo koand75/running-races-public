@@ -10,4 +10,6 @@ public class RunnerSection
     public int CustomPace { get; set; }
     public Guid? RaceId { get; set; }
     public Race? Race { get; set; }
+    public int? CategoryId { get; set; }
+    public RaceCategory? Category { get; set; }
 }

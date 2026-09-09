@@ -14,20 +14,20 @@ public class RunnerSectionService : IRunnerSectionService
         _context = context;
     }
 
-    public async Task<IEnumerable<RunnerSection>> GetByTeamAsync(Guid raceId, int teamId)
+    public async Task<IEnumerable<RunnerSection>> GetByTeamAsync(int categoryId, int teamId)
     {
         return await _context.RunnerSections
             .Include(rs => rs.Section)
             .Include(rs => rs.Runner)
-            .Where(rs => rs.Runner.TeamId == teamId && rs.RaceId == raceId)
+            .Where(rs => rs.Runner.TeamId == teamId && rs.CategoryId == categoryId)
             .OrderBy(rs => rs.Section.Order)
             .ToListAsync();
     }
 
-    public async Task SaveAllAsync(Guid raceId, int teamId, List<RunnerSection> assignments)
+    public async Task SaveAllAsync(int categoryId, int teamId, List<RunnerSection> assignments)
     {
         var oldAssignments = await _context.RunnerSections
-            .Where(rs => rs.Runner.TeamId == teamId && rs.RaceId == raceId)
+            .Where(rs => rs.Runner.TeamId == teamId && rs.CategoryId == categoryId)
             .ToListAsync();
 
         _context.RunnerSections.RemoveRange(oldAssignments);

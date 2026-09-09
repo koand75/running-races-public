@@ -12,7 +12,7 @@ export const UB_ROUTES: Routes = [
   }
   ,
   {
-    path: 'map', loadComponent: () =>
+    path: 'categories/:categoryId/map', loadComponent: () =>
       import('./components/map/map')
         .then(m => m.MapComponent)
   },

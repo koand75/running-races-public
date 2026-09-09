@@ -10,25 +10,25 @@ using RunningRacesApi.Services;
 namespace RunningRacesApi.Controllers;
 
 [ApiController]
-[Route("api/race/{raceId}/team/{teamId}/assignments")]
+[Route("api/race/{raceId}/category/{categoryId}/team/{teamId}/assignments")]
 public class RunnerSectionController(IRunnerSectionService runnerSectionService) : ControllerBase
 {
     private readonly IRunnerSectionService _runnerSectionService = runnerSectionService;
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<RunnerSectionDto>>> GetByTeam(Guid raceId, int teamId)
+    public async Task<ActionResult<IEnumerable<RunnerSectionDto>>> GetByTeam(int categoryId, int teamId)
     {
-        var assignments = await _runnerSectionService.GetByTeamAsync(raceId, teamId);
+        var assignments = await _runnerSectionService.GetByTeamAsync(categoryId, teamId);
         return Ok(assignments.Adapt<IEnumerable<RunnerSectionDto>>());
     }
 
     [HttpPut]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> SaveAll(Guid raceId, int teamId, List<SaveRunnerSectionDto> assignmentsdto)
+    public async Task<IActionResult> SaveAll(int categoryId, int teamId, List<SaveRunnerSectionDto> assignmentsdto)
     {
         var assignments = assignmentsdto.Adapt<List<RunnerSection>>();
-        assignments.ForEach(a => a.RaceId = raceId);
-        await _runnerSectionService.SaveAllAsync(raceId, teamId, assignments);
+        assignments.ForEach(a => a.CategoryId = categoryId);
+        await _runnerSectionService.SaveAllAsync(categoryId, teamId, assignments);
         return NoContent();
     }
 }
