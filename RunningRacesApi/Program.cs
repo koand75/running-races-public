@@ -41,6 +41,7 @@ builder.Services.AddScoped<ICsvExportService, CsvExportService>();
 builder.Services.AddSingleton<ITokenBlacklistService, TokenBlacklistService>();
 builder.Services.AddScoped<IRaceCategoryService, RaceCategoryService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IRaceCategoryTeamService, RaceCategoryTeamService>();
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
