@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="page-header">
+    <h1>Nevezések</h1>
+    <button mat-stroked-button routerLink="/admin/races">
+      <mat-icon>arrow_back</mat-icon> Vissza
+    </button>
+  </div>
+
+  <div class="header-actions">
+    <button mat-raised-button color="primary">
+      <mat-icon>group_add</mat-icon> Csapat hozzáadása
+    </button>
+  </div>
+
+  @if (registrations.length === 0) {
+    <p>Nincs még nevezett csapat.</p>
+  } @else {
+    <table mat-table [dataSource]="registrations">
+      <ng-container matColumnDef="teamName">
+        <th mat-header-cell *matHeaderCellDef>Csapat neve</th>
+        <td mat-cell *matCellDef="let reg">{{ reg.teamName }}</td>
+      </ng-container>
+      <ng-container matColumnDef="startTime">
+        <th mat-header-cell *matHeaderCellDef>Rajt időpont</th>
+        <td mat-cell *matCellDef="let reg">{{ reg.startTime | date:'yyyy.MM.dd HH:mm' }}</td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Műveletek</th>
+        <td mat-cell *matCellDef="let reg">
+          <button mat-mini-fab class="btn-delete" (click)="delete(reg.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  }
+</div>

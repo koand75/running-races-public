@@ -12,8 +12,7 @@ describe('Login', () => {
 
   beforeEach(async () => {
     mockAuthService = jasmine.createSpyObj('AuthService', ['login']);
-
-    await TestBed.configureTestingModule({
+    mockAuthService.login.and.returnValue(of({ token: 'eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjk5OTk5OTk5OTl9.test' })); await TestBed.configureTestingModule({
       imports: [LoginComponent],
       providers: [
         provideRouter([]),
