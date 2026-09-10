@@ -4,7 +4,8 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
-import { RaceCategoryTeamService, RaceCategoryTeamDto } from '../../services/race-category-team';
+import { RaceCategoryTeamService } from '../../services/race-category-team';
+import { RaceCategoryTeamDto } from '../../models/race.model';
 
 @Component({
   selector: 'app-registration',
@@ -20,7 +21,7 @@ export class Registration implements OnInit {
   raceId: string = '';
   categoryId: number = 0;
   registrations: RaceCategoryTeamDto[] = [];
-  displayedColumns = ['teamName', 'startTime', 'actions'];
+  displayedColumns = ['teamName', 'raceName', 'categoryName', 'startTime', 'actions'];
 
   ngOnInit(): void {
     this.raceId = this.route.snapshot.paramMap.get('raceId') ?? '';

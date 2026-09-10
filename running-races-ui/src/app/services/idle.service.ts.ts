@@ -40,7 +40,7 @@ export class IdleService {
     if (!token) return;
 
     const decoded: any = jwtDecode(token);
-    console.log('expires in:', (decoded.exp * 1000) - Date.now(), 'ms');
+    
     const expiresIn = (decoded.exp * 1000) - Date.now();
     const warningAt = expiresIn - 60000;
 

@@ -15,3 +15,14 @@ export interface RaceCategoryDropdownDto {
   categoryId: number;
   categoryName: string;
 }
+
+export interface RaceCategoryTeamDto {
+  id?: number;
+  categoryId: number;
+  teamId: number;
+  teamName: string;
+  startTime?: string | null;
+  raceName: string;
+  categoryName: string;
+  raceStartDate?: string | null;
+}

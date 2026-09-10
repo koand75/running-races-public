@@ -24,5 +24,11 @@ public static class MappingConfig
             .Map(dest => dest.RaceName, src => src.Race != null ? src.Race.Name : string.Empty)
             .Map(dest => dest.CategoryName, src => src.Name);
 
+        TypeAdapterConfig<RaceCategoryTeam, RaceCategoryTeamDto>.NewConfig()
+            .Map(dest => dest.TeamName, src => src.Team != null ? src.Team.Name : string.Empty)
+            .Map(dest => dest.RaceName, src => src.Category != null && src.Category.Race != null ? src.Category.Race.Name : string.Empty)
+            .Map(dest => dest.CategoryName, src => src.Category != null ? src.Category.Name : string.Empty)
+            .Map(dest => dest.RaceStartDate, src => src.Category != null && src.Category.Race != null ? (DateTime?)src.Category.Race.StartDate : null);
+
     }
 }

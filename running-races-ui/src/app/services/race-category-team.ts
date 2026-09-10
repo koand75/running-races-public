@@ -2,14 +2,8 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { RaceCategoryTeamDto } from '../models/race.model';
 
-export interface RaceCategoryTeamDto {
-  id?: number;
-  categoryId: number;
-  teamId: number;
-  teamName: string;
-  startTime?: string | null;
-}
 
 @Injectable({ providedIn: 'root' })
 export class RaceCategoryTeamService {

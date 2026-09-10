@@ -13,6 +13,8 @@ public class RaceCategoryTeamService(AppDbContext context) : IRaceCategoryTeamSe
     {
         return await _context.RaceCategoryTeams
             .Include(x => x.Team)
+            .Include(x => x.Category)
+                .ThenInclude(c => c.Race)
             .Where(x => x.CategoryId == categoryId)
             .ToListAsync();
     }
