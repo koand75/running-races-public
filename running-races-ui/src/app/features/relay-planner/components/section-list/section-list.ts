@@ -89,7 +89,7 @@ export class SectionListComponent implements OnInit {
 
   editSection(section: Section): void {
     const dialogRef = this.dialog.open(SectionInsertDialog, {
-      data: { section },
+      data: { section, raceId: this.raceId, categoryId: this.categoryId },
       width: '400px'
     });
 
@@ -122,7 +122,7 @@ export class SectionListComponent implements OnInit {
 
   insertAfter(order: number): void {
     const dialogRef = this.dialog.open(SectionInsertDialog, {
-      data: { afterOrder: order },
+      data: { afterOrder: order, raceId: this.raceId, categoryId: this.categoryId },
       width: '400px'
     });
 

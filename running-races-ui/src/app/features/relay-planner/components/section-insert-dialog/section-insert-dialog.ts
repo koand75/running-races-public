@@ -44,7 +44,13 @@ export class SectionInsertDialog implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<SectionInsertDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: { afterOrder?: number, section?: Section }
+    @Inject(MAT_DIALOG_DATA) public data: {
+      afterOrder?: number;
+      section?: Section;
+      raceId: string;
+      categoryId: number;
+
+    }
   ) {
     if (data.section) {
       this.newSection = { ...data.section };
@@ -64,8 +70,10 @@ export class SectionInsertDialog implements OnInit {
   }
 
   ngOnInit(): void {
-    this.raceId = this.route.snapshot.paramMap.get('raceId') ?? '';
-    this.categoryId = Number(this.route.snapshot.paramMap.get('categoryId'));
+    
+    this.raceId = this.data.raceId;
+    this.categoryId = this.data.categoryId;
+    console.log( this.raceId)
 
     this.waypointService.getAll(this.raceId, this.categoryId).subscribe(wp => {
       this.wayPoints = wp;
