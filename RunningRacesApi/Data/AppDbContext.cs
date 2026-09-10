@@ -10,7 +10,6 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
     }
-
     public DbSet<Race> Races { get; set; }
     public DbSet<Section> Sections { get; set; }
     public DbSet<Team> Teams { get; set; }
@@ -18,6 +17,8 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<RunnerSection> RunnerSections { get; set; }
     public DbSet<WayPoint> WayPoints { get; set; }
     public DbSet<RaceCategory> RaceCategory { get; set; }
+
+    public DbSet<RaceCategoryTeam> RaceCategoryTeams { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

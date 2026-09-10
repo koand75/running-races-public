@@ -18,7 +18,4 @@ public class Team : BaseEntity
     /// Hát ez se ide kell -> versenyhez indulási időpont ha van
     /// </summary>
     public DateTime? StartTime { get; set; }
-
-    // Connected categories
-    public ICollection<RaceCategory> Categories { get; set; } = new List<RaceCategory>();
 }
