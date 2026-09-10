@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="page-header">
+    <h1>Új csapat regisztrálása</h1>
+    <button mat-stroked-button (click)="onCancel()">
+      <mat-icon>arrow_back</mat-icon> Vissza
+    </button>
+  </div>
+
+  <div class="form-group">
+    <label>Csapat neve *</label>
+    <input type="text" [(ngModel)]="teamName" />
+  </div>
+
+  <div class="form-group">
+    <label>Rajt időpont</label>
+    <input type="datetime-local" [(ngModel)]="startTime" />
+  </div>
+
+  <div class="form-actions">
+    <button mat-raised-button color="primary" [disabled]="!teamName" (click)="onSubmit()">
+      Mentés
+    </button>
+    <button mat-stroked-button (click)="onCancel()">Mégse</button>
+  </div>
+</div>

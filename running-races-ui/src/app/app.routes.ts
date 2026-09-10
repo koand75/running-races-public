@@ -8,6 +8,7 @@ import { AdminLayoutComponent } from './components/admin-layout/admin-layout';
 import { PaceCalculator } from './features/pace-calculator/pace-calculator';
 import { RaceCategoryForm } from './components/race-category-form/race-category-form';
 import { Registration } from './components/registration/registration';
+import { TeamRegistrationForm } from './components/team-registration-form/team-registration-form';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/races', pathMatch: 'full' },
@@ -42,7 +43,8 @@ export const routes: Routes = [
       { path: 'races/:id/edit', component: RaceFormComponent },
       { path: 'races/:raceId/categories/new', component: RaceCategoryForm },
       { path: 'races/:raceId/categories/:id/edit', component: RaceCategoryForm },
-      { path: 'races/:raceId/categories/:categoryId/registrations', component: Registration }
+      { path: 'races/:raceId/categories/:categoryId/registrations', component: Registration },
+      { path: 'races/:raceId/categories/:categoryId/registrations/new', component: TeamRegistrationForm }
 
     ]
   }
