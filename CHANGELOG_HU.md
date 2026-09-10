@@ -36,6 +36,18 @@ ez a projekt követi a [Semantic Versioning](https://semver.org/spec/v2.0.0.html
 - Telepítési pipeline
 
 ---
+## [0.13.0] - 2026-09-10
+
+### Hozzáadva
+- Munkamenet inaktivitás figyelés automatikus token megújítással
+- "Hamarosan kijelentkeztetünk" snackbar figyelmeztetés kijelentkezés előtt
+- Token megújítás endpoint (`POST /api/auth/refresh`)
+- TokenService kiemelve az AuthController-ből
+
+### Javítva
+- Szakasz szerkesztő dialog most helyesen kapja meg a raceId-t és categoryId-t
+- ClockSkew nullára állítva a pontos token lejárathoz
+
 ## [0.12.0] - 2026-09-09
 
 ### Hozzáadva

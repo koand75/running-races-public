@@ -173,6 +173,8 @@ RunningRaces/
 - ✅ Role-based authorization
 - ✅ Route guards (frontend protection)
 - ✅ Auth interceptor (auto Bearer token)
+- ✅ Idle session timeout with automatic token refresh
+- ✅ Snackbar warning before automatic logout
 
 ---
 
@@ -282,6 +284,7 @@ ng test --watch=false
 - Soft delete + restore for races
 - Mapster DTO mapping
 - Docker support
+- Idle session timeout (auto logout + token refresh on activity)
 
 ### Frontend
 - Angular 20 Standalone Components

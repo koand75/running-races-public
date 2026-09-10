@@ -35,6 +35,18 @@ this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Deployment pipeline
 
 ---
+## [0.13.0] - 2026-09-10
+
+### Added
+- Idle session timeout with automatic token refresh
+- "Hamarosan kijelentkeztetünk" snackbar warning before logout
+- Refresh token endpoint (`POST /api/auth/refresh`)
+- TokenService extracted from AuthController
+
+### Fixed
+- Section insert dialog now receives raceId and categoryId correctly
+- ClockSkew set to zero for precise token expiry
+
 ## [0.12.0] - 2026-09-09
 
 ### Added
