@@ -1,39 +1,28 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 
 using RunningRacesApi.Models;
 using RunningRacesApi.Models.DTOs;
 using RunningRacesApi.Services;
 
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
 
 namespace RunningRacesApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AuthController : ControllerBase
-{
-    private readonly UserManager<ApplicationUser> _userManager;
-    private readonly SignInManager<ApplicationUser> _signInManager;
-    private readonly IConfiguration _configuration;
-    private readonly ITokenBlacklistService _blacklistService;
-
-
-    public AuthController(
-        UserManager<ApplicationUser> userManager,
+public class AuthController(UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
         IConfiguration configuration,
-        ITokenBlacklistService blacklistService)
-    {
-        _userManager = userManager;
-        _signInManager = signInManager;
-        _configuration = configuration;
-        _blacklistService = blacklistService;
-    }
+        ITokenBlacklistService blacklistService,
+        ITokenService tokenService) : ControllerBase
+{
+    private readonly UserManager<ApplicationUser> _userManager = userManager;
+    private readonly SignInManager<ApplicationUser> _signInManager = signInManager;
+    private readonly IConfiguration _configuration = configuration;
+    private readonly ITokenBlacklistService _blacklistService = blacklistService;
+    private readonly ITokenService _tokenService = tokenService;
 
     /// <summary>
     /// Login and get JWT token
@@ -67,33 +56,7 @@ public class AuthController : ControllerBase
     /// </summary>
     private async Task<string> GenerateJwtTokenAsync(ApplicationUser user)
     {
-        var securityKey = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
-        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
-        var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.NameIdentifier, user.Id),
-            new Claim(ClaimTypes.Name, user.UserName!),
-            new Claim(ClaimTypes.Email, user.Email!),
-            new Claim("FullName", user.FullName ?? user.UserName!),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-        };
-
-        // Add user roles to claims
-        var roles = await _userManager.GetRolesAsync(user);
-        claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
-
-        var token = new JwtSecurityToken(
-            issuer: _configuration["Jwt:Issuer"],
-            audience: _configuration["Jwt:Audience"],
-            claims: claims,
-            expires: DateTime.UtcNow.AddMinutes(
-                Convert.ToDouble(_configuration["Jwt:ExpireMinutes"])),
-            signingCredentials: credentials
-        );
-
-        return new JwtSecurityTokenHandler().WriteToken(token);
+        return await _tokenService.GenerateTokenAsync(user);
     }
 
     /// <summary>
@@ -110,5 +73,17 @@ public class AuthController : ControllerBase
         _blacklistService.AddToBlacklist(token, expiresAt);
 
         return Ok(new { message = "Successfully logged out" });
+    }
+
+    [HttpPost("refresh")]
+    [Authorize]
+    public async Task<IActionResult> Refresh()
+    {
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        var user = await _userManager.FindByIdAsync(userId!);
+        if (user == null) return Unauthorized();
+
+        var newToken = await _tokenService.GenerateTokenAsync(user); ;
+        return Ok(new { token = newToken });
     }
 }

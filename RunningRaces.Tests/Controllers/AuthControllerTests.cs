@@ -38,6 +38,9 @@ public class AuthControllerTests
         _mockConfiguration.Setup(c => c["Jwt:Audience"]).Returns("TestAudience");
         _mockConfiguration.Setup(c => c["Jwt:ExpireMinutes"]).Returns("60");
         _mockBlacklistService = new Mock<ITokenBlacklistService>();
+        var mockTokenService = new Mock<ITokenService>();
+        mockTokenService.Setup(t => t.GenerateTokenAsync(It.IsAny<ApplicationUser>()))
+            .ReturnsAsync("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.test.test");
 
         var userStore = new Mock<IUserStore<ApplicationUser>>();
         _mockUserManager = new Mock<UserManager<ApplicationUser>>(
@@ -56,7 +59,8 @@ public class AuthControllerTests
             _mockUserManager.Object,
             _mockSignInManager.Object,
             _mockConfiguration.Object,
-            _mockBlacklistService.Object);
+            _mockBlacklistService.Object,
+            mockTokenService.Object);
     }
 
     [Fact]

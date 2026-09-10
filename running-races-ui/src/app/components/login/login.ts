@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
+import { IdleService } from '../../services/idle.service.ts';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,7 @@ export class LoginComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
+  private idleService = inject(IdleService);
 
   loginForm: FormGroup;
   error = '';
@@ -33,7 +35,6 @@ export class LoginComponent {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/admin/races';
   }
 
-
   onSubmit(): void {
     if (this.loginForm.invalid) {
       return;
@@ -46,6 +47,7 @@ export class LoginComponent {
 
     this.authService.login(email, password).subscribe({
       next: () => {
+        this.idleService.start();
         // ✅ Sikeres login → Redirect a returnUrl-re
         this.router.navigate([this.returnUrl]);
       },

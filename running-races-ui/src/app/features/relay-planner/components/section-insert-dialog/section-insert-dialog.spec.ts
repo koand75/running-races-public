@@ -39,7 +39,7 @@ describe('SectionInsertDialog', () => {
   });
 
   it('should prefill data when editing existing section', () => {
-    component.data = { section: { id: 1, name: 'Test', distance: 5, order: 1 } as any };
+    component.data = { section: { id: 1, name: 'Test', distance: 5, order: 1 } as any , raceId: '', categoryId: 0 };
     component.newSection = { ...component.data.section };
     expect(component.newSection.distance).toBe(5);
   });
