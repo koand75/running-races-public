@@ -13,9 +13,4 @@ public class Team : BaseEntity
     /// List of member
     /// </summary>
     public ICollection<Runner> Runners { get; set; } = new List<Runner>();
-
-    /// <summary>
-    /// Hát ez se ide kell -> versenyhez indulási időpont ha van
-    /// </summary>
-    public DateTime? StartTime { get; set; }
 }
